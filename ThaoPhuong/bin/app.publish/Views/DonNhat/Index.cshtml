@@ -1,0 +1,214 @@
+﻿@model List<ThaoPhuong.Models.TDONHANG>
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.layout;
+}
+<h2>Đơn hàng nhặt</h2>
+@*lọc từ ngày đến ngày, khách hàng, số phiếu*@
+<form>
+    <div class="row justify-content-end">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col-1">
+                    Từ:
+                </div>
+                <div class="col-5">
+                    <input id="startDate" name="fDateStr" value="@ViewBag.fDateStr" />
+                </div>
+                <div class="col-1">
+                    Đến:
+                </div>
+                <div class="col-5">
+                    <input id="endDate" name="tDateStr" value="@ViewBag.tDateStr" />
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
+            <div class="row">
+                <div class="col-4">
+                    Khách hàng
+                </div>
+                <div class="col-8">
+                    <select class="form-control select2" name="DKHACHHANGID">
+                        <option value="">Chọn khách hàng</option>
+                        @foreach (ThaoPhuong.Models.DKHACHHANG item in ViewBag.khachHangs)
+                        {
+                            <option value="@item.ID" @{if (ViewBag.DKHACHHANGID == item.ID) { <text> selected</text>} else {<text></text>}}>@item.NAME</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col-4">
+                    Trạng thái
+                </div>
+                <div class="col-8">
+                    <select class="form-control" name="TRANGTHAI">
+                        <option value="">Chọn trạng thái</option>
+                        @{
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.CHOXULY</option>
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DangXuLy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DANGXULY</option>
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHOANTHANH</option>
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHuy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHUY</option>
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.QuayHen)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.QUAYHEN</option>
+                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <hr />
+        </div>
+        @*Sắp xếp: Ngày, vị trí --- Tăng hoặc giảm*@
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col-4">
+                    Sắp xếp
+                </div>
+                <div class="col-4">
+                    <select class="form-control" name="sortName">
+                        <option value="vitri" @{if (ViewBag.sortName == "vitri") { <text> selected</text> } else { } }>Vị trí</option>
+                        <option value="ngay" @{if (ViewBag.sortName == "ngay") { <text> selected</text> } else { } }>Ngày</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select class="form-control" name="sortDirection">
+                        <option value="tang" @{if (ViewBag.sortDirection == "tang") { <text> selected</text> } else { } }>Tăng</option>
+                        <option value="giam" @{if (ViewBag.sortDirection == "giam") { <text> selected</text> } else { } }>Giảm</option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row justify-content-end">
+                <button type="submit" class="btn btn-primary" style="margin-right: 15px">Tải dữ liệu</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    @{
+        foreach (ThaoPhuong.Models.TDONHANG item in Model)
+        {
+            DateTime time = item.TIMECREATED ?? DateTime.Now;
+            string logo = "";
+            foreach (var anh in item.DANHs)
+            {
+                if (logo.Length == 0)
+                {
+                    logo = "/Images/Upload/" + anh.PATH;
+                }
+            }
+            string details = "";
+            foreach (ThaoPhuong.Models.TDONHANGCHITIET detail in item.TDONHANGCHITIETs)
+            {
+                if (details.Length > 0)
+                {
+                    details += ", ";
+                }
+                details += detail.SOLUONG + ": " + detail.NOTE;
+            }
+            //#ffbab5;
+            <div class="col-sm-12 col-md-6 col-lg-4 itemDonNhat" data-id="@item.ID">
+                <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
+                    <div class="col-3" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
+                    </div>
+                    <div class="col-9" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row" style="padding-left: 10px;">
+                                    <table border="0">
+                                        <tr>
+                                            <td>Ngày</td>
+                                            <td style="padding-left:5px;">@time.ToString("dd/MM/yyyy")</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Quầy</td>
+                                            <td style="padding-left:5px;">@{if (item.DQUAY != null) { <text>item.DQUAY.NAME</text> }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sp:</td>
+                                            <td style="padding-left:5px;">@item.TENSP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T.tiền</td>
+                                            <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ghi chú</td>
+                                            <td style="padding-left:5px;">@item.NOTE</td>
+                                        </tr>
+                                        @if (details.Length > 0)
+                                        {
+                                            <tr>
+                                                <td colspan="2">@details</td>
+                                            </tr>
+                                        }
+                                        @if (item.TIMEUPDATED != null)
+                                        {
+                                            <tr>
+                                                <td>T/g c.nhật</td>
+                                                <td style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-3 p-0">
+                                @{
+                                    if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)
+                                    {
+                                        <div class="alert alert-danger h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.CHOXULY
+                                        </div>
+                                    }
+                                    else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy)
+                                    {
+                                        <div class="alert alert-dark h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.DANGXULY
+                                        </div>
+                                    }
+                                    else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)
+                                    {
+                                        <div class="alert alert-success h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.DAHOANTHANH
+                                        </div>
+                                    }
+                                    else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy)
+                                    {
+                                        <div class="alert alert-warning h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.DAHUY
+                                        </div>
+                                    }
+                                    else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen)
+                                    {
+                                        <div class="alert alert-warning h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.QUAYHEN
+                                        </div>
+                                    }
+                                    else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)
+                                    {
+                                        <div class="alert alert-warning h-100 w-100" role="alert">
+                                            @ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+@Scripts.Render("~/Scripts/jquery-3.6.0.js")
+<script>
+    $('.itemDonNhat').click(function () {
+        let id = $(this).attr("data-id");
+        window.location.href = "/DonNhat/AddOrUpdate/" + id;
+    });
+</script>

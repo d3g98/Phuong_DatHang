@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginRes.cshtml";
+}
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Đăng ký tài khoản</h1>
+                        </div>
+                        <form method="post" class="user">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" placeholder="Tài khoản (*Bắt buộc-Viết liền không dấu)" value="@ViewBag.userName" name="USERNAME">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" placeholder="Tên người dùng (*Bắt buộc)" value="@ViewBag.name" name="NAME">
+                            </div>
+                            @*<div class="form-group">
+                                <input type="email" class="form-control form-control-user" placeholder="Email" value="@ViewBag.email" name="EMAIL">
+                            </div>*@
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" placeholder="Điện thoại (*Bắt buộc)" value="@ViewBag.dienthoai" name="DIENTHOAI">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" placeholder="Địa chỉ (*Bắt buộc)" value="@ViewBag.diachi" name="DIACHI">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input id="ipPass" type="password" class="form-control form-control-user" placeholder="Mật khẩu (*Bắt buộc)" name="PASSWORD">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input id="ipCfPass" type="password" class="form-control form-control-user" placeholder="Nhập lại mật khẩu">
+                                </div>
+                            </div>
+                            <div class="form-group row justify-content-center">
+                                <button class="btn btn-info" id="btnReg" type="button">Đăng ký tài khoản</button>
+                            </div>
+                            <hr>
+                            @*<a href="index.html" class="btn btn-google btn-user btn-block">
+            <i class="fab fa-google fa-fw"></i> Register with Google
+        </a>
+        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+        </a>*@
+                        </form>
+                        @*<div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>*@
+                        <div class="text-center">
+                            <a class="small" href="/Profile/Login">Bạn đã có tài khoản? Đăng nhập ngay!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Content/Admin/vendor/jquery/jquery.min.js")
+<script>
+    $('#btnReg').click(function () {
+        let pass = $('#ipPass').val();
+        let cfPass = $('#ipCfPass').val();
+        if (pass != cfPass) {
+            alert("Mật khẩu không trùng khớp!");
+        }
+        else
+        {
+            $(this).closest("form").submit();
+        }
+    });
+</script>

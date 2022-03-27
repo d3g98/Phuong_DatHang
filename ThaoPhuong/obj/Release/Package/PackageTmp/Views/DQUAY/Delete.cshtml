@@ -1,0 +1,36 @@
+﻿@model ThaoPhuong.Models.DQUAY
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<div>
+    <h4>Xóa quầy này?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Quầy
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            Vị trí
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POSITION)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Danh sách", "Index")
+        </div>
+    }
+</div>

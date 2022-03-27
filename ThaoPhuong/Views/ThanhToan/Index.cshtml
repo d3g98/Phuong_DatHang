@@ -1,0 +1,102 @@
+﻿@model List<ThaoPhuong.Models.TTHANHTOAN>
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.layout;
+}
+<form style="padding-top: 10px ">
+    <div class="row justify-content-end">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col-1">
+                    Từ:
+                </div>
+                <div class="col-5">
+                    <input id="startDate" name="fDateStr" value="@ViewBag.fDateStr" />
+                </div>
+                <div class="col-1">
+                    Đến:
+                </div>
+                <div class="col-5">
+                    <input id="endDate" name="tDateStr" value="@ViewBag.tDateStr" />
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
+            <div class="row">
+                <div class="col-4">
+                    Khách hàng
+                </div>
+                <div class="col-8">
+                    <select class="form-control select2" name="DKHACHHANGID">
+                        <option value="">Chọn khách hàng</option>
+                        @foreach (ThaoPhuong.Models.DKHACHHANG item in ViewBag.khachHangs)
+                        {
+                            <option value="@item.ID" @{if (ViewBag.DKHACHHANGID == item.ID) { <text> selected</text>} else {<text></text>}}>@item.NAME</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <hr />
+        </div>
+        @*Sắp xếp: Ngày, vị trí --- Tăng hoặc giảm*@
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col-4">
+                    Sắp xếp
+                </div>
+                <div class="col-4">
+                    <select class="form-control" name="sortName">
+                        @*<option value="vitri" @{if (ViewBag.sortName == "vitri") { <text> selected</text> } else { } }>Vị trí</option>*@
+                        <option value="ngay" @{if (ViewBag.sortName == "ngay") { <text> selected</text> } else { } }>Ngày</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select class="form-control" name="sortDirection">
+                        <option value="tang" @{if (ViewBag.sortDirection == "tang") { <text> selected</text> } else { } }>Tăng</option>
+                        <option value="giam" @{if (ViewBag.sortDirection == "giam") { <text> selected</text> } else { } }>Giảm</option>
+                    </select>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="row justify-content-end">
+                <button type="submit" class="btn btn-primary" style="margin-right: 15px">Tải dữ liệu</button>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ngày</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Tiền hàng</th>
+            <th scope="col">Phụ phí</th>
+            <th scope="col">Tổng cộng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (ThaoPhuong.Models.TTHANHTOAN itemTT in Model)
+            {
+                DateTime time = itemTT.TIMECREATED ?? DateTime.Now;
+                <tr data-id="@itemTT.ID">
+                    <td>@time.ToString("dd/MM/yyyy")</td>
+                    <td>@itemTT.DKHACHHANG.NAME</td>
+                    <td>@itemTT.TIENHANG</td>
+                    <td>@itemTT.PHUPHI</td>
+                    <td>@itemTT.TONGCONG</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Scripts.Render("~/Scripts/jquery-3.6.0.js")
+<script>
+    $('table').find("tbody").find("tr").click(function () {
+        let id = $(this).attr("data-id");
+        window.location.href = "/ThanhToan/AddOrUpdate/" + id;
+    });
+</script>

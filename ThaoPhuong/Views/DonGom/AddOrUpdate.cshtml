@@ -1,0 +1,157 @@
+﻿@model ThaoPhuong.Models.TDONHANG
+@{
+    ViewBag.Title = "Update";
+    Layout = ViewBag.layout;
+}
+<form method="post" enctype="multipart/form-data">
+    @{
+        if (ViewBag.success != null)
+        {
+            <div class="alert alert-success" role="alert">@ViewBag.success</div>
+        }
+        if (ViewBag.error != null)
+        {
+            <div class="alert alert-danger" role="alert">@ViewBag.error</div>
+        }
+    }
+<div class="row">
+    <!-- thông tin -->
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-12">
+                <h4>Đơn gom hàng</h4>
+            </div>
+            <input type="text" class="form-control" hidden="hidden" name="ID" value="@Model.ID">
+            <!-- So phieu -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Đơn gom</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" readonly name="NAME" value="@Model.NAME">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quay -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Quầy</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control select2" name="DQUAYID">
+                            <option value="">Chọn quầy</option>
+                            @foreach (ThaoPhuong.Models.DQUAY item in ViewBag.quays)
+                            {
+                                if (item.ID == Model.DQUAYID)
+                                {
+                                    <option value="@item.ID" selected>@item.NAME</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID">@item.NAME</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh tien -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Tổng cộng</label>
+                    </div>
+                    <div class="col-8">
+                        @{
+                            if (ViewBag.isAdmin)
+                            {
+                                <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)">
+                            }
+                            else
+                            {
+                                <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)" readonly>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ghi chu -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Ghi chú</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="NOTE" value="@Model.NOTE">
+                    </div>
+                </div>
+            </div>
+
+            <!-- trang thai -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Trạng thái</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" name="TRANGTHAI" @{ if (!ViewBag.isAdmin) { <text>disabled="disabled"</text> }}>
+                            @{
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.CHOXULY</option>
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DangXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DANGXULY</option>
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHOANTHANH</option>
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHuy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHUY</option>
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.QuayHen)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.QUAYHEN</option>
+                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    <!-- Ảnh -->
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 form-group">
+        @{
+            if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)))
+            {
+                <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
+            }
+        }
+    </div>
+</div>
+</form>
+@Scripts.Render("~/Scripts/jquery-3.6.0.js")
+@Scripts.Render("~/Scripts/image-uploader.js")
+<script>
+    let preloaded = [];
+    @{
+        if (ViewBag.imgs != null)
+        {
+            Dictionary<string, string> dic = ViewBag.imgs;
+            foreach (string key in dic.Keys)
+            {
+                <Text>preloaded.push({ id: '@key', src: '@dic[key]' });</Text>
+            }
+        }
+    }
+    $('.input-images').imageUploader({
+        preloaded: preloaded
+    });
+</script>

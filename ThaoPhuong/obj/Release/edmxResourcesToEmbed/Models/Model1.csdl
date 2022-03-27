@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="THAOPHUONGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DANH">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PATH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TDONHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TDONHANG" Relationship="Self.FK__DANH__TDONHANGID__1920BF5C" FromRole="DANH" ToRole="TDONHANG" />
+  </EntityType>
+  <EntityType Name="DKHACHHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="USERNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DIENTHOAI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DIACHI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DKHACH__164452B1" FromRole="DKHACHHANG" ToRole="TDONHANG" />
+    <Property Name="ISADMIN" Type="Int32" />
+    <Property Name="ISACTIVE" Type="Int32" />
+    <NavigationProperty Name="TTHANHTOANs" Relationship="THAOPHUONGModel.FK__TTHANHTOA__DKHAC__49C3F6B7" FromRole="DKHACHHANG" ToRole="TTHANHTOAN" />
+    <NavigationProperty Name="TTHUCHIs" Relationship="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__5CD6CB2B" FromRole="DKHACHHANG" ToRole="TTHUCHI" />
+  </EntityType>
+  <EntityType Name="DQUAY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="POSITION" Type="Int32" />
+    <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DQUAYI__15502E78" FromRole="DQUAY" ToRole="TDONHANG" />
+  </EntityType>
+  <EntityType Name="TDONHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LOAI" Type="Int32" />
+    <Property Name="DQUAYID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="DKHACHHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TIMECREATED" Type="DateTime" Precision="3" />
+    <Property Name="TIMEUPDATED" Type="DateTime" Precision="3" />
+    <Property Name="TIENDUKIEN" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TIENDANHAT" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TONGCONG" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="DANHs" Relationship="Self.FK__DANH__TDONHANGID__1920BF5C" FromRole="TDONHANG" ToRole="DANH" />
+    <NavigationProperty Name="DKHACHHANG" Relationship="Self.FK__TDONHANG__DKHACH__164452B1" FromRole="TDONHANG" ToRole="DKHACHHANG" />
+    <NavigationProperty Name="DQUAY" Relationship="Self.FK__TDONHANG__DQUAYI__15502E78" FromRole="TDONHANG" ToRole="DQUAY" />
+    <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__1BFD2C07" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
+    <Property Name="TIENCONG" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TRANGTHAI" Type="Int32" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TENSP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TTHANHTOANCHITIETs" Relationship="THAOPHUONGModel.FK__TTHANHTOA__TDONH__4CA06362" FromRole="TDONHANG" ToRole="TTHANHTOANCHITIET" />
+  </EntityType>
+  <EntityType Name="TDONHANGCHITIET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TDONHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TENHANG" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SOLUONG" Type="Int32" />
+    <Property Name="SIZE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TDONHANG" Relationship="Self.FK__TDONHANGC__TDONH__1BFD2C07" FromRole="TDONHANGCHITIET" ToRole="TDONHANG" />
+    <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SOLUONGDANHAT" Type="Int32" />
+  </EntityType>
+  <Association Name="FK__DANH__TDONHANGID__1920BF5C">
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
+    <End Role="DANH" Type="Self.DANH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DANH">
+        <PropertyRef Name="TDONHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANG__DKHACH__164452B1">
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DKHACHHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DKHACHHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANG__DQUAYI__15502E78">
+    <End Role="DQUAY" Type="Self.DQUAY" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DQUAY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DQUAYID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDONHANGC__TDONH__1BFD2C07">
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
+    <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANGCHITIET">
+        <PropertyRef Name="TDONHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DANHs" EntityType="Self.DANH" />
+    <EntitySet Name="DKHACHHANGs" EntityType="Self.DKHACHHANG" />
+    <EntitySet Name="DQUAYs" EntityType="Self.DQUAY" />
+    <EntitySet Name="TDONHANGs" EntityType="Self.TDONHANG" />
+    <EntitySet Name="TDONHANGCHITIETs" EntityType="Self.TDONHANGCHITIET" />
+    <AssociationSet Name="FK__DANH__TDONHANGID__1920BF5C" Association="Self.FK__DANH__TDONHANGID__1920BF5C">
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+      <End Role="DANH" EntitySet="DANHs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANG__DKHACH__164452B1" Association="Self.FK__TDONHANG__DKHACH__164452B1">
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANGs" />
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANG__DQUAYI__15502E78" Association="Self.FK__TDONHANG__DQUAYI__15502E78">
+      <End Role="DQUAY" EntitySet="DQUAYs" />
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDONHANGC__TDONH__1BFD2C07" Association="Self.FK__TDONHANGC__TDONH__1BFD2C07">
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+      <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
+    </AssociationSet>
+    <EntitySet Name="TTHANHTOANs" EntityType="THAOPHUONGModel.TTHANHTOAN" />
+    <EntitySet Name="TTHANHTOANCHITIETs" EntityType="THAOPHUONGModel.TTHANHTOANCHITIET" />
+    <EntitySet Name="TTHUCHIs" EntityType="THAOPHUONGModel.TTHUCHI" />
+    <AssociationSet Name="FK__TTHANHTOA__DKHAC__49C3F6B7" Association="THAOPHUONGModel.FK__TTHANHTOA__DKHAC__49C3F6B7">
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANGs" />
+      <End Role="TTHANHTOAN" EntitySet="TTHANHTOANs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TTHUCHI__DKHACHH__5CD6CB2B" Association="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__5CD6CB2B">
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANGs" />
+      <End Role="TTHUCHI" EntitySet="TTHUCHIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TTHANHTOA__TDONH__4CA06362" Association="THAOPHUONGModel.FK__TTHANHTOA__TDONH__4CA06362">
+      <End Role="TDONHANG" EntitySet="TDONHANGs" />
+      <End Role="TTHANHTOANCHITIET" EntitySet="TTHANHTOANCHITIETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TTHANHTOA__TTHAN__160F4887" Association="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__160F4887">
+      <End Role="TTHANHTOAN" EntitySet="TTHANHTOANs" />
+      <End Role="TTHANHTOANCHITIET" EntitySet="TTHANHTOANCHITIETs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TTHANHTOAN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="DKHACHHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TONGCONG" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TIENTHANHTOAN" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DKHACHHANG" Relationship="THAOPHUONGModel.FK__TTHANHTOA__DKHAC__49C3F6B7" FromRole="TTHANHTOAN" ToRole="DKHACHHANG" />
+    <Property Name="TIENHANG" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PHUPHI" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="KETTHUC" Type="Int32" />
+    <NavigationProperty Name="TTHANHTOANCHITIETs" Relationship="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__160F4887" FromRole="TTHANHTOAN" ToRole="TTHANHTOANCHITIET" />
+    <Property Name="TIMECREATED" Type="DateTime" Precision="3" />
+    <Property Name="TIMEUPDATED" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="TTHANHTOANCHITIET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TDONHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TDONHANG" Relationship="THAOPHUONGModel.FK__TTHANHTOA__TDONH__4CA06362" FromRole="TTHANHTOANCHITIET" ToRole="TDONHANG" />
+    <Property Name="TTHANHTOANID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TTHANHTOAN" Relationship="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__160F4887" FromRole="TTHANHTOANCHITIET" ToRole="TTHANHTOAN" />
+  </EntityType>
+  <EntityType Name="TTHUCHI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="LOAI" Type="Int32" />
+    <Property Name="DKHACHHANGID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="THU" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CHI" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DKHACHHANG" Relationship="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__5CD6CB2B" FromRole="TTHUCHI" ToRole="DKHACHHANG" />
+    <Property Name="TIMECREATED" Type="DateTime" Precision="3" />
+    <Property Name="TIMEUPDATED" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK__TTHANHTOA__DKHAC__49C3F6B7">
+    <End Type="THAOPHUONGModel.DKHACHHANG" Role="DKHACHHANG" Multiplicity="0..1" />
+    <End Type="THAOPHUONGModel.TTHANHTOAN" Role="TTHANHTOAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DKHACHHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHANHTOAN">
+        <PropertyRef Name="DKHACHHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TTHUCHI__DKHACHH__5CD6CB2B">
+    <End Type="THAOPHUONGModel.DKHACHHANG" Role="DKHACHHANG" Multiplicity="0..1" />
+    <End Type="THAOPHUONGModel.TTHUCHI" Role="TTHUCHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DKHACHHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHUCHI">
+        <PropertyRef Name="DKHACHHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TTHANHTOA__TDONH__4CA06362">
+    <End Type="THAOPHUONGModel.TDONHANG" Role="TDONHANG" Multiplicity="0..1" />
+    <End Type="THAOPHUONGModel.TTHANHTOANCHITIET" Role="TTHANHTOANCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHANHTOANCHITIET">
+        <PropertyRef Name="TDONHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TTHANHTOA__TTHAN__160F4887">
+    <End Type="THAOPHUONGModel.TTHANHTOAN" Role="TTHANHTOAN" Multiplicity="0..1" />
+    <End Type="THAOPHUONGModel.TTHANHTOANCHITIET" Role="TTHANHTOANCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TTHANHTOAN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHANHTOANCHITIET">
+        <PropertyRef Name="TTHANHTOANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

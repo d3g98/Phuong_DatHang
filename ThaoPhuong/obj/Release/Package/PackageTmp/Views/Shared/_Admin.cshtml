@@ -1,0 +1,101 @@
+﻿@{
+    string id = "";
+    ThaoPhuong.Models.DKHACHHANG khRow = Session[ThaoPhuong.Utils.Contants.USER_SESSION_NAME] as ThaoPhuong.Models.DKHACHHANG;
+    if (khRow != null && khRow.ID.Length > 0)
+    {
+        id = khRow.ID;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Home/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Home/image-uploader.css" rel="stylesheet" />
+    <link href="~/Content/Home/Site.css" rel="stylesheet" />
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        @Html.ActionLink("Trang chủ", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Danh mục
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="dropdown-item">@Html.ActionLink("Danh sách quầy", "Index", "DQUAY")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Danh sách khách hàng", "Index", "DKHACHHANG")</li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hoạt động
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="dropdown-item">@Html.ActionLink("Quản lý đơn gom", "Index", "DonGom")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Quản lý đơn nhặt", "Index", "DonNhat")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Thêm mới thanh toán", "AddOrUpdate", "ThanhToan")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Quản lý thanh toán", "Index", "ThanhToan")</li>
+                    </ul>
+                </li>
+
+                @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Phiếu thanh toán
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Thêm mới", "AddOrUpdate", "ThanhToan")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách phiếu thanh toán", "Index", "ThanhToan")</li>
+                        </ul>
+                    </li>*@
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Thông tin cá nhân
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li class="dropdown-item">@Html.ActionLink("Thông tin", "Index", "Profile", new { id = id }, null)</li>
+                        <li class="dropdown-item">@Html.ActionLink("Đổi mật khẩu", "EditPassword", "Profile")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Đăng xuất", "Logout", "Profile")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/daterangepicker.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    @*<script src="~/Scripts/image-uploader.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+            $('#startDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome'
+            });
+            $('#endDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome'
+            });
+        });
+    </script>
+</body>
+</html>
