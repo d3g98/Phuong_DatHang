@@ -137,7 +137,7 @@ namespace ThaoPhuong.Controllers
                     decimal congNhat = 0;
                     foreach (TDONHANGCHITIET chRow in item.TDONHANGCHITIETs)
                     {
-                        congNhat += (decimal)chRow.SOLUONGDANHAT * 10000;
+                        congNhat += (decimal)(chRow.SOLUONGDANHAT ?? 0) * 10000;
                     }
                     dhRow.TIENCONG = congNhat;
                     dhRow.TONGCONG = (dhRow.TIENDANHAT == null ? 0 : dhRow.TIENDANHAT) + dhRow.TIENCONG;
