@@ -148,7 +148,10 @@ namespace ThaoPhuong.Controllers
 
         public ActionResult SearchHoaDonThanhToan(string id)
         {
-            List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id && (x.TRANGTHAI != (int)TrangThaiDon.DaHoanThanh || x.TRANGTHAI != (int)TrangThaiDon.DaHuy)).ToList();
+            List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id 
+            && (x.TRANGTHAI != (int)TrangThaiDon.DaHoanThanh || x.TRANGTHAI != (int)TrangThaiDon.DaHuy)
+            && x.TDONHANGCHITIETs.Count == 0)
+                .ToList();
             return PartialView(lst);
         }
     }

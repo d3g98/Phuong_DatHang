@@ -31,7 +31,7 @@ namespace ThaoPhuong.Controllers
                 DKHACHHANGID = khRow.ID;
             }
             //Lọc ngày, lọc theo trạng thái, lọc khách hàng
-            int intTt = TRANGTHAI == null ? (int)TrangThaiDon.ChoXuLy : (TRANGTHAI == "" ? -1 : Convert.ToInt32(TRANGTHAI));
+            int intTt = (TRANGTHAI == "" || TRANGTHAI == null) ? -1 : Convert.ToInt32(TRANGTHAI);
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;

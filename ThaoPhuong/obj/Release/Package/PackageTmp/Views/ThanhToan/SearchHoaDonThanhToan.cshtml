@@ -8,20 +8,50 @@
             <th scope="col">Quầy</th>
             <th scope="col">Mặt hàng</th>
             <th scope="col">Tổng cộng</th>
+            <th scope="col">Trạng thái</th>
         </tr>
     </thead>
     <tbody>
         @foreach (ThaoPhuong.Models.TDONHANG donHangRow in Model)
         {
             DateTime time = donHangRow.TIMECREATED ?? DateTime.Now;
-            <tr data-id="@donHangRow.ID" data-loai="@donHangRow.LOAI">
-                <td><div class="form-group form-check"><input type="checkbox" class="form-check-input"></div></td>
-                <td>@time.ToString("dd/MM/yyyy")</td>
-                <td>@donHangRow.NAME</td>
-                <td>@donHangRow.DQUAY.NAME</td>
-                <td>@donHangRow.TENSP</td>
-                <td>@ThaoPhuong.Utils.DbUtils.NumberToText(donHangRow.TONGCONG)</td>
-            </tr>
+        <tr data-id="@donHangRow.ID" data-loai="@donHangRow.LOAI">
+            <td><div class="form-group form-check"><input type="checkbox" class="form-check-input"></div></td>
+            <td>@time.ToString("dd/MM/yyyy")</td>
+            <td>@donHangRow.NAME</td>
+            <td>@if (donHangRow.DQUAY != null)
+            {<text>@donHangRow.DQUAY.NAME</text>}</td>
+            <td>@donHangRow.TENSP</td>
+            <td>@ThaoPhuong.Utils.DbUtils.NumberToText(donHangRow.TONGCONG)</td>
+            <td>
+                @{
+                    if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.CHOXULY</text>
+                    }
+                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.DANGXULY</text>
+                    }
+                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.DAHOANTHANH</text>
+                    }
+                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.DAHUY</text>
+                    }
+                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.QUAYHEN</text>
+                    }
+                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)
+                    {
+                        <text>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</text>
+                    }
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>

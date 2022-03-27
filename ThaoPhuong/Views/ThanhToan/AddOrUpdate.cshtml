@@ -219,24 +219,26 @@
         let val = 0;
         if (param != undefined && param != null && param.length > 0)
         {
-            val = parseInt(para);
+            val = parseInt(param);
         }
         return val;
     }
 
-    function renameControls() {
-        let tienCong = 0;
-        $(".tblChiTiet").find("tbody").find("tr").each(function (index, ele) {
-            //$(ele).find("th")[0].innerText = index + 1;
-            let name = "TTHANHTOANCHITIETs[" + index + "].SOLUONG";
-            $(ele).find('.ipTDONHANGID').attr("name", name);
-            name = "TTHANHTOANCHITIETs[" + index + "].NOTE";
-            $(ele).find('.ipNOTE').attr("name", name);
-            tienCong += convertToInt($(ele).find('.ipTONGCONG').val().replace(",", ""));
-        });
-        $('.ipTIENHANG').val(tienCong);
-        $('.ipTONGCONG').val(convertToInt($('.ipPHUPHI').val().replace(",", "")) + tienCong);
-    }
+    //function renameControls() {
+    //    let tienCong = 0;
+    //    $(".tblChiTiet").find("tbody").find("tr").each(function (index, ele) {
+    //        //$(ele).find("th")[0].innerText = index + 1;
+    //        let name = "TTHANHTOANCHITIETs[" + index + "].SOLUONG";
+    //        $(ele).find('.ipTDONHANGID').attr("name", name);
+    //        name = "TTHANHTOANCHITIETs[" + index + "].NOTE";
+    //        $(ele).find('.ipNOTE').attr("name", name);
+    //        tienCong += convertToInt($(ele).find('.ipTONGCONG').val().replace(",", ""));
+    //    });
+    //    $('.ipTIENHANG').val(tienCong);
+    //    let phuPhi = convertToInt($('.ipPHUPHI').val().replace(",", ""));
+    //    let tongCong = phuPhi + tienCong;
+    //    $('.ipTONGCONG').val(phuPhi);
+    //}
 
     $(".tblChiTiet").find("tbody").on("click", ".btn-danger", function () {
         $(this).closest("tr").remove();
@@ -323,6 +325,6 @@
             tienHang += convertToInt($(ele).find("td")[2].innerText.replace(",", ""));
         });
         $('.ipTIENHANG').val(tienHang);
-        $('.ipTONGCONG').val(tienHang + $('.ipPHUPHI').val().replace(",", ""));
+        $('.ipTONGCONG').val(tienHang + convertToInt($('.ipPHUPHI').val().replace(",", "")));
     }
 </script>
