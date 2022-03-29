@@ -14,11 +14,12 @@ namespace ThaoPhuong.Controllers
     {
         DbEntities db = new DbEntities();
         // GET: DonGom
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string TRANGTHAI, string sortName, string sortDirection)
+        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string TRANGTHAI, string sortName, string sortDirection)
         {
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
             ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
+            ViewBag.quays = db.DQUAYs.ToList();
             DKHACHHANG khRow = Session[Contants.USER_SESSION_NAME] as DKHACHHANG;
             ViewBag.isAdmin = false;
             if (SessionUtils.IsAdmin(Session))
@@ -38,6 +39,7 @@ namespace ThaoPhuong.Controllers
             ViewBag.fDateStr = fromDate.ToString("MM/dd/yyyy");
             ViewBag.tDateStr = toDate.ToString("MM/dd/yyyy");
             ViewBag.DKHACHHANGID = DKHACHHANGID;
+            ViewBag.DQUAYID = DQUAYID;
             ViewBag.TRANGTHAI = intTt;
             //Sắp xếp theo ngày, vị trí - Tăng giảm
             ViewBag.sortName = sortName ?? "vitri";
@@ -46,6 +48,7 @@ namespace ThaoPhuong.Controllers
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 0);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
+            iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
             if (intTt != -1)
             {
                 iQueryable = iQueryable.Where(x => (x.TRANGTHAI ?? (int)TrangThaiDon.ChoXuLy) == intTt);

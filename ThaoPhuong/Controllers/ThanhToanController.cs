@@ -150,7 +150,7 @@ namespace ThaoPhuong.Controllers
         {
             List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id 
             && (x.TRANGTHAI != (int)TrangThaiDon.DaHoanThanh || x.TRANGTHAI != (int)TrangThaiDon.DaHuy)
-            && x.TDONHANGCHITIETs.Count == 0)
+            && x.TTHANHTOANCHITIETs.Count == 0)
                 .ToList();
             return PartialView(lst);
         }
