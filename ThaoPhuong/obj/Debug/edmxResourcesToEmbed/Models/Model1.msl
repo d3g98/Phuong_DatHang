@@ -36,10 +36,10 @@
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
+          <ScalarProperty Name="DTRANGTHAIID" ColumnName="DTRANGTHAIID" />
           <ScalarProperty Name="TENSP" ColumnName="TENSP" />
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
           <ScalarProperty Name="TIENCONG" ColumnName="TIENCONG" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
@@ -103,6 +103,15 @@
           <ScalarProperty Name="THU" ColumnName="THU" />
           <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTRANGTHAIs">
+      <EntityTypeMapping TypeName="THAOPHUONGModel.DTRANGTHAI">
+        <MappingFragment StoreEntitySet="DTRANGTHAI">
+          <ScalarProperty Name="BASIC" ColumnName="BASIC" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

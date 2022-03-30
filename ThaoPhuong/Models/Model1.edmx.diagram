@@ -21,6 +21,8 @@
         <AssociationConnector Association="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__5CD6CB2B" />
         <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TDONH__4CA06362" />
         <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__160F4887" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DTRANGTHAI" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DTRANG__29221CFB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

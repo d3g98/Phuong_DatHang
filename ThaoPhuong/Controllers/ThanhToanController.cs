@@ -14,7 +14,7 @@ namespace ThaoPhuong.Controllers
     {
         DbEntities db = new DbEntities();
         // GET: ThanhToan
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string TRANGTHAI, string sortName, string sortDirection)
+        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DTRANGTHAIID, string sortName, string sortDirection)
         {
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
@@ -137,9 +137,9 @@ namespace ThaoPhuong.Controllers
             foreach (TTHANHTOANCHITIET ctRow in temp.TTHANHTOANCHITIETs)
             {
                 TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == ctRow.TDONHANGID).FirstOrDefault();
-                if (dhRow != null)
+                if (dhRow != null && ttRow.KETTHUC > 0)
                 {
-                    dhRow.TRANGTHAI = ttRow.KETTHUC > 0 ? (int)TrangThaiDon.DaHoanThanh : (int)TrangThaiDon.DangXuLy;
+                    dhRow.DTRANGTHAIID = "3";
                 }
             }
             db.SaveChanges();
@@ -148,8 +148,10 @@ namespace ThaoPhuong.Controllers
 
         public ActionResult SearchHoaDonThanhToan(string id)
         {
+            string huyStr = "4";
+            string hoanThanhStr = "3";
             List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id 
-            && (x.TRANGTHAI != (int)TrangThaiDon.DaHoanThanh || x.TRANGTHAI != (int)TrangThaiDon.DaHuy)
+            && (x.DTRANGTHAIID != hoanThanhStr || x.DTRANGTHAIID != huyStr)
             && x.TTHANHTOANCHITIETs.Count == 0)
                 .ToList();
             return PartialView(lst);

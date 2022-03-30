@@ -23,34 +23,7 @@
             {<text>@donHangRow.DQUAY.NAME</text>}</td>
             <td>@donHangRow.TENSP</td>
             <td>@ThaoPhuong.Utils.DbUtils.NumberToText(donHangRow.TONGCONG)</td>
-            <td>
-                @{
-                    if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.CHOXULY</text>
-                    }
-                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.DANGXULY</text>
-                    }
-                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.DAHOANTHANH</text>
-                    }
-                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.DAHUY</text>
-                    }
-                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.QUAYHEN</text>
-                    }
-                    else if (donHangRow.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)
-                    {
-                        <text>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</text>
-                    }
-                }
-            </td>
+            <td>@donHangRow.DTRANGTHAI.NAME</td>
         </tr>
         }
     </tbody>

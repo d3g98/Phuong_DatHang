@@ -47,11 +47,11 @@
                     Quầy
                 </div>
                 <div class="col-8">
-                    <select class="form-control select2" name="DKHACHHANGID">
+                    <select class="form-control select2" name="DQUAYID">
                         <option value="">Chọn quầy</option>
                         @foreach (ThaoPhuong.Models.DQUAY item in ViewBag.quays)
                         {
-                            <option value="@item.ID" @{if (ViewBag.DQUAYID == item.ID) { <text> selected</text>} else {<text></text>}}>@item.NAME</option>
+                            <option value="@item.ID" @{if (ViewBag.DQUAYID == item.ID) { <text> selected</text>}}>@item.NAME</option>
                         }
                     </select>
                 </div>
@@ -64,15 +64,13 @@
                     Trạng thái
                 </div>
                 <div class="col-8">
-                    <select class="form-control" name="TRANGTHAI">
+                    <select class="form-control" name="DTRANGTHAIID">
                         <option value="">Chọn trạng thái</option>
                         @{
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.CHOXULY</option>
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DangXuLy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DANGXULY</option>
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHOANTHANH</option>
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHuy)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHUY</option>
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.QuayHen)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.QUAYHEN</option>
-                            <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)" @{if (ViewBag.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</option>
+                            foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
+                            {
+                                <option value="@item.ID" @{if (ViewBag.DTRANGTHAIID == item.ID) { <text> selected</text>}}>@item.NAME</option>
+                            }
                         }
                     </select>
                 </div>
@@ -162,44 +160,9 @@
                                     </div>
                                 </div>
                                 <div class="col-3 p-0">
-                                    @{
-                                        if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)
-                                        {
-                                            <div class="alert alert-danger h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.CHOXULY
-                                            </div>
-                                        }
-                                        else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy)
-                                        {
-                                            <div class="alert alert-dark h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.DANGXULY
-                                            </div>
-                                        }
-                                        else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)
-                                        {
-                                            <div class="alert alert-success h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.DAHOANTHANH
-                                            </div>
-                                        }
-                                        else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy)
-                                        {
-                                            <div class="alert alert-warning h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.DAHUY
-                                            </div>
-                                        }
-                                        else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen)
-                                        {
-                                            <div class="alert alert-warning h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.QUAYHEN
-                                            </div>
-                                        }
-                                        else if (item.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)
-                                        {
-                                            <div class="alert alert-warning h-100 w-100" role="alert">
-                                                @ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY
-                                            </div>
-                                        }
-                                    }
+                                    <div class="alert alert-warning h-100 w-100" role="alert">
+                                        @item.DTRANGTHAI.NAME
+                                    </div>
                                 </div>
                             </div>
                         </div>

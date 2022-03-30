@@ -153,14 +153,12 @@
                         <label for="">Trạng thái</label>
                     </div>
                     <div class="col-8">
-                        <select class="form-control select2" name="TRANGTHAI" @{ if (!ViewBag.isAdmin) { <text>disabled="disabled"</text> }}>
+                        <select class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin) { <text> disabled="disabled" </text>  }}>
                             @{
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.CHOXULY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DangXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DANGXULY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHOANTHANH</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHuy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHUY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.QuayHen)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.QUAYHEN</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</option>
+                                foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
+                                {
+                                    <option value="@item.ID" @{if (Model.DTRANGTHAIID == item.ID || (Model.DTRANGTHAIID == null && item.ID == "1")) { <text> selected</text> } }>@item.NAME</option>
+                                }
                             }
                         </select>
                     </div>
@@ -217,7 +215,7 @@
 <div class="row">
     <div class="col-12 form-group">
         @{
-            if (ViewBag.isAdmin || (!ViewBag.isAdmin &&  (Model.ID == null || Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)))
+            if (ViewBag.isAdmin || (!ViewBag.isAdmin &&  (Model.ID == null || Model.DTRANGTHAIID == "1")))
             {
                 <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
             }

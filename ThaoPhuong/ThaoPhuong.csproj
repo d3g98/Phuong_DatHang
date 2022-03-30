@@ -133,6 +133,7 @@
     <Compile Include="Controllers\DonGomController.cs" />
     <Compile Include="Controllers\DonNhatController.cs" />
     <Compile Include="Controllers\DQUAYController.cs" />
+    <Compile Include="Controllers\DTRANGTHAIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ThanhToanController.cs" />
@@ -146,6 +147,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DQUAY.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DTRANGTHAI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -2625,6 +2629,10 @@
     <Content Include="Views\ThanhToan\AddOrUpdate.cshtml" />
     <Content Include="Views\ThanhToan\Index.cshtml" />
     <Content Include="Views\ThanhToan\SearchHoaDonThanhToan.cshtml" />
+    <Content Include="Views\DTRANGTHAI\Create.cshtml" />
+    <Content Include="Views\DTRANGTHAI\Delete.cshtml" />
+    <Content Include="Views\DTRANGTHAI\Edit.cshtml" />
+    <Content Include="Views\DTRANGTHAI\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -14,12 +14,13 @@ namespace ThaoPhuong.Controllers
     {
         DbEntities db = new DbEntities();
         // GET: DonNhat
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string TRANGTHAI, string sortName, string sortDirection)
+        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection)
         {
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
             ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
             ViewBag.quays = db.DQUAYs.ToList();
+            ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             DKHACHHANG khRow = Session[Contants.USER_SESSION_NAME] as DKHACHHANG;
             ViewBag.isAdmin = false;
             if (SessionUtils.IsAdmin(Session))
@@ -32,15 +33,14 @@ namespace ThaoPhuong.Controllers
                 DKHACHHANGID = khRow.ID;
             }
             //Lọc ngày, lọc theo trạng thái, lọc khách hàng
-            int intTt = (TRANGTHAI == "" || TRANGTHAI == null) ? -1 : Convert.ToInt32(TRANGTHAI);
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;
             ViewBag.fDateStr = fromDate.ToString("MM/dd/yyyy");
             ViewBag.tDateStr = toDate.ToString("MM/dd/yyyy");
             ViewBag.DKHACHHANGID = DKHACHHANGID;
+            ViewBag.DTRANGTHAIID = DTRANGTHAIID;
             ViewBag.DQUAYID = DQUAYID;
-            ViewBag.TRANGTHAI = intTt;
             //Sắp xếp theo ngày, vị trí - Tăng giảm
             ViewBag.sortName = sortName ?? "vitri";
             ViewBag.sortDirection = sortDirection ?? "tang";
@@ -48,11 +48,8 @@ namespace ThaoPhuong.Controllers
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 1);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
+            iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == null || DTRANGTHAIID.Length == 0);
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
-            if (intTt != -1)
-            {
-                iQueryable = iQueryable.Where(x => (x.TRANGTHAI ?? (int)TrangThaiDon.ChoXuLy) == intTt);
-            }
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
             {
@@ -78,6 +75,7 @@ namespace ThaoPhuong.Controllers
                 ViewBag.layout = Contants.LAYOUT_ADMIN;
             }
             ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
+            ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             ViewBag.isAdmin = isAdmin;
 
             TDONHANG dhRow = null;
@@ -125,14 +123,13 @@ namespace ThaoPhuong.Controllers
                         dhRow.NAME = DbUtils.GenCode("DN", "TDONHANG", "NAME");
                         dhRow.TIMECREATED = DateTime.Now;
                         dhRow.DKHACHHANGID = (Session[Contants.USER_SESSION_NAME] as DKHACHHANG).ID;
-                        dhRow.TRANGTHAI = (int)TrangThaiDon.ChoXuLy;
                     }
                     else
                     {
                         dhRow = db.TDONHANGs.Where(x => x.ID == item.ID).FirstOrDefault();
                         dhRow.TIMEUPDATED = DateTime.Now;
-                        dhRow.TRANGTHAI = item.TRANGTHAI;
                     }
+                    dhRow.DTRANGTHAIID = item.DTRANGTHAIID ?? "1";
                     dhRow.TENSP = item.TENSP;
                     dhRow.TIENDUKIEN = item.TIENDUKIEN;
                     dhRow.TIENDANHAT = item.TIENDANHAT;

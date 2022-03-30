@@ -65,14 +65,4 @@ namespace ThaoPhuong.Utils
             return rs.ToString("###,###");
         }
     }
-
-    public enum TrangThaiDon
-    {
-        ChoXuLy = 0,
-        DangXuLy = 1,
-        DaHoanThanh = 2,
-        DaHuy = 3,
-        QuayHen = 4,
-        DonHangCanXuLyVoiQuay = 5,
-    }
 }

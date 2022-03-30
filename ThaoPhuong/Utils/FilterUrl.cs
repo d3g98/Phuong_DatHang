@@ -12,7 +12,7 @@ namespace ThaoPhuong.Utils
     public class FilterUrl : ActionFilterAttribute, IAuthenticationFilter
     {
         DbEntities db = new DbEntities();
-        string[] adminUrls = new string[] { "Admin", "DQUAY", "DKHACHHANG" };
+        string[] adminUrls = new string[] { "Admin", "DQUAY", "DKHACHHANG", "DTRANGTHAI" };
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             string controller = filterContext.RouteData.Values["Controller"].ToString();
