@@ -14,17 +14,43 @@
     <tbody>
         @foreach (ThaoPhuong.Models.TDONHANG donHangRow in Model)
         {
+            decimal sl = 0;
+
+            string logo = "";
+            foreach (var anh in donHangRow.DANHs)
+            {
+                if (logo.Length == 0)
+                {
+                    logo = @"/Images/Upload/" + anh.PATH;
+                }
+            }
+
+            string details = "";
+            foreach (ThaoPhuong.Models.TDONHANGCHITIET detail in donHangRow.TDONHANGCHITIETs)
+            {
+                if (details.Length > 0)
+                {
+                    details += "; ";
+                }
+                details += detail.SOLUONG + ": " + detail.NOTE + ": " + (detail.SOLUONGDANHAT == null ? "0" : detail.SOLUONGDANHAT.ToString());
+                sl += detail.SOLUONGDANHAT ?? 0;
+            }
+            sl = sl == 0 ? 1 : sl;
+
             DateTime time = donHangRow.TIMECREATED ?? DateTime.Now;
-        <tr data-id="@donHangRow.ID" data-loai="@donHangRow.LOAI">
-            <td><div class="form-group form-check"><input type="checkbox" class="form-check-input"></div></td>
-            <td>@time.ToString("dd/MM/yyyy")</td>
-            <td>@donHangRow.NAME</td>
-            <td>@if (donHangRow.DQUAY != null)
-            {<text>@donHangRow.DQUAY.NAME</text>}</td>
-            <td>@donHangRow.TENSP</td>
-            <td>@ThaoPhuong.Utils.DbUtils.NumberToText(donHangRow.TONGCONG)</td>
-            <td>@donHangRow.DTRANGTHAI.NAME</td>
-        </tr>
+            DateTime timeUpdate = donHangRow.TIMEUPDATED ?? DateTime.Now;
+            <tr data-id="@donHangRow.ID" data-sl="@sl" data-ngay="@time.ToString("dd/MM/yyyy")" data-soHd="@donHangRow.NAME" data-quay="@if (donHangRow.DQUAY != null) { <text>@donHangRow.DQUAY.NAME</text> } "
+                data-khachhang="@donHangRow.DKHACHHANG.NAME" data-sp="@donHangRow.TENSP" data-tongtien="@Convert.ToInt32(donHangRow.TONGCONG)" data-note="@donHangRow.NOTE"
+                data-timeupdate="@if (donHangRow.TIMEUPDATED != null) { <text>@timeUpdate.ToString("dd/MM/yyyy HH:mm")</text>}" data-details="@details" data-logo="@logo" data-trangthai="@donHangRow.DTRANGTHAI.NAME">
+                <td><div class="form-group form-check"><input type="checkbox" class="form-check-input"></div></td>
+                <td>@time.ToString("dd/MM/yyyy")</td>
+                <td>@donHangRow.NAME</td>
+                <td>@if (donHangRow.DQUAY != null)
+                {<text>@donHangRow.DQUAY.NAME</text>}</td>
+                <td>@donHangRow.TENSP</td>
+                <td>@ThaoPhuong.Utils.DbUtils.NumberToText(donHangRow.TONGCONG)</td>
+                <td>@donHangRow.DTRANGTHAI.NAME</td>
+            </tr>
         }
     </tbody>
 </table>

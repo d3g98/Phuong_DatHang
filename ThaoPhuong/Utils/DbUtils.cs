@@ -62,7 +62,7 @@ namespace ThaoPhuong.Utils
         {
             decimal rs = 0;
             rs = v ?? 0;
-            return rs.ToString("###,###");
+            return rs == 0 ? "0" : rs.ToString("###,###");
         }
     }
 }

@@ -33,6 +33,7 @@ namespace ThaoPhuong.Controllers
             if (ModelState.IsValid)
             {
                 dTRANGTHAI.BASIC = 0;
+                dTRANGTHAI.ID = Guid.NewGuid().ToString();
                 db.DTRANGTHAIs.Add(dTRANGTHAI);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -142,35 +142,46 @@
                                             <td style="padding-left:5px;">@time.ToString("dd/MM/yyyy")</td>
                                         </tr>
                                         <tr>
+                                            <td>Số HĐ</td>
+                                            <td style="padding-left:5px;">@item.NAME</td>
+                                        </tr>
+                                        <tr>
                                             <td>Quầy</td>
-                                            <td style="padding-left:5px;">@{if (item.DQUAY != null)
-                                                { <text>@item.DQUAY.NAME</text> }}</td>
-                                        </tr>
+                                            <td style="padding-left:5px;">
+                                                @{if (item.DQUAY != null)
+                                                    { <text>@item.DQUAY.NAME</text> }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kh.hàng</td>
+                                        <td>@item.DKHACHHANG.NAME</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sp:</td>
+                                        <td style="padding-left:5px;">@item.TENSP</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T.tiền</td>
+                                        <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ghi chú</td>
+                                        <td style="padding-left:5px;">@item.NOTE</td>
+                                    </tr>
+                                    @if (details.Length > 0)
+                                    {
                                         <tr>
-                                            <td>Sp:</td>
-                                            <td style="padding-left:5px;">@item.TENSP</td>
+                                            <td colspan="2">@details</td>
                                         </tr>
+                                    }
+                                    @if (item.TIMEUPDATED != null)
+                                    {
+                                        time = item.TIMEUPDATED ?? DateTime.Now;
                                         <tr>
-                                            <td>T.tiền</td>
-                                            <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
+                                            <td>T/g c.nhật</td>
+                                            <td style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
                                         </tr>
-                                        <tr>
-                                            <td>Ghi chú</td>
-                                            <td style="padding-left:5px;">@item.NOTE</td>
-                                        </tr>
-                                        @if (details.Length > 0)
-                                        {
-                                            <tr>
-                                                <td colspan="2">@details</td>
-                                            </tr>
-                                        }
-                                        @if (item.TIMEUPDATED != null)
-                                        {
-                                            <tr>
-                                                <td>T/g c.nhật</td>
-                                                <td style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
-                                            </tr>
-                                        }
+                                    }
                                     </table>
                                 </div>
                             </div>
