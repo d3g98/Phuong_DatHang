@@ -11,7 +11,7 @@ namespace ThaoPhuong.Utils
 {
     public class FilterUrl : ActionFilterAttribute, IAuthenticationFilter
     {
-        DbEntities db = new DbEntities();
+        THAOPHUONGEntities db = new THAOPHUONGEntities();
         string[] adminUrls = new string[] { "Admin", "DQUAY", "DKHACHHANG", "DTRANGTHAI" };
         public void OnAuthentication(AuthenticationContext filterContext)
         {

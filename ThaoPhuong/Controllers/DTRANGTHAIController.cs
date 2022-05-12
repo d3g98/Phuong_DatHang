@@ -12,7 +12,7 @@ namespace ThaoPhuong.Controllers
 {
     public class DTRANGTHAIController : Controller
     {
-        private DbEntities db = new DbEntities();
+        private THAOPHUONGEntities db = new THAOPHUONGEntities();
 
         // GET: DTRANGTHAI
         public ActionResult Index()

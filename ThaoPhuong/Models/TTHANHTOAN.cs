@@ -23,12 +23,12 @@ namespace ThaoPhuong.Models
         public string ID { get; set; }
         public string NAME { get; set; }
         public string DKHACHHANGID { get; set; }
-        public Nullable<decimal> TONGCONG { get; set; }
-        public Nullable<decimal> TIENTHANHTOAN { get; set; }
-        public string NOTE { get; set; }
         public Nullable<decimal> TIENHANG { get; set; }
         public Nullable<decimal> PHUPHI { get; set; }
+        public Nullable<decimal> TONGCONG { get; set; }
+        public Nullable<decimal> TIENTHANHTOAN { get; set; }
         public Nullable<int> KETTHUC { get; set; }
+        public string NOTE { get; set; }
         public Nullable<System.DateTime> TIMECREATED { get; set; }
         public Nullable<System.DateTime> TIMEUPDATED { get; set; }
     

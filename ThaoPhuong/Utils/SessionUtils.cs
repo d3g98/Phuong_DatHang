@@ -10,7 +10,7 @@ namespace ThaoPhuong.Utils
     {
         public static bool IsAdmin(HttpSessionStateBase ses)
         {
-            DbEntities db = new DbEntities();
+            THAOPHUONGEntities db = new THAOPHUONGEntities();
             DKHACHHANG khRow = ses[Contants.USER_SESSION_NAME] as DKHACHHANG;
             khRow = db.DKHACHHANGs.Where(x => x.ID == khRow.ID).FirstOrDefault();
             return khRow == null ? false : khRow.ISADMIN == 30;

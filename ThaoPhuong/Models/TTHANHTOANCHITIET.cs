@@ -15,9 +15,9 @@ namespace ThaoPhuong.Models
     public partial class TTHANHTOANCHITIET
     {
         public string ID { get; set; }
+        public string TTHANHTOANID { get; set; }
         public string TDONHANGID { get; set; }
         public string NOTE { get; set; }
-        public string TTHANHTOANID { get; set; }
     
         public virtual TDONHANG TDONHANG { get; set; }
         public virtual TTHANHTOAN TTHANHTOAN { get; set; }

@@ -12,7 +12,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class ThanhToanController : Controller
     {
-        DbEntities db = new DbEntities();
+        THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: ThanhToan
         public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DTRANGTHAIID, string sortName, string sortDirection)
         {
@@ -65,7 +65,7 @@ namespace ThaoPhuong.Controllers
                 ViewBag.layout = Contants.LAYOUT_ADMIN;
             }
             ViewBag.isAdmin = isAdmin;
-            ViewBag.khachHangs = db.DKHACHHANGs.Where(x=>x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
+            ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
             TTHANHTOAN ttRow = new TTHANHTOAN();
             if (id != null)
             {
@@ -139,7 +139,8 @@ namespace ThaoPhuong.Controllers
                 TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == ctRow.TDONHANGID).FirstOrDefault();
                 if (dhRow != null && ttRow.KETTHUC > 0)
                 {
-                    dhRow.DTRANGTHAIID = "3";
+                    dhRow.DTRANGTHAIID = "7";
+                    db.Entry(dhRow);
                 }
             }
             db.SaveChanges();
@@ -150,11 +151,28 @@ namespace ThaoPhuong.Controllers
         {
             string huyStr = "4";
             string hoanThanhStr = "3";
-            List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id 
-            && (x.DTRANGTHAIID != hoanThanhStr || x.DTRANGTHAIID != huyStr)
-            && x.TTHANHTOANCHITIETs.Count == 0)
-                .ToList();
+            string daThanhToan = "7";
+            //List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id
+            //&& (x.DTRANGTHAIID != hoanThanhStr && x.DTRANGTHAIID != huyStr && x.DTRANGTHAIID != daThanhToan)
+            //&& x.TTHANHTOANCHITIETs.Count == 0)
+            //    .ToList();
+            List<TDONHANG> lst = db.TDONHANGs.Where(x => x.DKHACHHANGID == id
+             && x.DTRANGTHAIID == hoanThanhStr
+             && x.TTHANHTOANCHITIETs.Count == 0)
+                 .ToList();
             return PartialView(lst);
+        }
+
+        public ActionResult Delete(string id)
+        {
+            //Xóa thanh toán chi tiết
+            TTHANHTOAN thanhToanRow = db.TTHANHTOANs.Where(x => x.ID == id).FirstOrDefault();
+            if (thanhToanRow == null) return View("~/Views/Shared/Error.cshtml");
+            db.TTHANHTOANCHITIETs.RemoveRange(thanhToanRow.TTHANHTOANCHITIETs);
+            db.SaveChanges();
+            db.TTHANHTOANs.Remove(thanhToanRow);
+            db.SaveChanges();
+            return RedirectToAction("Index", "ThanhToan");
         }
     }
 }

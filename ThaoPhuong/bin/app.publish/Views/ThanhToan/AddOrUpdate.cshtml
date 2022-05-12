@@ -121,7 +121,7 @@
                                     <input type="checkbox" class="form-control chkKetThuc" readonly @{if (Model.KETTHUC > 0) { <text> checked</text> } else { <text></text> }}>
                                 }
                             }
-                            <input type="number" class="form-control ipKETTHUC" name="KETHUC" value="@Model.KETTHUC" hidden="hidden">
+                            <input type="number" class="form-control ipKETTHUC" name="KETTHUC" value="@Model.KETTHUC" hidden="hidden">
                         </div>
                     </div>
                 </div>
@@ -149,33 +149,123 @@
                         <table class="table tblChiTiet">
                             <thead class="thead-light">
                                 <tr>
-                                    @*<th scope="col">#</th>*@
-                                    <th class="col-3" scope="col">Ngày</th>
-                                    <th class="col-3" scope="col">Số phiếu</th>
-                                    <th class="col-2" scope="col">Tổng cộng</th>
-                                    <th class="col-3" scope="col">Ghi chú</th>
+                                    <th class="col-5" scope="col">Tổng SL: <span class="lblTongSL">0</span></th>
+                                    <th class="col-6" scope="col">Tổng tiền hàng: <span class="lblTongTien">0</span></th>
                                     <th class="col-1" scope="col"><div class="btn btn-success">+</div></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @*find data*@
-                                @{
-                                    int count = 0;
-                                    foreach (ThaoPhuong.Models.TTHANHTOANCHITIET item in Model.TTHANHTOANCHITIETs)
+                        </table>
+                    </div>
+                    <div class="row chiTiet">
+                        @{
+                            int count = 0;
+                            foreach (ThaoPhuong.Models.TTHANHTOANCHITIET item in Model.TTHANHTOANCHITIETs)
+                            {
+                                string alertStr = "warning";
+                                if (item.TDONHANG.DTRANGTHAIID == "3" || item.TDONHANG.DTRANGTHAIID == "7")
+                                {
+                                    alertStr = "success";
+                                }
+                                if (item.TDONHANG.DTRANGTHAIID == "4")
+                                {
+                                    alertStr = "danger";
+                                }
+                                DateTime time = item.TDONHANG.TIMECREATED ?? DateTime.Now;
+                                string logo = "";
+                                foreach (var anh in item.TDONHANG.DANHs)
+                                {
+                                    if (logo.Length == 0)
                                     {
-                                        DateTime time = item.TDONHANG.TIMECREATED ?? DateTime.Now;
-                                        <tr data-id="@item.TDONHANGID" data-loai="@item.TDONHANG.LOAI">
-                                            <td>@time.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.TDONHANG.NAME</td>
-                                            <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TDONHANG.TONGCONG)</td>
-                                            <td><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TTHANHTOANCHITIETs[@count].NOTE" value="@item.NOTE"></td>
-                                            <td><input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[@count].TDONHANGID" value="@item.TDONHANGID" hidden="hidden"><div class="btn btn-danger">-</div></td>
-                                        </tr>
-                                        count++;
+                                        logo = "/Images/Upload/" + anh.PATH;
                                     }
                                 }
-                            </tbody>
-                        </table>
+                                decimal soLuong = 0;
+                                string details = "";
+                                foreach (ThaoPhuong.Models.TDONHANGCHITIET detail in item.TDONHANG.TDONHANGCHITIETs)
+                                {
+                                    if (details.Length > 0)
+                                    {
+                                        details += "; ";
+                                    }
+                                    details += detail.SOLUONG + ": " + detail.NOTE + ": " + (detail.SOLUONGDANHAT == null ? "0" : detail.SOLUONGDANHAT.ToString());
+                                    soLuong += detail.SOLUONGDANHAT ?? 0;
+                                }
+                                soLuong = soLuong == 0 ? 1 : soLuong;
+                                //#ffbab5;
+                                <div class="col-12 itemDonNhat" data-id="@item.ID" data-soluong="@soLuong" data-tongtien="@item.TDONHANG.TONGCONG">
+                                    <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
+                                        <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
+                                        </div>
+                                        <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <div class="row" style="padding-left: 10px;">
+                                                        <table border="0">
+                                                            <tr>
+                                                                <td>Ngày</td>
+                                                                <td style="padding-left:5px;">@time.ToString("dd/MM/yy")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>HĐ</td>
+                                                                <td style="padding-left:5px;">@item.TDONHANG.NAME</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Quầy</td>
+                                                                <td style="padding-left:5px;">
+                                                                    @{if (item.TDONHANG.DQUAY != null)
+                                                                        { <text>@item.TDONHANG.DQUAY.NAME</text> }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Kh</td>
+                                                                <td>@item.TDONHANG.DKHACHHANG.NAME</td>
+                                                            </tr>
+                                                            @if (item.TDONHANG.TENSP != null)
+                                                            {
+                                                                <tr>
+                                                                    <td>Sp:</td>
+                                                                    <td style="padding-left:5px;">@item.TDONHANG.TENSP</td>
+                                                                </tr>
+                                                            }
+                                                            <tr>
+                                                                <td>T.tiền</td>
+                                                                <td class="lblTienItem" style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TDONHANG.TONGCONG)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>G.chú</td>
+                                                                <td style="padding-left:5px;">@item.TDONHANG.NOTE</td>
+                                                            </tr>
+                                                            @if (details.Length > 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="2">@details</td>
+                                                                </tr>
+                                                            }
+                                                            @if (item.TDONHANG.TIMEUPDATED != null)
+                                                            {
+                                                                time = item.TDONHANG.TIMECREATED ?? DateTime.Now;
+                                                                <tr>
+                                                                    <td colspan="2" style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 p-0">
+                                                    <div class="alert alert-@alertStr" role="alert" style="padding:3px;">
+                                                        @item.TDONHANG.DTRANGTHAI.NAME
+                                                    </div>
+                                                    <div class="btn btn-danger btnXoa" role="alert">
+                                                        Xóa
+                                                    </div>
+                                                    <input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[@count].TDONHANGID" value="@item.TDONHANGID" hidden="hidden">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -186,6 +276,10 @@
             @{
                 if (ViewBag.isAdmin)
                 {
+                    if (Model.ID != null && Model.ID.Length > 0)
+                    {
+                        <a href="/ThanhToan/Delete/@Model.ID" class="btn btn-danger float-right" style="margin-left: 5px;">Xóa thanh toán</a>
+                    }
                     <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
                 }
             }
@@ -217,35 +311,14 @@
 <script>
     function convertToInt(param) {
         let val = 0;
-        if (param != undefined && param != null && param.length > 0)
-        {
+        if (param != undefined && param != null && param.length > 0) {
             val = parseInt(param);
         }
         return val;
     }
 
-    //function renameControls() {
-    //    let tienCong = 0;
-    //    $(".tblChiTiet").find("tbody").find("tr").each(function (index, ele) {
-    //        //$(ele).find("th")[0].innerText = index + 1;
-    //        let name = "TTHANHTOANCHITIETs[" + index + "].SOLUONG";
-    //        $(ele).find('.ipTDONHANGID').attr("name", name);
-    //        name = "TTHANHTOANCHITIETs[" + index + "].NOTE";
-    //        $(ele).find('.ipNOTE').attr("name", name);
-    //        tienCong += convertToInt($(ele).find('.ipTONGCONG').val().replace(",", ""));
-    //    });
-    //    $('.ipTIENHANG').val(tienCong);
-    //    let phuPhi = convertToInt($('.ipPHUPHI').val().replace(",", ""));
-    //    let tongCong = phuPhi + tienCong;
-    //    $('.ipTONGCONG').val(phuPhi);
-    //}
-
-    $(".tblChiTiet").find("tbody").on("click", ".btn-danger", function () {
-        $(this).closest("tr").remove();
-        renameControls();
-    });
-
-    $(".tblChiTiet").find("tbody").on("change", ".ipPHUPHI", function () {
+    $(".chiTiet").on("click", ".btn-danger", function () {
+        $(this).closest(".itemDonNhat").remove();
         renameControls();
     });
 
@@ -277,7 +350,7 @@
             return;
         }
         //Kiểm tra cái nào có rồi thì không thêm vào nữa
-        $(".tblChiTiet").find("tbody").find("tr").each(function (index, ele) {
+        $(".chiTiet").find(".itemDonNhat").each(function (index, ele) {
             let id = ele.dataset.id;
             if (ids.indexOf(id) != -1) {
                 //Xóa
@@ -290,14 +363,69 @@
                 $('.modal-body').find("tr").each(function (index, ele) {
                     if ($(ele).attr("data-id") == val) {
                         //append data to grid
-                        let html = $('<tr data-id="' + val + '" data-loai="' + $(ele).attr("data-loai") + '">' +
-                            '<td>' + $(ele).find("td")[1].innerText + '</td>' +
-                            '<td>' + $(ele).find("td")[2].innerText + '</td > '+
-                            '<td>' + $(ele).find("td")[5].innerText + '</td > '+
-                            '<td><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TTHANHTOANCHITIETs[0].NOTE" value=""></td>' +
-                            '<td><input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[0].TDONHANGID" value="' + val + '" hidden="hidden"><div class="btn btn-danger">-</div></td>' +
-                            '</tr>');
-                        $(".tblChiTiet").append(html);
+                        let ngay = $(ele).attr("data-ngay").trim();
+                        let soLuong = $(ele).attr("data-sl").trim();
+                        let logo = $(ele).attr("data-logo").trim();
+                        let soHd = $(ele).attr("data-soHd").trim();
+                        let quay = $(ele).attr("data-quay").trim();
+                        let khachhang = $(ele).attr("data-khachhang").trim();
+                        let sp = $(ele).attr("data-sp").trim();
+                        let tongtien = $(ele).attr("data-tongtien").trim();
+                        let note = $(ele).attr("data-note").trim();
+                        let timeupdate = $(ele).attr("data-timeupdate").trim();
+                        let details = $(ele).attr("data-details").trim();
+                        let trangthai = $(ele).attr("data-trangthai").trim();
+                        let html = $('<div class="col-12 itemDonNhat" data-id="' + val + '" data-soluong="' + soLuong + '" data-tongtien="' + tongtien + '">'+
+                                   ' <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">'+
+                                   '     <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url(' + logo +'); background-size: 100% 100%; background-repeat: no-repeat;">'+
+                                   '     </div>'+
+                                   '     <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">'+
+                                   '         <div class="row">'+
+                                   '             <div class="col-9">'+
+                                   '                 <div class="row" style="padding-left: 10px;">'+
+                                   '                     <table border="0">'+
+                                   '                         <tr>'+
+                                   '                             <td>Ngày</td>'+
+                                   '                             <td style="padding-left:5px;">'+ngay+'</td>'+
+                                   '                         </tr>'+
+                                   '                         <tr>'+
+                                   '                             <td>HĐ</td>'+
+                                   '                             <td style="padding-left:5px;">'+soHd+'</td>'+
+                                   '                         </tr>'+
+                                   '                         <tr>'+
+                                   '                             <td>Quầy</td>' +
+                                   '                             <td style="padding-left:5px;">' + (quay.length > 0 ? quay : '') +
+                                   '                             </td>'+
+                                   '                         </tr>'+
+                                   '                         <tr>'+
+                                   '                             <td>Kh:</td>'+
+                                   '                             <td>' + khachhang + '</td>' +
+                                   '                         </tr>' + (sp.length > 0 ? '<tr><td>Sp:</td><td style="padding-left:5px;">' + sp + '</td></tr>' : '') +
+                                   '                         <tr>'+
+                                   '                             <td>T.tiền:</td>'+
+                                   '                             <td class="lblTienItem" style="padding-left:5px;">'+tongtien+'</td>'+
+                                   '                         </tr>'+
+                                   '                         <tr>'+
+                                   '                             <td>Ghi chú</td>'+
+                                   '                             <td style="padding-left:5px;">'+note+'</td>'+
+                                   '                         </tr>' + (details.length > 0 ? '<tr><td colspan="2">' + details + '</td></tr>' : '') +
+                                                                      (timeupdate.length > 0 ? '<tr><td colspan="2">' + timeupdate + '</td></tr>' : '') +
+                                   '                     </table>'+
+                                   '                 </div>'+
+                                   '             </div>'+
+                                   '             <div class="col-3 p-0">'+
+                                   '                 <div class="alert alert-warning" role="alert" style="padding:3px;">'+ (trangthai.length > 0 ? trangthai : '') +
+                                   '                 </div>'+
+                                   '                 <div class="btn btn-danger btnXoa" role="alert">'+
+                                   '                     Xóa'+
+                                   '                 </div>'+
+                                   '                 <input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[0].TDONHANGID" value="'+val+'" hidden="hidden">'+
+                                   '             </div>'+
+                                   '         </div>'+
+                                   '     </div>'+
+                                   ' </div>'+
+                                   '</div>');
+                        $(".chiTiet").append(html);
                     }
                 });
             });
@@ -310,21 +438,54 @@
     });
 
     $('.chkKetThuc').change(function () {
-        let val = 0;
+        /*let val = 0;*/
         /*$('.ipKETTHUC').val($('.chkKetThuc').is(':checked') ? 30 : 0);*/
         $('.ipKETTHUC').attr("value", $('.chkKetThuc').is(':checked') ? 30 : 0);
     });
 
     function renameControls() {
         let tienHang = 0;
-        $(".tblChiTiet").find("tbody").find("tr").each(function (index, ele) {
+        let soLuong = 0;
+        $(".chiTiet").find(".itemDonNhat").each(function (index, ele) {
             let name = "TTHANHTOANCHITIETs[" + index + "].TDONHANGID";
             $(ele).find('.ipTDONHANGID').attr("name", name);
             name = "TTHANHTOANCHITIETs[" + index + "].NOTE";
             $(ele).find('.ipNOTE').attr("name", name);
-            tienHang += convertToInt($(ele).find("td")[2].innerText.replace(",", ""));
+            /*let tong = $(ele).find(".lblTienItem").text();*/
+            tienHang += convertToInt($(ele).attr("data-tongtien"));
+            soLuong += convertToInt($(ele).attr("data-soluong"));
         });
+        $('.lblTongSL').text(soLuong);
+        $('.lblTongTien').text(tienHang);
         $('.ipTIENHANG').val(tienHang);
         $('.ipTONGCONG').val(tienHang + convertToInt($('.ipPHUPHI').val().replace(",", "")));
     }
 </script>
+
+
+@*<tr data-id="@item.TDONHANGID" data-loai="@item.TDONHANG.LOAI">
+        <td>@time.ToString("dd/MM/yyyy")</td>
+        <td>@item.TDONHANG.NAME</td>
+        <td>@{if (item.TDONHANG.DQUAY != null) { <text>@item.TDONHANG.DQUAY.NAME</text> }}</td>
+        <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TDONHANG.TONGCONG)</td>
+        <td><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TTHANHTOANCHITIETs[@count].NOTE" value="@item.NOTE"></td>
+        <td><input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[@count].TDONHANGID" value="@item.TDONHANGID" hidden="hidden"><div class="btn btn-danger">-</div></td>
+    </tr>*@
+@*<tbody>
+        @{
+            int count = 0;
+            foreach (ThaoPhuong.Models.TTHANHTOANCHITIET item in Model.TTHANHTOANCHITIETs)
+            {
+                DateTime time = item.TDONHANG.TIMECREATED ?? DateTime.Now;
+                <tr data-id="@item.TDONHANGID" data-loai="@item.TDONHANG.LOAI">
+                    <td>@time.ToString("dd/MM/yyyy")</td>
+                    <td>@item.TDONHANG.NAME</td>
+                    <td>@{if (item.TDONHANG.DQUAY != null) { <text>@item.TDONHANG.DQUAY.NAME</text> }}</td>
+                    <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TDONHANG.TONGCONG)</td>
+                    <td><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TTHANHTOANCHITIETs[@count].NOTE" value="@item.NOTE"></td>
+                    <td><input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[@count].TDONHANGID" value="@item.TDONHANGID" hidden="hidden"><div class="btn btn-danger">-</div></td>
+                </tr>
+                count++;
+            }
+        }
+    </tbody>*@

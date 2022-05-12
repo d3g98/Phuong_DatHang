@@ -13,10 +13,10 @@ namespace ThaoPhuong.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DbEntities : DbContext
+    public partial class THAOPHUONGEntities : DbContext
     {
-        public DbEntities()
-            : base("name=DbEntities")
+        public THAOPHUONGEntities()
+            : base("name=THAOPHUONGEntities")
         {
         }
     
@@ -28,11 +28,11 @@ namespace ThaoPhuong.Models
         public virtual DbSet<DANH> DANHs { get; set; }
         public virtual DbSet<DKHACHHANG> DKHACHHANGs { get; set; }
         public virtual DbSet<DQUAY> DQUAYs { get; set; }
+        public virtual DbSet<DTRANGTHAI> DTRANGTHAIs { get; set; }
         public virtual DbSet<TDONHANG> TDONHANGs { get; set; }
         public virtual DbSet<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
         public virtual DbSet<TTHANHTOAN> TTHANHTOANs { get; set; }
         public virtual DbSet<TTHANHTOANCHITIET> TTHANHTOANCHITIETs { get; set; }
         public virtual DbSet<TTHUCHI> TTHUCHIs { get; set; }
-        public virtual DbSet<DTRANGTHAI> DTRANGTHAIs { get; set; }
     }
 }

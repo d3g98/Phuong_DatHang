@@ -1,0 +1,35 @@
+﻿@model ThaoPhuong.Models.DKHACHHANG
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.layout;
+}
+
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="" class="form-label">Tài khoản</label>
+            <input type="text" class="form-control form-control-user" placeholder="Tài khoản (*Bắt buộc)" value="@Model.USERNAME" name="USERNAME" readonly>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="" class="form-label">Tên người dùng</label>
+            <input type="email" class="form-control form-control-user" placeholder="Tên người dùng" value="@Model.NAME" name="NAME" readonly>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="" class="form-label">Điện thoại</label>
+            <input type="text" class="form-control form-control-user" placeholder="Điện thoại (*Bắt buộc)" value="@Model.DIENTHOAI" name="DIENTHOAI" readonly>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="form-group">
+            <label for="" class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control form-control-user" placeholder="Địa chỉ (*Bắt buộc)" value="@Model.DIACHI" name="DIACHI" readonly>
+        </div>
+    </div>
+</div>

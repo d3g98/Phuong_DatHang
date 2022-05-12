@@ -14,7 +14,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class DKHACHHANGController : Controller
     {
-        private DbEntities db = new DbEntities();
+        private THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DKHACHHANG
         public ActionResult Index()
         {
@@ -128,12 +128,35 @@ namespace ThaoPhuong.Controllers
             return View(dKHACHHANG);
         }
 
-        // POST: DKHACHHANG/Delete/5
+        //POST: DKHACHHANG/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             DKHACHHANG dKHACHHANG = db.DKHACHHANGs.Find(id);
+            if (dKHACHHANG == null)
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+            //Xóa thanh toán
+            List<TTHANHTOAN> ttRows = db.TTHANHTOANs.Where(x => x.DKHACHHANGID == id).ToList();
+            foreach (TTHANHTOAN tt in ttRows)
+            {
+                db.TTHANHTOANCHITIETs.RemoveRange(tt.TTHANHTOANCHITIETs);
+            }
+            db.TTHANHTOANs.RemoveRange(ttRows);
+            db.SaveChanges();
+
+            //Xóa đơn hàng
+            List<TDONHANG> dhRows = db.TDONHANGs.Where(x => x.DKHACHHANGID == id).ToList();
+            foreach (TDONHANG tt in dhRows)
+            {
+                db.TDONHANGCHITIETs.RemoveRange(tt.TDONHANGCHITIETs);
+                db.DANHs.RemoveRange(tt.DANHs);
+            }
+            db.TDONHANGs.RemoveRange(dhRows);
+            db.SaveChanges();
+
             db.DKHACHHANGs.Remove(dKHACHHANG);
             db.SaveChanges();
             return RedirectToAction("Index");

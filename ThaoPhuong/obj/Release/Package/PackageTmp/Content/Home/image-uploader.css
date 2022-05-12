@@ -105,7 +105,8 @@
 .image-uploader .uploaded .uploaded-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /*object-fit: cover;*/
+    object-fit: contain;
     position: absolute;
 }
 

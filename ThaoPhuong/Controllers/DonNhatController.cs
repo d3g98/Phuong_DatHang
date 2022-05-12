@@ -12,7 +12,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class DonNhatController : Controller
     {
-        DbEntities db = new DbEntities();
+        THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DonNhat
         public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection)
         {
@@ -33,6 +33,7 @@ namespace ThaoPhuong.Controllers
                 DKHACHHANGID = khRow.ID;
             }
             //Lọc ngày, lọc theo trạng thái, lọc khách hàng
+            if (DTRANGTHAIID == null || DTRANGTHAIID.Length == 0) DTRANGTHAIID = "1";
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;
@@ -48,7 +49,7 @@ namespace ThaoPhuong.Controllers
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 1);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
-            iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == null || DTRANGTHAIID.Length == 0);
+            iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == "TatCa");
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
@@ -97,10 +98,15 @@ namespace ThaoPhuong.Controllers
         {
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
+            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection);
+
             try
             {
                 ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
+                ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
                 ViewBag.imgs = DonGomController.GetDicAnhs(db, dhRow);
+                ViewBag.layout = Contants.LAYOUT_HOME;
                 if (ModelState.IsValid)
                 {
                     //kiểm tra xem up ảnh hay chưa
@@ -147,12 +153,11 @@ namespace ThaoPhuong.Controllers
                     if (!hasImg || item.TDONHANGCHITIETs == null || item.TDONHANGCHITIETs.Count == 0)
                     {
                         bool isAdmin = SessionUtils.IsAdmin(Session);
-                        ViewBag.layout = Contants.LAYOUT_HOME;
                         if (isAdmin)
                         {
                             ViewBag.layout = Contants.LAYOUT_ADMIN;
                         }
-                        ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
+
                         ViewBag.isAdmin = isAdmin;
                         if (!hasImg) ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
                         else ViewBag.error = "Bạn chưa thêm mặt hàng nhặt nào!";
@@ -196,8 +201,8 @@ namespace ThaoPhuong.Controllers
                 ViewBag.error = ex.Message;
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
-            //return View(dhRow);
-            return RedirectToAction("Index", "DonNhat");
+
+            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection });
         }
     }
 }

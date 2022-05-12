@@ -23,6 +23,7 @@ namespace ThaoPhuong.Models
         }
     
         public string ID { get; set; }
+        public string NAME { get; set; }
         public Nullable<int> LOAI { get; set; }
         public string DQUAYID { get; set; }
         public string DKHACHHANGID { get; set; }
@@ -30,9 +31,8 @@ namespace ThaoPhuong.Models
         public Nullable<System.DateTime> TIMEUPDATED { get; set; }
         public Nullable<decimal> TIENDUKIEN { get; set; }
         public Nullable<decimal> TIENDANHAT { get; set; }
-        public Nullable<decimal> TONGCONG { get; set; }
         public Nullable<decimal> TIENCONG { get; set; }
-        public string NAME { get; set; }
+        public Nullable<decimal> TONGCONG { get; set; }
         public string NOTE { get; set; }
         public string TENSP { get; set; }
         public string DTRANGTHAIID { get; set; }
@@ -41,10 +41,10 @@ namespace ThaoPhuong.Models
         public virtual ICollection<DANH> DANHs { get; set; }
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DQUAY DQUAY { get; set; }
+        public virtual DTRANGTHAI DTRANGTHAI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TTHANHTOANCHITIET> TTHANHTOANCHITIETs { get; set; }
-        public virtual DTRANGTHAI DTRANGTHAI { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class DonGomController : Controller
     {
-        DbEntities db = new DbEntities();
+        THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DonGom
         public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection)
         {
@@ -33,6 +34,7 @@ namespace ThaoPhuong.Controllers
                 DKHACHHANGID = khRow.ID;
             }
             //Lọc ngày, lọc theo trạng thái, lọc khách hàng
+            if (DTRANGTHAIID == null || DTRANGTHAIID.Length == 0) DTRANGTHAIID = "1";
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;
@@ -49,7 +51,7 @@ namespace ThaoPhuong.Controllers
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 0);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
-            iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == null || DTRANGTHAIID.Length == 0);
+            iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == "TatCa");
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
@@ -97,7 +99,19 @@ namespace ThaoPhuong.Controllers
             return View(dhRow);
         }
 
-        public static Dictionary<string, string> GetDicAnhs(DbEntities db, TDONHANG dhRow)
+        public static void GetParamFromUrl(NameValueCollection @params, ref string fDateStr, ref string tDateStr, ref string DKHACHHANGID, ref string DQUAYID, ref string DTRANGTHAIID, ref string sortName, ref string sortDirection)
+        {
+            List<string> lstKeys = new List<string>(@params.AllKeys);
+            if (lstKeys.Contains("pfDateStr")) fDateStr = @params["pfDateStr"];
+            if (lstKeys.Contains("ptDateStr")) tDateStr = @params["ptDateStr"];
+            if (lstKeys.Contains("pDKHACHHANGID")) DKHACHHANGID = @params["pDKHACHHANGID"];
+            if (lstKeys.Contains("pDQUAYID")) DQUAYID = @params["pDQUAYID"];
+            if (lstKeys.Contains("pDTRANGTHAIID")) DTRANGTHAIID = @params["pDTRANGTHAIID"];
+            if (lstKeys.Contains("psortName")) sortName = @params["psortName"];
+            if (lstKeys.Contains("psortDirection")) sortDirection = @params["psortDirection"];
+        }
+
+        public static Dictionary<string, string> GetDicAnhs(THAOPHUONGEntities db, TDONHANG dhRow)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             List<DANH> lstAnhs = db.DANHs.Where(x => x.TDONHANGID == dhRow.ID).ToList();
@@ -111,11 +125,15 @@ namespace ThaoPhuong.Controllers
         [HttpPost]
         public ActionResult AddOrUpdate(TDONHANG item)
         {
+            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection);
+
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
             try
             {
                 ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
+                ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
                 ViewBag.imgs = GetDicAnhs(db, dhRow);
                 if (ModelState.IsValid)
                 {
@@ -193,11 +211,11 @@ namespace ThaoPhuong.Controllers
                 ViewBag.error = ex.Message;
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
-            //return View(dhRow);
-            return RedirectToAction("Index", "DonGom");
+
+            return RedirectToAction("Index", "DonGom", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection });
         }
 
-        public static void uploadAnhMatHang(DbEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, TDONHANG item)
+        public static void uploadAnhMatHang(THAOPHUONGEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, TDONHANG item)
         {
             //Lấy danh sách ảnh trong database cái nào không còn trong olds thì xóa.
             List<DANH> lstAnhs = db.DANHs.Where(x=>x.TDONHANGID == item.ID).ToList();

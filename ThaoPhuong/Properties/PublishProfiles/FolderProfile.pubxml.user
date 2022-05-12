@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\DLaptop\Desktop\ThaoPhuong\ThaoPhuong\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2022-03-27T16:33:18.2965076Z;True|2022-03-27T13:58:46.4711238+07:00;True|2022-03-27T03:27:48.0228715+07:00;True|2022-03-24T01:14:24.1408854+07:00;</History>
+    <_PublishTargetUrl>C:\Users\Admin\Desktop\ThaoPhuong\ThaoPhuong\bin\app.publish\</_PublishTargetUrl>
+    <History>True|2022-04-01T15:08:12.0885213Z;True|2022-04-01T22:07:51.7165520+07:00;True|2022-04-01T21:54:18.0167582+07:00;True|2022-03-27T23:33:18.2965076+07:00;True|2022-03-27T13:58:46.4711238+07:00;True|2022-03-27T03:27:48.0228715+07:00;True|2022-03-24T01:14:24.1408854+07:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -198,10 +198,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/29/2018 04:04:24</publishTime>
     </File>
     <File Include="bin/ThaoPhuong.dll">
-      <publishTime>03/27/2022 23:33:06</publishTime>
+      <publishTime>04/07/2022 00:34:36</publishTime>
     </File>
     <File Include="bin/ThaoPhuong.pdb">
-      <publishTime>03/27/2022 23:33:06</publishTime>
+      <publishTime>04/07/2022 00:34:36</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/24/2014 04:57:34</publishTime>
@@ -7281,7 +7281,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/18/2022 22:40:41</publishTime>
     </File>
     <File Include="Content/Home/image-uploader.css">
-      <publishTime>03/18/2022 23:15:39</publishTime>
+      <publishTime>04/01/2022 21:17:33</publishTime>
     </File>
     <File Include="Content/Home/Site.css">
       <publishTime>03/20/2022 02:21:11</publishTime>
@@ -7323,7 +7323,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/15/2022 22:08:52</publishTime>
     </File>
     <File Include="Models/Model1.edmx.diagram">
-      <publishTime>03/21/2022 23:49:48</publishTime>
+      <publishTime>04/01/2022 22:05:33</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>03/18/2022 22:08:50</publishTime>
@@ -7356,40 +7356,52 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/17/2022 20:25:35</publishTime>
     </File>
     <File Include="Views/DKHACHHANG/Create.cshtml">
-      <publishTime>03/17/2022 20:30:41</publishTime>
+      <publishTime>03/31/2022 00:17:48</publishTime>
     </File>
     <File Include="Views/DKHACHHANG/Delete.cshtml">
-      <publishTime>03/17/2022 20:30:43</publishTime>
+      <publishTime>04/04/2022 23:28:18</publishTime>
     </File>
     <File Include="Views/DKHACHHANG/Edit.cshtml">
-      <publishTime>03/17/2022 20:30:45</publishTime>
+      <publishTime>03/31/2022 00:17:56</publishTime>
     </File>
     <File Include="Views/DKHACHHANG/Index.cshtml">
-      <publishTime>03/18/2022 22:16:47</publishTime>
+      <publishTime>04/04/2022 23:12:19</publishTime>
     </File>
     <File Include="Views/DonGom/AddOrUpdate.cshtml">
-      <publishTime>03/27/2022 13:52:09</publishTime>
+      <publishTime>03/30/2022 23:52:30</publishTime>
     </File>
     <File Include="Views/DonGom/Index.cshtml">
-      <publishTime>03/27/2022 23:06:37</publishTime>
+      <publishTime>04/07/2022 00:32:25</publishTime>
     </File>
     <File Include="Views/DonNhat/AddOrUpdate.cshtml">
-      <publishTime>03/27/2022 23:29:57</publishTime>
+      <publishTime>03/31/2022 21:50:18</publishTime>
     </File>
     <File Include="Views/DonNhat/Index.cshtml">
-      <publishTime>03/27/2022 23:32:47</publishTime>
+      <publishTime>04/07/2022 00:33:02</publishTime>
     </File>
     <File Include="Views/DQUAY/Create.cshtml">
-      <publishTime>03/17/2022 20:44:44</publishTime>
+      <publishTime>03/31/2022 00:19:11</publishTime>
     </File>
     <File Include="Views/DQUAY/Delete.cshtml">
-      <publishTime>03/17/2022 22:28:17</publishTime>
+      <publishTime>03/31/2022 00:19:11</publishTime>
     </File>
     <File Include="Views/DQUAY/Edit.cshtml">
-      <publishTime>03/17/2022 22:27:00</publishTime>
+      <publishTime>03/31/2022 00:18:09</publishTime>
     </File>
     <File Include="Views/DQUAY/Index.cshtml">
       <publishTime>03/17/2022 22:28:54</publishTime>
+    </File>
+    <File Include="Views/DTRANGTHAI/Create.cshtml">
+      <publishTime>03/31/2022 21:47:16</publishTime>
+    </File>
+    <File Include="Views/DTRANGTHAI/Delete.cshtml">
+      <publishTime>03/31/2022 00:19:31</publishTime>
+    </File>
+    <File Include="Views/DTRANGTHAI/Edit.cshtml">
+      <publishTime>03/31/2022 21:47:20</publishTime>
+    </File>
+    <File Include="Views/DTRANGTHAI/Index.cshtml">
+      <publishTime>03/31/2022 21:47:27</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/16/2022 00:00:17</publishTime>
@@ -7410,7 +7422,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/16/2022 21:07:11</publishTime>
     </File>
     <File Include="Views/Shared/_Admin.cshtml">
-      <publishTime>03/26/2022 22:48:35</publishTime>
+      <publishTime>03/31/2022 00:13:11</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>03/27/2022 01:57:31</publishTime>
@@ -7419,13 +7431,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/18/2022 22:16:27</publishTime>
     </File>
     <File Include="Views/ThanhToan/AddOrUpdate.cshtml">
-      <publishTime>03/27/2022 23:21:46</publishTime>
+      <publishTime>04/01/2022 23:21:26</publishTime>
     </File>
     <File Include="Views/ThanhToan/Index.cshtml">
-      <publishTime>03/27/2022 13:53:15</publishTime>
+      <publishTime>03/31/2022 23:36:24</publishTime>
     </File>
     <File Include="Views/ThanhToan/SearchHoaDonThanhToan.cshtml">
-      <publishTime>03/27/2022 23:09:44</publishTime>
+      <publishTime>04/01/2022 22:49:01</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>03/15/2022 22:08:52</publishTime>
@@ -7434,7 +7446,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/15/2022 22:13:30</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/24/2022 00:24:00</publishTime>
+      <publishTime>04/06/2022 23:33:12</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ namespace ThaoPhuong.Controllers
     [FilterUrl]
     public class DQUAYController : Controller
     {
-        private DbEntities db = new DbEntities();
+        private THAOPHUONGEntities db = new THAOPHUONGEntities();
 
         // GET: DQUAY
         public ActionResult Index()

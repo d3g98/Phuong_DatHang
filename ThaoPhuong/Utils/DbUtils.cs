@@ -34,7 +34,7 @@ namespace ThaoPhuong.Utils
 
         public static string GenCode(string startCode, string table, string field)
         {
-            DbEntities db = new DbEntities();
+            THAOPHUONGEntities db = new THAOPHUONGEntities();
             //lấy số thứ tự
             List<string> lst = db.Database.SqlQuery<string>("SELECT "+ field + " FROM "+ table + " WHERE "+ field + " LIKE '" + startCode + "%'").ToList();
             int max = 0;

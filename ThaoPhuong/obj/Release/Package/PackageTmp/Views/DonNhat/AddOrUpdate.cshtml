@@ -19,7 +19,7 @@
     <div class="col-sm-12 col-md-6 col-lg-6">
         <div class="row">
             <div class="col-12">
-                <h4>Đơn gom hàng</h4>
+                <h4>Đơn nhặt hàng</h4>
             </div>
             <input type="text" class="form-control" hidden="hidden" name="ID" value="@Model.ID">
             <!-- So phieu -->
@@ -153,14 +153,12 @@
                         <label for="">Trạng thái</label>
                     </div>
                     <div class="col-8">
-                        <select class="form-control select2" name="TRANGTHAI" @{ if (!ViewBag.isAdmin) { <text>disabled="disabled"</text> }}>
+                        <select class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin) { <text> disabled="disabled" </text>  }}>
                             @{
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.CHOXULY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DangXuLy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DangXuLy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DANGXULY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHoanThanh) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHOANTHANH</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DaHuy)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DaHuy) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DAHUY</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.QuayHen)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.QuayHen) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.QUAYHEN</option>
-                                <option value="@Convert.ToInt32(ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay)" @{if (Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.DonHangCanXuLyVoiQuay) { <text> selected</text> } else { <text></text> } }>@ThaoPhuong.Utils.Contants.DONHANGCANXULYVOIQUAY</option>
+                                foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
+                                {
+                                    <option value="@item.ID" @{if (Model.DTRANGTHAIID == item.ID || (Model.DTRANGTHAIID == null && item.ID == "1")) { <text> selected</text> } }>@item.NAME</option>
+                                }
                             }
                         </select>
                     </div>
@@ -187,8 +185,8 @@
                             <tr>
                                 @*<th scope="col">#</th>*@
                                 <th class="col-2" scope="col">SL</th>
-                                <th class="col-4" scope="col">SL đã nhặt</th>
                                 <th class="col-5" scope="col">Ghi chú</th>
+                                <th class="col-4" scope="col">SL đã nhặt</th>
                                 <th class="col-1" scope="col"><div class="btn btn-success">+</div></th>
                             </tr>
                         </thead>
@@ -198,12 +196,12 @@
                                 int count = 0;
                                 foreach (ThaoPhuong.Models.TDONHANGCHITIET item in Model.TDONHANGCHITIETs)
                                 {
-                                    <tr>
-                                        <td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONG" value="@item.SOLUONG"></td>
-                                        <td class="col-4"><input type="number" class="form-control ipSOLUONGDANHAT" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONGDANHAT" value="@item.SOLUONGDANHAT" @{ if (!ViewBag.isAdmin) { <text>readonly</text> }}></td>
-                                        <td class="col-5"><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TDONHANGCHITIETs[@count].NOTE" value="@item.NOTE"></td>
-                                        <td class="col-1"><div class="btn btn-danger">-</div></td>
-                                    </tr>
+                                                        <tr>
+                                                            <td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONG" value="@item.SOLUONG"></td>
+                                                            <td class="col-5"><input type="text" class="form-control ipNOTE" placeholder="Ghi chú" name="TDONHANGCHITIETs[@count].NOTE" value="@item.NOTE"></td>
+                                                            <td class="col-4"><input type="number" class="form-control ipSOLUONGDANHAT" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONGDANHAT" value="@item.SOLUONGDANHAT" @{ if (!ViewBag.isAdmin) { <text> readonly</text> }}></td>
+                                                            <td class="col-1"><div class="btn btn-danger">-</div></td>
+                                                        </tr>
                                     count++;
                                 }
                             }
@@ -217,7 +215,7 @@
 <div class="row">
     <div class="col-12 form-group">
         @{
-            if (ViewBag.isAdmin || (!ViewBag.isAdmin &&  (Model.ID == null || Model.TRANGTHAI == (int)ThaoPhuong.Utils.TrangThaiDon.ChoXuLy)))
+            if (ViewBag.isAdmin || (!ViewBag.isAdmin &&  (Model.ID == null || Model.DTRANGTHAIID == "1")))
             {
                 <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
             }
@@ -260,9 +258,9 @@
     }
     $('.btn-success').click(function () {
         //<th>1</th>
-        let td = $('<tr><td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="SL"></td>' +
-            '<td class="col-4"><input type="number" class="form-control ipSOLUONGDANHAT" placeholder="SL đã nhặt" @{ if (!ViewBag.isAdmin) { <text>readonly</text> }}></td>'+
+        let td = $('<tr><td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="SL" value="1"></td>' +
             '<td class="col-5"><input type="text" class="form-control ipNOTE" placeholder="Ghi chú"></td>' +
+            '<td class="col-4"><input type="number" class="form-control ipSOLUONGDANHAT" placeholder="SL đã nhặt" @{ if (!ViewBag.isAdmin) { <text>readonly</text> }}></td>'+
             '<td class="col-1"><div class="btn btn-danger">-</div></td></tr>');
         $(this).closest('table').find("tbody").append(td);
         renameControls();

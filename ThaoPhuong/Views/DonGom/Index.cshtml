@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-8">
                     <select class="form-control" name="DTRANGTHAIID">
-                        <option value="">Chọn trạng thái</option>
+                        <option value="TatCa">Chọn trạng thái</option>
                         @{
                             foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
                             {
@@ -85,7 +85,12 @@
                 </div>
                 <div class="col-4">
                     <select class="form-control" name="sortName">
-                        <option value="vitri" @{if (ViewBag.sortName == "vitri") { <text> selected</text> } else { } }>Vị trí</option>
+                        @{
+                            if (ViewBag.isAdmin)
+                            {
+                                <option value="vitri" @{if (ViewBag.sortName == "vitri") { <text> selected</text> } else { } }>Vị trí</option>
+                            }
+                        }
                         <option value="ngay" @{if (ViewBag.sortName == "ngay") { <text> selected</text> } else { } }>Ngày</option>
                     </select>
                 </div>
@@ -109,6 +114,15 @@
         @{
             foreach (ThaoPhuong.Models.TDONHANG item in Model)
             {
+                string alertStr = "warning";
+                if (item.DTRANGTHAIID == "3" || item.DTRANGTHAIID == "7")
+                {
+                    alertStr = "success";
+                }    
+                if (item.DTRANGTHAIID == "4")
+                {
+                    alertStr = "danger";
+                }                    
                 DateTime time = item.TIMECREATED ?? DateTime.Now;
                 string logo = "";
                 foreach (var anh in item.DANHs)
@@ -117,9 +131,9 @@
                 }
                 <div class="col-sm-12 col-md-6 col-lg-4 itemDonGom" data-id="@item.ID">
                     <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
-                        <div class="col-3" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
+                        <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
                         </div>
-                        <div class="col-9" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
+                        <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
                             <div class="row">
                                 <div class="col-9">
                                     <div class="row">
@@ -127,18 +141,17 @@
                                             <table border="0">
                                                 <tr>
                                                     <td>Ngày</td>
-                                                    <td>@time.ToString("dd/MM/yyyy")</td>
+                                                    <td>@time.ToString("dd/MM HH:mm")</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Số HĐ</td>
-                                                    <td style="padding-left:5px;">@item.NAME</td>
+                                                    <td colspan="2">@item.NAME</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Quầy</td>
                                                     <td>@item.DQUAY.NAME</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Kh.hàng</td>
+                                                    <td>Kh</td>
                                                     <td>@item.DKHACHHANG.NAME</td>
                                                 </tr>
                                                 <tr>
@@ -146,7 +159,7 @@
                                                     <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Ghi chú</td>
+                                                    <td>G.chú</td>
                                                     <td>@item.NOTE</td>
                                                 </tr>
                                                 @{
@@ -154,8 +167,7 @@
                                                     {
                                                         time = item.TIMEUPDATED ?? DateTime.Now;
                                                         <tr>
-                                                            <td>TG thay đổi</td>
-                                                            <td>@time.ToString("dd/MM/yy HH:mm")</td>
+                                                            <td colspan="2">@time.ToString("dd/MM/yy HH:mm")</td>
                                                         </tr>
                                                     }
                                                 }
@@ -164,7 +176,7 @@
                                     </div>
                                 </div>
                                 <div class="col-3 p-0">
-                                    <div class="alert alert-warning h-100 w-100" role="alert">
+                                    <div class="alert alert-@alertStr h-100 w-100" role="alert" style="padding:3px;">
                                         @item.DTRANGTHAI.NAME
                                     </div>
                                 </div>
@@ -179,6 +191,14 @@
     <script>
         $('.itemDonGom').click(function () {
             let id = $(this).attr("data-id");
-            window.location.href = "/DonGom/AddOrUpdate/" + id;
+            let paramS = window.location.search;
+            paramS = paramS.replace("fDateStr", "pfDateStr");
+            paramS = paramS.replace("tDateStr", "ptDateStr");
+            paramS = paramS.replace("DKHACHHANGID", "pDKHACHHANGID");
+            paramS = paramS.replace("DQUAYID", "pDQUAYID");
+            paramS = paramS.replace("DTRANGTHAIID", "pDTRANGTHAIID");
+            paramS = paramS.replace("sortName", "psortName");
+            paramS = paramS.replace("sortDirection", "psortDirection");
+            window.location.href = "/DonGom/AddOrUpdate/" + id + paramS;
         });
     </script>
