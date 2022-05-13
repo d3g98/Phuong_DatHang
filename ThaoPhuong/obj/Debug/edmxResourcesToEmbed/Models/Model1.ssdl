@@ -56,6 +56,7 @@
     <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
     <Property Name="TENSP" Type="nvarchar" MaxLength="255" />
     <Property Name="DTRANGTHAIID" Type="varchar" MaxLength="36" />
+    <Property Name="SLDANHAT" Type="int" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

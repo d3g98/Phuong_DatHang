@@ -68,6 +68,7 @@
     <NavigationProperty Name="DTRANGTHAI" Relationship="Self.FK__TDONHANG__DTRANG__25869641" FromRole="TDONHANG" ToRole="DTRANGTHAI" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__267ABA7A" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
     <NavigationProperty Name="TTHANHTOANCHITIETs" Relationship="Self.FK__TTHANHTOA__TDONH__286302EC" FromRole="TDONHANG" ToRole="TTHANHTOANCHITIET" />
+    <Property Name="SLDANHAT" Type="Int32" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

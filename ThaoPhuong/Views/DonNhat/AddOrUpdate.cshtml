@@ -64,14 +64,20 @@
             </div>
 
             <!-- Tên sp -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Tên sản phẩm</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="TENSP" value="@Model.TENSP">
-                    </div>
+            @*<div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label for="">Tên sản phẩm</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control" name="TENSP" value="@Model.TENSP">
+                </div>
+            </div>
+        </div>*@
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <div class="input-images" name="files" style="padding-top: .5rem;"></div>
                 </div>
             </div>
 
@@ -82,14 +88,38 @@
                         <label for="">Tiền dự kiến</label>
                     </div>
                     <div class="col-8">
+                        <input type="number" class="form-control" name="TIENDUKIEN" value="@Convert.ToInt32(Model.TIENDUKIEN)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ghi chu -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">Ghi chú</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="NOTE" value="@Model.NOTE">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiền dự kiến -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="">SL đã nhặt</label>
+                    </div>
+                    <div class="col-8">
                         @{
                             if (ViewBag.isAdmin)
                             {
-                                <input type="number" class="form-control" name="TIENDUKIEN" value="@Convert.ToInt32(Model.TIENDUKIEN)">
+                                <input id="ipSLDANHAT" type="number" class="form-control" name="SLDANHAT" value="@Convert.ToInt32(Model.SLDANHAT)">
                             }
                             else
                             {
-                                <input type="number" class="form-control" name="TIENDUKIEN" value="@Convert.ToInt32(Model.TIENDUKIEN)">
+                                <input id="ipSLDANHAT" type="number" class="form-control" name="SLDANHAT" value="@Convert.ToInt32(Model.SLDANHAT)" readonly>
                             }
                         }
                     </div>
@@ -138,18 +168,6 @@
                 </div>
             </div>
 
-            <!-- ghi chu -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Ghi chú</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="NOTE" value="@Model.NOTE">
-                    </div>
-                </div>
-            </div>
-
             <!-- trang thai -->
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="form-group row">
@@ -172,62 +190,26 @@
                 </div>
             </div>
 
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                @{
+                    if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.DTRANGTHAIID == "1")))
+                    {
+                        <button type="submit" class="btn btn-primary float-right col-12 form-group">Cập nhật</button>
+                    }
+                }
+            </div>
         </div>
     </div>
     <!-- Ảnh -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+    @*<div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+                    </div>
                 </div>
             </div>
-
-            @*Thêm chi tiết mặt hàng*@
-            <div class="col-12 justify-content-center">
-                <div class="form-group p-1">
-                    @*<div class="input-images" name="files" style="padding-top: .5rem;"></div>*@
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                @*<th scope="col">#</th>*@
-                                <th class="col-2" scope="col">SL</th>
-                                <th class="col-5" scope="col">Size,màu</th>
-                                <th class="col-4" scope="col">SL đã nhặt</th>
-                                <th class="col-1" scope="col"><div class="btn btn-success">+</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*find data*@
-                            @{
-                                int count = 0;
-                                foreach (ThaoPhuong.Models.TDONHANGCHITIET item in Model.TDONHANGCHITIETs)
-                                {
-                                                        <tr>
-                                                            <td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONG" value="@item.SOLUONG"></td>
-                                                            <td class="col-5"><input type="text" class="form-control ipNOTE" placeholder="Size,màu" name="TDONHANGCHITIETs[@count].NOTE" value="@item.NOTE"></td>
-                                                            <td class="col-4"><input type="number" class="form-control ipSOLUONGDANHAT" placeholder="S.lượng" name="TDONHANGCHITIETs[@count].SOLUONGDANHAT" value="@item.SOLUONGDANHAT" @{ if (!ViewBag.isAdmin) { <text> readonly</text> }}></td>
-                                                            <td class="col-1"><div class="btn btn-danger">-</div></td>
-                                                        </tr>
-                                    count++;
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 form-group">
-        @{
-            if (ViewBag.isAdmin || (!ViewBag.isAdmin &&  (Model.ID == null || Model.DTRANGTHAIID == "1")))
-            {
-                <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
-            }
-        }
-    </div>
+        </div>*@
 </div>
 </form>
 @Scripts.Render("~/Scripts/jquery-3.6.0.js")
@@ -248,22 +230,22 @@
         preloaded: preloaded
     });
 
-    function renameControls() {
-        let tienCong = 0;
-        $(".table").find("tbody").find("tr").each(function (index, ele) {
-            //$(ele).find("th")[0].innerText = index + 1;
-            let name = "TDONHANGCHITIETs[" + index + "].SOLUONG";
-            $(ele).find('.ipSOLUONG').attr("name", name);
-            name = "TDONHANGCHITIETs[" + index + "].SOLUONGDANHAT";
-            $(ele).find('.ipSOLUONGDANHAT').attr("name", name);
-            name = "TDONHANGCHITIETs[" + index + "].NOTE";
-            $(ele).find('.ipNOTE').attr("name", name);
-            let temp = $(ele).find('.ipSOLUONGDANHAT').val();
-            tienCong += parseInt(temp == "" ? "0" : temp) * 10000;
-        });
-        $('.ipTIENCONG').val(tienCong);
-    }
-    $('.btn-success').click(function () {
+    //function renameControls() {
+    //    let tienCong = 0;
+    //    //$(".table").find("tbody").find("tr").each(function (index, ele) {
+    //    //    //$(ele).find("th")[0].innerText = index + 1;
+    //    //    let name = "TDONHANGCHITIETs[" + index + "].SOLUONG";
+    //    //    $(ele).find('.ipSOLUONG').attr("name", name);
+    //    //    name = "TDONHANGCHITIETs[" + index + "].SOLUONGDANHAT";
+    //    //    $(ele).find('.ipSOLUONGDANHAT').attr("name", name);
+    //    //    name = "TDONHANGCHITIETs[" + index + "].NOTE";
+    //    //    $(ele).find('.ipNOTE').attr("name", name);
+    //    //    let temp = $(ele).find('.ipSOLUONGDANHAT').val();
+    //    //    tienCong += parseInt(temp == "" ? "0" : temp) * 10000;
+    //    //});
+    //    $('.ipTIENCONG').val(tienCong);
+    //}
+    @*$('.btn-success').click(function () {
         //<th>1</th>
         let td = $('<tr><td class="col-2"><input type="number" class="form-control ipSOLUONG" placeholder="SL" value="1"></td>' +
             '<td class="col-5"><input type="text" class="form-control ipNOTE" placeholder="Size,màu"></td>' +
@@ -271,16 +253,24 @@
             '<td class="col-1"><div class="btn btn-danger">-</div></td></tr>');
         $(this).closest('table').find("tbody").append(td);
         renameControls();
-    });
+    });*@
 
     $(".table").find("tbody").on("click", ".btn-danger", function () {
         $(this).closest("tr").remove();
         renameControls();
     });
 
-    $(".table").find("tbody").on("change", ".ipSOLUONGDANHAT", function () {
-        renameControls();
-        //chuyển trạng thái sang hoàn thành
+    //$(".table").find("tbody").on("change", ".ipSOLUONGDANHAT", function () {
+    //    renameControls();
+    //    //chuyển trạng thái sang hoàn thành
+    //    $("#cbTrangThai").val("3").change();
+    //});
+
+    $('#ipSLDANHAT').change((e) => {
+        let temp = $('#ipSLDANHAT').val();
+        let sl = parseInt(temp == "" ? "0" : temp);
+        let tienCong = sl * 10000;
+        $('.ipTIENCONG').val(tienCong);
         $("#cbTrangThai").val("3").change();
     });
 

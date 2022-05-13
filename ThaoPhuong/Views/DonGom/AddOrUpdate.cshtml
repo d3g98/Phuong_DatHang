@@ -131,15 +131,13 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12 form-group">
-        @{
-            if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.DTRANGTHAIID == "1")))
-            {
-                <button type="submit" class="btn btn-primary float-right">Cập nhật</button>
-            }
+<div class="col-sm-12 col-md-6 col-lg-6">
+    @{
+        if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.DTRANGTHAIID == "1")))
+        {
+            <button type="submit" class="btn btn-primary float-right col-12 form-group">Cập nhật</button>
         }
-    </div>
+    }
 </div>
 </form>
 @Scripts.Render("~/Scripts/jquery-3.6.0.js")

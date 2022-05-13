@@ -61,6 +61,7 @@
           <Property Name="NOTE" Type="nvarchar" MaxLength="255" />
           <Property Name="TENSP" Type="nvarchar" MaxLength="255" />
           <Property Name="DTRANGTHAIID" Type="varchar" MaxLength="36" />
+          <Property Name="SLDANHAT" Type="int" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -339,6 +340,7 @@
           <NavigationProperty Name="DTRANGTHAI" Relationship="Self.FK__TDONHANG__DTRANG__25869641" FromRole="TDONHANG" ToRole="DTRANGTHAI" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__267ABA7A" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
           <NavigationProperty Name="TTHANHTOANCHITIETs" Relationship="Self.FK__TTHANHTOA__TDONH__286302EC" FromRole="TDONHANG" ToRole="TTHANHTOANCHITIET" />
+          <Property Name="SLDANHAT" Type="Int32" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -602,6 +604,7 @@
           <EntitySetMapping Name="TDONHANGs">
             <EntityTypeMapping TypeName="THAOPHUONGModel.TDONHANG">
               <MappingFragment StoreEntitySet="TDONHANG">
+                <ScalarProperty Name="SLDANHAT" ColumnName="SLDANHAT" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="LOAI" ColumnName="LOAI" />

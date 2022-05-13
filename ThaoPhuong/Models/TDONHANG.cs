@@ -36,6 +36,7 @@ namespace ThaoPhuong.Models
         public string NOTE { get; set; }
         public string TENSP { get; set; }
         public string DTRANGTHAIID { get; set; }
+        public Nullable<int> SLDANHAT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANH> DANHs { get; set; }

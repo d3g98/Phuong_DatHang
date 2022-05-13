@@ -104,21 +104,30 @@
             <hr />
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="row">
-                <div class="col-3">
-                    Giao dịch
-                </div>
-                <div class="col-5">
-                    <select class="form-control" name="giaoDich">
-                        <option value="-1" @{if (ViewBag.giaoDich == "-1") { <text> selected</text> } else { } }>Tất cả</option>
-                        <option value="0" @{if (ViewBag.giaoDich == "0") { <text> selected</text> } else { } }>Chốt Zalo</option>
-                        <option value="1" @{if (ViewBag.giaoDich == "1") { <text> selected</text> } else { } }>Nhặt</option>
-                        <option value="2" @{if (ViewBag.giaoDich == "2") { <text> selected</text> } else { } }>Tìm</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <button type="submit" class="btn btn-primary" style="margin-right: 15px">Tải dữ liệu</button>
-                </div>
+            <div class="row justify-content-end">
+                @{
+                    if (ViewBag.isAdmin)
+                    {
+                        <div class="col-3">
+                            Giao dịch
+                        </div>
+                        <div class="col-5">
+                            <select class="form-control" name="giaoDich">
+                                <option value="-1" @{if (ViewBag.giaoDich == "-1") { <text> selected</text> } else { } }>Tất cả</option>
+                                <option value="0" @{if (ViewBag.giaoDich == "0") { <text> selected</text> } else { } }>Chốt Zalo</option>
+                                <option value="1" @{if (ViewBag.giaoDich == "1") { <text> selected</text> } else { } }>Nhặt</option>
+                                <option value="2" @{if (ViewBag.giaoDich == "2") { <text> selected</text> } else { } }>Tìm</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary" style="margin-right: 15px">Tải dữ liệu</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary col-12">Tải dữ liệu</button>
+                    }
+                }
             </div>
         </div>
     </div>

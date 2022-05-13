@@ -156,18 +156,27 @@ namespace ThaoPhuong.Controllers
                     dhRow.TENSP = item.TENSP;
                     dhRow.TIENDUKIEN = item.TIENDUKIEN;
                     dhRow.TIENDANHAT = item.TIENDANHAT;
+                    dhRow.SLDANHAT = item.SLDANHAT;
+
                     //tính công nhặt
                     decimal congNhat = 0;
-                    foreach (TDONHANGCHITIET chRow in item.TDONHANGCHITIETs)
-                    {
-                        congNhat += (decimal)(chRow.SOLUONGDANHAT ?? 0) * 10000;
-                    }
+
+                    //Cách cũ
+                    //foreach (TDONHANGCHITIET chRow in item.TDONHANGCHITIETs)
+                    //{
+                    //    congNhat += (decimal)(chRow.SOLUONGDANHAT ?? 0) * 10000;
+                    //}
+
+                    //Cách mới
+                    congNhat = (dhRow.SLDANHAT ?? 0) * 10000;
+
                     dhRow.TIENCONG = congNhat;
                     dhRow.TONGCONG = (dhRow.TIENDANHAT == null ? 0 : dhRow.TIENDANHAT) + dhRow.TIENCONG;
                     dhRow.DQUAYID = item.DQUAYID;
                     dhRow.NOTE = item.NOTE;
 
-                    if (!hasImg || item.TDONHANGCHITIETs == null || item.TDONHANGCHITIETs.Count == 0)
+                    //if (!hasImg || item.TDONHANGCHITIETs == null || item.TDONHANGCHITIETs.Count == 0)
+                    if (!hasImg)
                     {
                         bool isAdmin = SessionUtils.IsAdmin(Session);
                         if (isAdmin)
@@ -176,9 +185,12 @@ namespace ThaoPhuong.Controllers
                         }
 
                         ViewBag.isAdmin = isAdmin;
-                        if (!hasImg) ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
-                        else ViewBag.error = "Bạn chưa thêm mặt hàng nhặt nào!";
-                        dhRow.TDONHANGCHITIETs = item.TDONHANGCHITIETs;
+
+                        //if (!hasImg) ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
+                        //else ViewBag.error = "Bạn chưa thêm mặt hàng nhặt nào!";
+                        //dhRow.TDONHANGCHITIETs = item.TDONHANGCHITIETs;
+
+                        ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
                         return View(dhRow);
                     }
 
@@ -192,19 +204,21 @@ namespace ThaoPhuong.Controllers
                         db.Entry(dhRow);
                     }
                     db.SaveChanges();
-                    List<TDONHANGCHITIET> lstTemp = db.TDONHANGCHITIETs.Where(x => x.TDONHANGID == dhRow.ID).ToList();
-                    foreach (TDONHANGCHITIET itChiTiet in lstTemp)
-                    {
-                        db.TDONHANGCHITIETs.Remove(itChiTiet);
-                    }
-                    db.SaveChanges();
-                    foreach (TDONHANGCHITIET itChiTiet in item.TDONHANGCHITIETs)
-                    {
-                        if (itChiTiet.ID == null || itChiTiet.ID.Length == 0) itChiTiet.ID = Guid.NewGuid().ToString();
-                        itChiTiet.TDONHANGID = dhRow.ID;
-                        db.TDONHANGCHITIETs.Add(itChiTiet);
-                    }
-                    db.SaveChanges();
+
+                    //không sử dụng chi tiết nữa
+                    //List<TDONHANGCHITIET> lstTemp = db.TDONHANGCHITIETs.Where(x => x.TDONHANGID == dhRow.ID).ToList();
+                    //foreach (TDONHANGCHITIET itChiTiet in lstTemp)
+                    //{
+                    //    db.TDONHANGCHITIETs.Remove(itChiTiet);
+                    //}
+                    //db.SaveChanges();
+                    //foreach (TDONHANGCHITIET itChiTiet in item.TDONHANGCHITIETs)
+                    //{
+                    //    if (itChiTiet.ID == null || itChiTiet.ID.Length == 0) itChiTiet.ID = Guid.NewGuid().ToString();
+                    //    itChiTiet.TDONHANGID = dhRow.ID;
+                    //    db.TDONHANGCHITIETs.Add(itChiTiet);
+                    //}
+                    //db.SaveChanges();
 
                     //upload anh
                     DonGomController.uploadAnhMatHang(db, Server, preloaded, files, dhRow);
