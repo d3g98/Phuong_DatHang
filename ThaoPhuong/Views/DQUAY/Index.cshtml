@@ -16,22 +16,36 @@
         <th>
             Vị trí
         </th>
+        <th>
+            Giao dịch
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.POSITION)
-        </td>
-        <td>
-            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.NAME)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.POSITION)
+    </td>
+    <td>
+        @{
+            int giaoDich = item.GIAODICH ?? 0;
+            switch (giaoDich)
+            {
+                case 0: { <text>Chốt zalo</text> } break;
+                case 1: { <text>Nhặt</text> } break;
+                case 2: { <text>Tìm</text> } break;
+            }
+        }
+    </td>
+    <td>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ID }) |
+        @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+    </td>
+</tr>
 }
 
 </table>

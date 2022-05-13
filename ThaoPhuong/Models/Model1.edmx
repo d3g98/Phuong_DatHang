@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="THAOPHUONGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="THAOPHUONGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DANH">
           <Key>
             <PropertyRef Name="ID" />
@@ -33,6 +33,7 @@
           <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
           <Property Name="NAME" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="POSITION" Type="int" />
+          <Property Name="GIAODICH" Type="int" />
         </EntityType>
         <EntityType Name="DTRANGTHAI">
           <Key>
@@ -111,7 +112,7 @@
           <Property Name="TIMECREATED" Type="datetime" />
           <Property Name="TIMEUPDATED" Type="datetime" />
         </EntityType>
-        <Association Name="FK__DANH__TDONHANGID__22AA2996">
+        <Association Name="FK__DANH__TDONHANGID__3A81B327">
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
           <End Role="DANH" Type="Self.DANH" Multiplicity="*" />
           <ReferentialConstraint>
@@ -123,7 +124,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TDONHANG__DKHACH__239E4DCF">
+        <Association Name="FK__TDONHANG__DKHACH__37A5467C">
           <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -135,7 +136,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TDONHANG__DQUAYI__24927208">
+        <Association Name="FK__TDONHANG__DQUAYI__36B12243">
           <End Role="DQUAY" Type="Self.DQUAY" Multiplicity="0..1" />
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,7 +148,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TDONHANG__DTRANG__25869641">
+        <Association Name="FK__TDONHANG__DTRANG__29221CFB">
           <End Role="DTRANGTHAI" Type="Self.DTRANGTHAI" Multiplicity="0..1" />
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -159,7 +160,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TDONHANGC__TDONH__267ABA7A">
+        <Association Name="FK__TDONHANGC__TDONH__3D5E1FD2">
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
           <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
           <ReferentialConstraint>
@@ -171,7 +172,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TTHANHTOA__DKHAC__276EDEB3">
+        <Association Name="FK__TTHANHTOA__DKHAC__7F2BE32F">
           <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
           <End Role="TTHANHTOAN" Type="Self.TTHANHTOAN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -183,7 +184,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TTHANHTOA__TDONH__286302EC">
+        <Association Name="FK__TTHANHTOA__TDONH__17036CC0">
           <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
           <End Role="TTHANHTOANCHITIET" Type="Self.TTHANHTOANCHITIET" Multiplicity="*" />
           <ReferentialConstraint>
@@ -195,7 +196,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TTHANHTOA__TTHAN__29572725">
+        <Association Name="FK__TTHANHTOA__TTHAN__160F4887">
           <End Role="TTHANHTOAN" Type="Self.TTHANHTOAN" Multiplicity="0..1" />
           <End Role="TTHANHTOANCHITIET" Type="Self.TTHANHTOANCHITIET" Multiplicity="*" />
           <ReferentialConstraint>
@@ -207,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TTHUCHI__DKHACHH__2A4B4B5E">
+        <Association Name="FK__TTHUCHI__DKHACHH__5CD6CB2B">
           <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
           <End Role="TTHUCHI" Type="Self.TTHUCHI" Multiplicity="*" />
           <ReferentialConstraint>
@@ -229,45 +230,44 @@
           <EntitySet Name="TTHANHTOAN" EntityType="Self.TTHANHTOAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TTHANHTOANCHITIET" EntityType="Self.TTHANHTOANCHITIET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TTHUCHI" EntityType="Self.TTHUCHI" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__DANH__TDONHANGID__22AA2996" Association="Self.FK__DANH__TDONHANGID__22AA2996">
+          <AssociationSet Name="FK__DANH__TDONHANGID__3A81B327" Association="Self.FK__DANH__TDONHANGID__3A81B327">
             <End Role="TDONHANG" EntitySet="TDONHANG" />
             <End Role="DANH" EntitySet="DANH" />
           </AssociationSet>
-          <AssociationSet Name="FK__TDONHANG__DKHACH__239E4DCF" Association="Self.FK__TDONHANG__DKHACH__239E4DCF">
+          <AssociationSet Name="FK__TDONHANG__DKHACH__37A5467C" Association="Self.FK__TDONHANG__DKHACH__37A5467C">
             <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
             <End Role="TDONHANG" EntitySet="TDONHANG" />
           </AssociationSet>
-          <AssociationSet Name="FK__TDONHANG__DQUAYI__24927208" Association="Self.FK__TDONHANG__DQUAYI__24927208">
+          <AssociationSet Name="FK__TDONHANG__DQUAYI__36B12243" Association="Self.FK__TDONHANG__DQUAYI__36B12243">
             <End Role="DQUAY" EntitySet="DQUAY" />
             <End Role="TDONHANG" EntitySet="TDONHANG" />
           </AssociationSet>
-          <AssociationSet Name="FK__TDONHANG__DTRANG__25869641" Association="Self.FK__TDONHANG__DTRANG__25869641">
+          <AssociationSet Name="FK__TDONHANG__DTRANG__29221CFB" Association="Self.FK__TDONHANG__DTRANG__29221CFB">
             <End Role="DTRANGTHAI" EntitySet="DTRANGTHAI" />
             <End Role="TDONHANG" EntitySet="TDONHANG" />
           </AssociationSet>
-          <AssociationSet Name="FK__TDONHANGC__TDONH__267ABA7A" Association="Self.FK__TDONHANGC__TDONH__267ABA7A">
+          <AssociationSet Name="FK__TDONHANGC__TDONH__3D5E1FD2" Association="Self.FK__TDONHANGC__TDONH__3D5E1FD2">
             <End Role="TDONHANG" EntitySet="TDONHANG" />
             <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
           </AssociationSet>
-          <AssociationSet Name="FK__TTHANHTOA__DKHAC__276EDEB3" Association="Self.FK__TTHANHTOA__DKHAC__276EDEB3">
+          <AssociationSet Name="FK__TTHANHTOA__DKHAC__7F2BE32F" Association="Self.FK__TTHANHTOA__DKHAC__7F2BE32F">
             <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
             <End Role="TTHANHTOAN" EntitySet="TTHANHTOAN" />
           </AssociationSet>
-          <AssociationSet Name="FK__TTHANHTOA__TDONH__286302EC" Association="Self.FK__TTHANHTOA__TDONH__286302EC">
+          <AssociationSet Name="FK__TTHANHTOA__TDONH__17036CC0" Association="Self.FK__TTHANHTOA__TDONH__17036CC0">
             <End Role="TDONHANG" EntitySet="TDONHANG" />
             <End Role="TTHANHTOANCHITIET" EntitySet="TTHANHTOANCHITIET" />
           </AssociationSet>
-          <AssociationSet Name="FK__TTHANHTOA__TTHAN__29572725" Association="Self.FK__TTHANHTOA__TTHAN__29572725">
+          <AssociationSet Name="FK__TTHANHTOA__TTHAN__160F4887" Association="Self.FK__TTHANHTOA__TTHAN__160F4887">
             <End Role="TTHANHTOAN" EntitySet="TTHANHTOAN" />
             <End Role="TTHANHTOANCHITIET" EntitySet="TTHANHTOANCHITIET" />
           </AssociationSet>
-          <AssociationSet Name="FK__TTHUCHI__DKHACHH__2A4B4B5E" Association="Self.FK__TTHUCHI__DKHACHH__2A4B4B5E">
+          <AssociationSet Name="FK__TTHUCHI__DKHACHH__5CD6CB2B" Association="Self.FK__TTHUCHI__DKHACHH__5CD6CB2B">
             <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
             <End Role="TTHUCHI" EntitySet="TTHUCHI" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="THAOPHUONGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -304,6 +304,7 @@
           <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="POSITION" Type="Int32" />
           <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DQUAYI__24927208" FromRole="DQUAY" ToRole="TDONHANG" />
+          <Property Name="GIAODICH" Type="Int32" />
         </EntityType>
         <EntityType Name="DTRANGTHAI">
           <Key>
@@ -582,6 +583,7 @@
           <EntitySetMapping Name="DQUAYs">
             <EntityTypeMapping TypeName="THAOPHUONGModel.DQUAY">
               <MappingFragment StoreEntitySet="DQUAY">
+                <ScalarProperty Name="GIAODICH" ColumnName="GIAODICH" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="POSITION" ColumnName="POSITION" />

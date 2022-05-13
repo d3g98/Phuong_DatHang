@@ -27,6 +27,7 @@
     <EntitySetMapping Name="DQUAYs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DQUAY">
         <MappingFragment StoreEntitySet="DQUAY">
+          <ScalarProperty Name="GIAODICH" ColumnName="GIAODICH" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="POSITION" ColumnName="POSITION" />

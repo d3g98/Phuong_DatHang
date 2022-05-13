@@ -29,6 +29,17 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.GIAODICH, "Giao dịch", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" name="GIAODICH">
+                    <option value="0">Chốt Zalo</option>
+                    <option value="1">Nhặt</option>
+                    <option value="2">Tìm</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Tạo mới" class="btn btn-success" />
             </div>

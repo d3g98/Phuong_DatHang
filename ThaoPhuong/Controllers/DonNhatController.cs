@@ -14,7 +14,7 @@ namespace ThaoPhuong.Controllers
     {
         THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DonNhat
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection)
+        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection, string giaoDich)
         {
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
@@ -42,6 +42,7 @@ namespace ThaoPhuong.Controllers
             ViewBag.DKHACHHANGID = DKHACHHANGID;
             ViewBag.DTRANGTHAIID = DTRANGTHAIID;
             ViewBag.DQUAYID = DQUAYID;
+            ViewBag.giaoDich = giaoDich;
             //Sắp xếp theo ngày, vị trí - Tăng giảm
             ViewBag.sortName = sortName ?? "vitri";
             ViewBag.sortDirection = sortDirection ?? "tang";
@@ -51,19 +52,34 @@ namespace ThaoPhuong.Controllers
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
             iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == "TatCa");
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
+            if (giaoDich != "-1")
+            {
+                iQueryable = iQueryable.Where(x => (x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich);
+            }
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
             {
                 if (ViewBag.sortName == "ngay") iOrderedQueryable = iQueryable.OrderBy(x => x.TIMECREATED);
-                else iOrderedQueryable = iQueryable.OrderBy(x => x.DQUAY.POSITION);
+                else iOrderedQueryable = iQueryable.OrderBy(x => x.DQUAY.POSITION ?? 999999999);
             }
             else
             {
                 if (ViewBag.sortName == "ngay") iOrderedQueryable = iQueryable.OrderByDescending(x => x.TIMECREATED);
-                else iOrderedQueryable = iQueryable.OrderByDescending(x => x.DQUAY.POSITION);
+                else iOrderedQueryable = iQueryable.OrderByDescending(x => x.DQUAY.POSITION ?? 999999999);
             }
             lst = iOrderedQueryable.ToList();
             return View(lst);
+        }
+
+        //Chờ xử lý, đang hết, cắt mẫu, quầy hẹn
+        public static List<string> trangThaiChoPheps()
+        {
+            string choXuLy = "1";
+            string dangHet = "";
+            string catMau = "99d9ab19-203f-4bc1-a2e4-aec6fcaa60de";
+            string quayHen = "e5d5b9ad-11c9-4d9c-8aac-261a8d950ec4";
+            List<string> lst = new List<string>(new string[] { choXuLy, catMau, quayHen });
+            return lst;
         }
 
         [HttpGet]
@@ -78,6 +94,7 @@ namespace ThaoPhuong.Controllers
             ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
             ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             ViewBag.isAdmin = isAdmin;
+            ViewBag.choPheps = trangThaiChoPheps();
 
             TDONHANG dhRow = null;
             if (id != null && id.Length > 0)
@@ -98,8 +115,8 @@ namespace ThaoPhuong.Controllers
         {
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
-            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null;
-            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection);
+            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich);
 
             try
             {
@@ -202,7 +219,7 @@ namespace ThaoPhuong.Controllers
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
 
-            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection });
+            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich });
         }
     }
 }

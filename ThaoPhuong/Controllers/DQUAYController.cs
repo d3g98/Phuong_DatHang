@@ -31,7 +31,7 @@ namespace ThaoPhuong.Controllers
         // POST: DQUAY/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,NAME,POSITION")] DQUAY dQUAY)
+        public ActionResult Create([Bind(Include = "ID,NAME,POSITION,GIAODICH")] DQUAY dQUAY)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace ThaoPhuong.Controllers
         // POST: DQUAY/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,NAME,POSITION")] DQUAY dQUAY)
+        public ActionResult Edit([Bind(Include = "ID,NAME,POSITION,GIAODICH")] DQUAY dQUAY)
         {
             if (ModelState.IsValid)
             {

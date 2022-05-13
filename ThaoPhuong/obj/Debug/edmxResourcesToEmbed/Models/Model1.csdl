@@ -33,6 +33,7 @@
     <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="POSITION" Type="Int32" />
     <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DQUAYI__24927208" FromRole="DQUAY" ToRole="TDONHANG" />
+    <Property Name="GIAODICH" Type="Int32" />
   </EntityType>
   <EntityType Name="DTRANGTHAI">
     <Key>

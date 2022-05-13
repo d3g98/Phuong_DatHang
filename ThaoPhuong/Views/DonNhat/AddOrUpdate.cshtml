@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Update";
     Layout = ViewBag.layout;
+
+    string DTRANGTHAISELECTED = Model.DTRANGTHAIID ?? "1";
+    List<string> lstChoPheps = ViewBag.choPheps;
+    bool choPhepSua = lstChoPheps.Contains(DTRANGTHAISELECTED);
 }
 <form method="post" enctype="multipart/form-data">
     @{
@@ -153,11 +157,14 @@
                         <label for="">Trạng thái</label>
                     </div>
                     <div class="col-8">
-                        <select id="cbTrangThai" class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin) { <text> disabled="disabled" </text>  }}>
+                        <select class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin && !choPhepSua) { <text> disabled="disabled" </text>  }}>
                             @{
                                 foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
                                 {
-                                    <option value="@item.ID" @{if (Model.DTRANGTHAIID == item.ID || (Model.DTRANGTHAIID == null && item.ID == "1")) { <text> selected</text> } }>@item.NAME</option>
+                                    if (ViewBag.isAdmin || (!ViewBag.isAdmin && (lstChoPheps.Contains(item.ID) || item.ID == "4" || DTRANGTHAISELECTED == item.ID)))
+                                    {
+                                        <option value="@item.ID" @{if (DTRANGTHAISELECTED == item.ID) { <text> selected</text> } }>@item.NAME</option>
+                                    }
                                 }
                             }
                         </select>
