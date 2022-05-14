@@ -177,9 +177,9 @@
                                             <td>Ngày</td>
                                             <td>@time.ToString("dd/MM HH:mm")</td>
                                         </tr>
-                                        <tr>
+                                        @*<tr>
                                             <td colspan="2">@item.NAME</td>
-                                        </tr>
+                                        </tr>*@
                                         <tr>
                                             <td>Quầy</td>
                                             <td style="padding-left:5px;">
@@ -192,16 +192,16 @@
                                         <td>@item.DKHACHHANG.NAME</td>
                                     </tr>
                                     <tr>
-                                        <td>Sp:</td>
-                                        <td style="padding-left:5px;">@item.TENSP</td>
-                                    </tr>
-                                    <tr>
                                         <td>T.tiền</td>
                                         <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
                                     </tr>
                                     <tr>
                                         <td>G.chú</td>
                                         <td style="padding-left:5px;">@item.NOTE</td>
+                                    </tr>
+                                     <tr>
+                                        <td>Đ.nhặt:</td>
+                                        <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.SLDANHAT)</td>
                                     </tr>
                                     @if (details.Length > 0)
                                     {

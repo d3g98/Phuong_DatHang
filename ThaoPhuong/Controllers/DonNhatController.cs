@@ -16,6 +16,7 @@ namespace ThaoPhuong.Controllers
         // GET: DonNhat
         public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection, string giaoDich)
         {
+            giaoDich = giaoDich ?? "-1";
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
             ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
@@ -71,17 +72,6 @@ namespace ThaoPhuong.Controllers
             return View(lst);
         }
 
-        //Chờ xử lý, đang hết, cắt mẫu, quầy hẹn
-        public static List<string> trangThaiChoPheps()
-        {
-            string choXuLy = "1";
-            string dangHet = "";
-            string catMau = "99d9ab19-203f-4bc1-a2e4-aec6fcaa60de";
-            string quayHen = "e5d5b9ad-11c9-4d9c-8aac-261a8d950ec4";
-            List<string> lst = new List<string>(new string[] { choXuLy, catMau, quayHen });
-            return lst;
-        }
-
         [HttpGet]
         public ActionResult AddOrUpdate(string id)
         {
@@ -94,7 +84,7 @@ namespace ThaoPhuong.Controllers
             ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
             ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             ViewBag.isAdmin = isAdmin;
-            ViewBag.choPheps = trangThaiChoPheps();
+            //ViewBag.choPheps = trangThaiChoPheps();
 
             TDONHANG dhRow = null;
             if (id != null && id.Length > 0)
@@ -176,7 +166,7 @@ namespace ThaoPhuong.Controllers
                     dhRow.NOTE = item.NOTE;
 
                     //if (!hasImg || item.TDONHANGCHITIETs == null || item.TDONHANGCHITIETs.Count == 0)
-                    if (!hasImg)
+                    if (!hasImg || dhRow.NOTE == null || dhRow.NOTE.Length == 0)
                     {
                         bool isAdmin = SessionUtils.IsAdmin(Session);
                         if (isAdmin)
@@ -190,7 +180,9 @@ namespace ThaoPhuong.Controllers
                         //else ViewBag.error = "Bạn chưa thêm mặt hàng nhặt nào!";
                         //dhRow.TDONHANGCHITIETs = item.TDONHANGCHITIETs;
 
-                        ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
+                        if (!hasImg) ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
+                        else ViewBag.error = "Trường ghi chú là bắt buộc(SL,Size...)";
+
                         return View(dhRow);
                     }
 

@@ -3,9 +3,12 @@
     ViewBag.Title = "Update";
     Layout = ViewBag.layout;
 
-    string DTRANGTHAISELECTED = Model.DTRANGTHAIID ?? "1";
-    List<string> lstChoPheps = ViewBag.choPheps;
-    bool choPhepSua = lstChoPheps.Contains(DTRANGTHAISELECTED);
+    string choXuLy = "1";
+    string daHuy = "4";
+    string catMau = "99d9ab19-203f-4bc1-a2e4-aec6fcaa60de";
+    string dangHet = "e5d5b9ad-11c9-4d9c-8aac-261a8d950ec4";
+    string selected = Model.DTRANGTHAIID ?? "1";
+    bool choPhepSua = selected == choXuLy || (selected == daHuy) || selected == dangHet;
 }
 <form method="post" enctype="multipart/form-data">
     @{
@@ -27,7 +30,7 @@
             </div>
             <input type="text" class="form-control" hidden="hidden" name="ID" value="@Model.ID">
             <!-- So phieu -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-6 col-lg-6" style="display: none">
                 <div class="form-group row">
                     <div class="col-4">
                         <label for="">Đơn nhặt</label>
@@ -175,13 +178,43 @@
                         <label for="">Trạng thái</label>
                     </div>
                     <div class="col-8">
-                        <select class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin && !choPhepSua) { <text> disabled="disabled" </text>  }}>
+                        <select id="cbTrangThai" class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin && !choPhepSua) { <text> disabled="disabled" </text>  }}>
                             @{
                                 foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
                                 {
-                                    if (ViewBag.isAdmin || (!ViewBag.isAdmin && (lstChoPheps.Contains(item.ID) || item.ID == "4" || DTRANGTHAISELECTED == item.ID)))
+
+                                    bool add = false;
+                                    if (ViewBag.isAdmin)
                                     {
-                                        <option value="@item.ID" @{if (DTRANGTHAISELECTED == item.ID) { <text> selected</text> } }>@item.NAME</option>
+                                        add = true;
+                                    }
+                                    if (!add && !ViewBag.isAdmin)
+                                    {
+                                        if (selected == item.ID)
+                                        {
+                                            add = true;
+                                        }
+                                        if (!add)
+                                        {
+                                            if ((selected == choXuLy || selected == catMau || selected == dangHet) && item.ID == daHuy && Model.ID != null)
+                                            {
+                                                add = true;
+                                            }
+
+                                            if (selected == daHuy && item.ID == choXuLy)
+                                            {
+                                                add = true;
+                                            }
+
+                                            if ((selected == catMau || selected == dangHet) && item.ID == choXuLy)
+                                            {
+                                                add = true;
+                                            }
+                                        }
+                                    }
+                                    if (add)
+                                    {
+                                         <option value="@item.ID" @{if (selected == item.ID) { <text> selected</text> } }>@item.NAME</option>
                                     }
                                 }
                             }
@@ -192,7 +225,8 @@
 
             <div class="col-sm-12 col-md-6 col-lg-6">
                 @{
-                    if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.DTRANGTHAIID == "1")))
+                    //if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || Model.DTRANGTHAIID == "1")))
+                    if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || choPhepSua)))
                     {
                         <button type="submit" class="btn btn-primary float-right col-12 form-group">Cập nhật</button>
                     }
@@ -275,7 +309,9 @@
     });
 
     $('#ipTienDaNhat').change((e) => {
-        $('#ipTienDaNhat').val($('#ipTienDaNhat').val() + '000');
+        let val = $('#ipTienDaNhat').val();
+        let num = parseInt(val == "" ? "0" : val);
+        if (num > 0) $('#ipTienDaNhat').val(val  + '000');
     });
 
 </script>

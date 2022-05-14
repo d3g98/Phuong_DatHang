@@ -17,6 +17,7 @@ namespace ThaoPhuong.Controllers
         // GET: DonGom
         public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection, string giaoDich)
         {
+            giaoDich = giaoDich ?? "-1";
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
             ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
@@ -84,7 +85,6 @@ namespace ThaoPhuong.Controllers
             ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
             ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             ViewBag.isAdmin = isAdmin;
-            ViewBag.choPheps = DonNhatController.trangThaiChoPheps();
 
             TDONHANG dhRow = null;
             if (id != null && id.Length > 0)
