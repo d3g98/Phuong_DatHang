@@ -30,6 +30,15 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Thông tin chung
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="dropdown-item">@Html.ActionLink("Thông báo khách hàng", "ThongBaoKhachHang", "SCONFIG")</li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Danh mục
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -52,14 +61,14 @@
                 </li>
 
                 @*<li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Phiếu thanh toán
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item">@Html.ActionLink("Thêm mới", "AddOrUpdate", "ThanhToan")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Danh sách phiếu thanh toán", "Index", "ThanhToan")</li>
-                        </ul>
-                    </li>*@
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Phiếu thanh toán
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li class="dropdown-item">@Html.ActionLink("Thêm mới", "AddOrUpdate", "ThanhToan")</li>
+                <li class="dropdown-item">@Html.ActionLink("Danh sách phiếu thanh toán", "Index", "ThanhToan")</li>
+            </ul>
+        </li>*@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

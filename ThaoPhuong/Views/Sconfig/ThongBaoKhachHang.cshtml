@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "ThongBaoKhachHang";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<h2>Chỉnh sửa thông báo khách hàng</h2>
+<form method="post" action="">
+    <textarea name="data" id="edThongBaoKhachHang" rows="50" cols="80">@Html.Raw(ViewBag.data)</textarea>
+    <hr />
+    <button type="submit" class="btn btn-success">Cập nhật</button>
+</form>
+<script>
+    CKEDITOR.replace('edThongBaoKhachHang', {
+        htmlEncodeOutput: true
+    });
+</script>

@@ -4,25 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fbe417f153d74b1fb8c758420b039ab2" Name="Diagram1">
-        <EntityTypeShape EntityType="THAOPHUONGModel.DANH" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.DKHACHHANG" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.DQUAY" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.DTRANGTHAI" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANG" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANGCHITIET" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOAN" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOANCHITIET" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TTHUCHI" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__DANH__TDONHANGID__22AA2996" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DKHACH__239E4DCF" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__DKHAC__276EDEB3" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DQUAYI__24927208" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DTRANG__25869641" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANGC__TDONH__267ABA7A" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TDONH__286302EC" ManuallyRouted="false" />
-        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__29572725" ManuallyRouted="false" />
+      <Diagram DiagramId="752834b4eae14461a7a34bb1812862a7" Name="Diagram1" ZoomLevel="55" >
+        <EntityTypeShape EntityType="THAOPHUONGModel.DANH" Width="1.5" PointX="5.25" PointY="6" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DKHACHHANG" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DQUAY" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DTRANGTHAI" Width="1.5" PointX="0.75" PointY="12" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANG" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANGCHITIET" Width="1.5" PointX="5.25" PointY="11.375" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOAN" Width="1.5" PointX="3" PointY="11.875" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOANCHITIET" Width="1.5" PointX="8.25" PointY="9.625" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TTHUCHI" Width="1.5" PointX="3" PointY="16.125" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__DANH__TDONHANGID__22AA2996" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DKHACH__239E4DCF" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__DKHAC__276EDEB3" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TTHUCHI__DKHACHH__2A4B4B5E" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DQUAYI__24927208" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANG__DTRANG__25869641" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TDONHANGC__TDONH__267ABA7A" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TDONH__286302EC" />
+        <AssociationConnector Association="THAOPHUONGModel.FK__TTHANHTOA__TTHAN__29572725" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.SCONFIG" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -378,6 +378,11 @@ ON [dbo].[TTHANHTOANCHITIET]
     ([TTHANHTOANID]);
 GO
 
+CREATE TABLE SCONFIG
+(
+ THONGBAOKHACHHANG NVARCHAR(MAX)
+)
+
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------

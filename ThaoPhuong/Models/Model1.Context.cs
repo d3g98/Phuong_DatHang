@@ -34,5 +34,6 @@ namespace ThaoPhuong.Models
         public virtual DbSet<TTHANHTOAN> TTHANHTOANs { get; set; }
         public virtual DbSet<TTHANHTOANCHITIET> TTHANHTOANCHITIETs { get; set; }
         public virtual DbSet<TTHUCHI> TTHUCHIs { get; set; }
+        public virtual DbSet<SCONFIG> SCONFIGs { get; set; }
     }
 }

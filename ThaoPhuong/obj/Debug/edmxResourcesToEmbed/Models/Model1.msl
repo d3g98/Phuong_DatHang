@@ -4,117 +4,125 @@
     <EntitySetMapping Name="DANHs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DANH">
         <MappingFragment StoreEntitySet="DANH">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="PATH" ColumnName="PATH" />
           <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DKHACHHANGs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DKHACHHANG">
         <MappingFragment StoreEntitySet="DKHACHHANG">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
-          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
-          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
-          <ScalarProperty Name="ISADMIN" ColumnName="ISADMIN" />
           <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+          <ScalarProperty Name="ISADMIN" ColumnName="ISADMIN" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DQUAYs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DQUAY">
         <MappingFragment StoreEntitySet="DQUAY">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="POSITION" ColumnName="POSITION" />
           <ScalarProperty Name="GIAODICH" ColumnName="GIAODICH" />
+          <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DTRANGTHAIs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DTRANGTHAI">
         <MappingFragment StoreEntitySet="DTRANGTHAI">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="BASIC" ColumnName="BASIC" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
-          <ScalarProperty Name="DQUAYID" ColumnName="DQUAYID" />
-          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
-          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
-          <ScalarProperty Name="TIMEUPDATED" ColumnName="TIMEUPDATED" />
-          <ScalarProperty Name="TIENDUKIEN" ColumnName="TIENDUKIEN" />
-          <ScalarProperty Name="TIENDANHAT" ColumnName="TIENDANHAT" />
-          <ScalarProperty Name="TIENCONG" ColumnName="TIENCONG" />
-          <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="TENSP" ColumnName="TENSP" />
-          <ScalarProperty Name="DTRANGTHAIID" ColumnName="DTRANGTHAIID" />
           <ScalarProperty Name="SLDANHAT" ColumnName="SLDANHAT" />
+          <ScalarProperty Name="DTRANGTHAIID" ColumnName="DTRANGTHAIID" />
+          <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
+          <ScalarProperty Name="TIENCONG" ColumnName="TIENCONG" />
+          <ScalarProperty Name="TIENDANHAT" ColumnName="TIENDANHAT" />
+          <ScalarProperty Name="TIENDUKIEN" ColumnName="TIENDUKIEN" />
+          <ScalarProperty Name="TIMEUPDATED" ColumnName="TIMEUPDATED" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="DQUAYID" ColumnName="DQUAYID" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGCHITIETs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TDONHANGCHITIET">
         <MappingFragment StoreEntitySet="TDONHANGCHITIET">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
-          <ScalarProperty Name="TENHANG" ColumnName="TENHANG" />
-          <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
-          <ScalarProperty Name="SIZE" ColumnName="SIZE" />
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
           <ScalarProperty Name="SOLUONGDANHAT" ColumnName="SOLUONGDANHAT" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="SIZE" ColumnName="SIZE" />
+          <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+          <ScalarProperty Name="TENHANG" ColumnName="TENHANG" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TTHANHTOANs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TTHANHTOAN">
         <MappingFragment StoreEntitySet="TTHANHTOAN">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
-          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
-          <ScalarProperty Name="TIENHANG" ColumnName="TIENHANG" />
-          <ScalarProperty Name="PHUPHI" ColumnName="PHUPHI" />
-          <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
-          <ScalarProperty Name="TIENTHANHTOAN" ColumnName="TIENTHANHTOAN" />
-          <ScalarProperty Name="KETTHUC" ColumnName="KETTHUC" />
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
           <ScalarProperty Name="TIMEUPDATED" ColumnName="TIMEUPDATED" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="KETTHUC" ColumnName="KETTHUC" />
+          <ScalarProperty Name="TIENTHANHTOAN" ColumnName="TIENTHANHTOAN" />
+          <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
+          <ScalarProperty Name="PHUPHI" ColumnName="PHUPHI" />
+          <ScalarProperty Name="TIENHANG" ColumnName="TIENHANG" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TTHANHTOANCHITIETs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TTHANHTOANCHITIET">
         <MappingFragment StoreEntitySet="TTHANHTOANCHITIET">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TTHANHTOANID" ColumnName="TTHANHTOANID" />
-          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="TTHANHTOANID" ColumnName="TTHANHTOANID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TTHUCHIs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TTHUCHI">
         <MappingFragment StoreEntitySet="TTHUCHI">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
-          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
-          <ScalarProperty Name="THU" ColumnName="THU" />
-          <ScalarProperty Name="CHI" ColumnName="CHI" />
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
           <ScalarProperty Name="TIMEUPDATED" ColumnName="TIMEUPDATED" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="CHI" ColumnName="CHI" />
+          <ScalarProperty Name="THU" ColumnName="THU" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SCONFIGs">
+      <EntityTypeMapping TypeName="THAOPHUONGModel.SCONFIG">
+        <MappingFragment StoreEntitySet="SCONFIG">
+          <ScalarProperty Name="THONGBAOKHACHHANG" ColumnName="THONGBAOKHACHHANG" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

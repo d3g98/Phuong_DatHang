@@ -38,6 +38,13 @@
     <Property Name="NAME" Type="nvarchar" MaxLength="255" />
     <Property Name="BASIC" Type="int" />
   </EntityType>
+  <EntityType Name="SCONFIG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="THONGBAOKHACHHANG" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="TDONHANG">
     <Key>
       <PropertyRef Name="ID" />
@@ -221,6 +228,7 @@
     <EntitySet Name="DKHACHHANG" EntityType="Self.DKHACHHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DQUAY" EntityType="Self.DQUAY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTRANGTHAI" EntityType="Self.DTRANGTHAI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SCONFIG" EntityType="Self.SCONFIG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TTHANHTOAN" EntityType="Self.TTHANHTOAN" Schema="dbo" store:Type="Tables" />
