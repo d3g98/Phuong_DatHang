@@ -27,10 +27,10 @@
     <EntitySetMapping Name="DQUAYs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.DQUAY">
         <MappingFragment StoreEntitySet="DQUAY">
-          <ScalarProperty Name="GIAODICH" ColumnName="GIAODICH" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+          <ScalarProperty Name="GIAODICH" ColumnName="GIAODICH" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -46,7 +46,6 @@
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="THAOPHUONGModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
-          <ScalarProperty Name="SLDANHAT" ColumnName="SLDANHAT" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
@@ -61,6 +60,7 @@
           <ScalarProperty Name="NOTE" ColumnName="NOTE" />
           <ScalarProperty Name="TENSP" ColumnName="TENSP" />
           <ScalarProperty Name="DTRANGTHAIID" ColumnName="DTRANGTHAIID" />
+          <ScalarProperty Name="SLDANHAT" ColumnName="SLDANHAT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -32,8 +32,8 @@
     <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="POSITION" Type="Int32" />
-    <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DQUAYI__24927208" FromRole="DQUAY" ToRole="TDONHANG" />
     <Property Name="GIAODICH" Type="Int32" />
+    <NavigationProperty Name="TDONHANGs" Relationship="Self.FK__TDONHANG__DQUAYI__24927208" FromRole="DQUAY" ToRole="TDONHANG" />
   </EntityType>
   <EntityType Name="DTRANGTHAI">
     <Key>
@@ -62,13 +62,13 @@
     <Property Name="NOTE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="TENSP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="DTRANGTHAIID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="SLDANHAT" Type="Int32" />
     <NavigationProperty Name="DANHs" Relationship="Self.FK__DANH__TDONHANGID__22AA2996" FromRole="TDONHANG" ToRole="DANH" />
     <NavigationProperty Name="DKHACHHANG" Relationship="Self.FK__TDONHANG__DKHACH__239E4DCF" FromRole="TDONHANG" ToRole="DKHACHHANG" />
     <NavigationProperty Name="DQUAY" Relationship="Self.FK__TDONHANG__DQUAYI__24927208" FromRole="TDONHANG" ToRole="DQUAY" />
     <NavigationProperty Name="DTRANGTHAI" Relationship="Self.FK__TDONHANG__DTRANG__25869641" FromRole="TDONHANG" ToRole="DTRANGTHAI" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK__TDONHANGC__TDONH__267ABA7A" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
     <NavigationProperty Name="TTHANHTOANCHITIETs" Relationship="Self.FK__TTHANHTOA__TDONH__286302EC" FromRole="TDONHANG" ToRole="TTHANHTOANCHITIET" />
-    <Property Name="SLDANHAT" Type="Int32" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

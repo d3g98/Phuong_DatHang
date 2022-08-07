@@ -21,157 +21,157 @@
             <div class="alert alert-danger" role="alert">@ViewBag.error</div>
         }
     }
-<div class="row">
-    <!-- thông tin -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <div class="row">
-            <div class="col-12">
-                <h4>Đơn gom hàng</h4>
-            </div>
-            <input type="text" class="form-control" hidden="hidden" name="ID" value="@Model.ID">
-            <!-- So phieu -->
-            <div class="col-sm-12 col-md-6 col-lg-6" style="display: none">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Đơn gom</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control" readonly name="NAME" value="@Model.NAME">
+    <div class="row">
+        <!-- thông tin -->
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col-12">
+                    <h4>Đơn gom hàng</h4>
+                </div>
+                <input type="text" class="form-control" hidden="hidden" name="ID" value="@Model.ID">
+                <!-- So phieu -->
+                <div class="col-sm-12 col-md-6 col-lg-6" style="display: none">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Đơn gom</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" readonly name="NAME" value="@Model.NAME">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Quay -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Quầy</label>
-                    </div>
-                    <div class="col-8">
-                        <select class="form-control select2" name="DQUAYID">
-                            <option value="">Chọn quầy</option>
-                            @foreach (ThaoPhuong.Models.DQUAY item in ViewBag.quays)
-                            {
-                                if (item.ID == Model.DQUAYID)
+                <!-- Quay -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Quầy</label>
+                        </div>
+                        <div class="col-8">
+                            <select class="form-control select2" name="DQUAYID">
+                                <option value="">Chọn quầy</option>
+                                @foreach (ThaoPhuong.Models.DQUAY item in ViewBag.quays)
                                 {
-                                    <option value="@item.ID" selected>@item.NAME</option>
+                                    if (item.ID == Model.DQUAYID)
+                                    {
+                                        <option value="@item.ID" selected>@item.NAME</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.NAME</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thanh tien -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Tổng cộng</label>
+                        </div>
+                        <div class="col-8">
+                            @{
+                                if (ViewBag.isAdmin)
+                                {
+                                    <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)">
                                 }
                                 else
                                 {
-                                    <option value="@item.ID">@item.NAME</option>
+                                    <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)" readonly>
                                 }
                             }
-                        </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Thanh tien -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Tổng cộng</label>
-                    </div>
-                    <div class="col-8">
-                        @{
-                            if (ViewBag.isAdmin)
-                            {
-                                <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)">
-                            }
-                            else
-                            {
-                                <input type="number" class="form-control" name="TONGCONG" value="@Convert.ToInt32(Model.TONGCONG)" readonly>
-                            }
-                        }
+                <!-- ghi chu -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Ghi chú</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" name="NOTE" value="@Model.NOTE">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- ghi chu -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Ghi chú</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control" name="NOTE" value="@Model.NOTE">
-                    </div>
-                </div>
-            </div>
-
-            <!-- trang thai -->
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label for="">Trạng thái</label>
-                    </div>
-                    <div class="col-8">
-                        <select id="cbTrangThai" class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin && !choPhepSua) { <text> disabled="disabled" </text>  }}>
-                            @{
-                                foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
-                                {
-
-                                    bool add = false;
-                                    if (ViewBag.isAdmin)
+                <!-- trang thai -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Trạng thái</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="cbTrangThai" class="form-control" name="DTRANGTHAIID" @{ if (!ViewBag.isAdmin && !choPhepSua) { <text> disabled="disabled" </text>  }}>
+                                @{
+                                    foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
                                     {
-                                        add = true;
-                                    }
-                                    if (!add && !ViewBag.isAdmin)
-                                    {
-                                        if (selected == item.ID)
+
+                                        bool add = false;
+                                        if (ViewBag.isAdmin)
                                         {
                                             add = true;
                                         }
-                                        if (!add)
+                                        if (!add && !ViewBag.isAdmin)
                                         {
-                                            if ((selected == choXuLy || selected == catMau || selected == dangHet) && item.ID == daHuy && Model.ID != null)
+                                            if (selected == item.ID)
                                             {
                                                 add = true;
                                             }
-
-                                            if (selected == daHuy && item.ID == choXuLy)
+                                            if (!add)
                                             {
-                                                add = true;
-                                            }
+                                                if ((selected == choXuLy || selected == catMau || selected == dangHet) && item.ID == daHuy && Model.ID != null)
+                                                {
+                                                    add = true;
+                                                }
 
-                                            if ((selected == catMau || selected == dangHet) && item.ID == choXuLy)
-                                            {
-                                                add = true;
+                                                if (selected == daHuy && item.ID == choXuLy)
+                                                {
+                                                    add = true;
+                                                }
+
+                                                if ((selected == catMau || selected == dangHet) && item.ID == choXuLy)
+                                                {
+                                                    add = true;
+                                                }
                                             }
                                         }
-                                    }
-                                    if (add)
-                                    {
-                                        <option value="@item.ID" @{if (selected == item.ID) { <text> selected</text> } }>@item.NAME</option>
+                                        if (add)
+                                        {
+                                            <option value="@item.ID" @{if (selected == item.ID) { <text> selected</text> } }>@item.NAME</option>
+                                        }
                                     }
                                 }
-                            }
-                        </select>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-        </div>
-    <!-- Ảnh -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+        <!-- Ảnh -->
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-sm-12 col-md-6 col-lg-6">
-    @{
-        if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || choPhepSua)))
-        {
-            <button type="submit" class="btn btn-primary float-right col-12 form-group">Cập nhật</button>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        @{
+            if (ViewBag.isAdmin || (!ViewBag.isAdmin && (Model.ID == null || choPhepSua)))
+            {
+                <button type="submit" class="btn btn-primary float-right col-12 form-group">Cập nhật</button>
+            }
         }
-    }
-</div>
+    </div>
 </form>
 @Scripts.Render("~/Scripts/jquery-3.6.0.js")
 @Scripts.Render("~/Scripts/image-uploader.js")

@@ -233,8 +233,35 @@
 </div>
 @Scripts.Render("~/Scripts/jquery-3.6.0.js")
 <script>
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    $(document).ready(function () {
+        //get param from url
+        let loadIndex = getUrlParameter("loadIndex");
+        if (loadIndex != "") {
+            $('html, body').animate({
+                scrollTop: parseInt(loadIndex)
+            }, 200);
+        }
+    });
+
     $('.itemDonNhat').click(function () {
         let id = $(this).attr("data-id");
+        let loadIndex = $(this).offset().top;
         let paramS = window.location.search;
         paramS = paramS.replace("fDateStr", "pfDateStr");
         paramS = paramS.replace("tDateStr", "ptDateStr");
@@ -244,6 +271,15 @@
         paramS = paramS.replace("sortName", "psortName");
         paramS = paramS.replace("sortDirection", "psortDirection");
         paramS = paramS.replace("giaoDich", "pgiaoDich");
-        window.location.href = "/DonNhat/AddOrUpdate/" + id + paramS;
+
+        let url = "/DonNhat/AddOrUpdate/" + id + paramS;
+        if (paramS.length == 0) {
+            url += "?";
+        }
+        else {
+            url += "&";
+        }
+        url += "loadIndex=" + loadIndex;
+        window.location.href = url;
     });
 </script>

@@ -2322,6 +2322,7 @@
     <Content Include="Content\Home\image-uploader.css" />
     <Content Include="Content\Home\Site.css" />
     <Content Include="Content\select2.css" />
+    <Content Include="Models\database.sql" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

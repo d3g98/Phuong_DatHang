@@ -42,7 +42,7 @@
             <tr data-id="@donHangRow.ID" data-sl="@sl" data-ngay="@time.ToString("dd/MM/yyyy")" data-soHd="@donHangRow.NAME" data-quay="@if (donHangRow.DQUAY != null) { <text>@donHangRow.DQUAY.NAME</text> } "
                 data-khachhang="@donHangRow.DKHACHHANG.NAME" data-sp="@donHangRow.TENSP" data-tongtien="@Convert.ToInt32(donHangRow.TONGCONG)" data-note="@donHangRow.NOTE" data-trangthaiid="@donHangRow.DTRANGTHAIID"
                 data-timeupdate="@if (donHangRow.TIMEUPDATED != null) { <text>@timeUpdate.ToString("dd/MM/yyyy HH:mm")</text>}" data-details="@details" data-logo="@logo" data-trangthai="@donHangRow.DTRANGTHAI.NAME">
-                <td><div class="form-group form-check"><input type="checkbox" class="form-check-input"></div></td>
+                <td><div class="form-group form-check"><input type="checkbox" class="form-check-input" checked></div></td>
                 <td>@time.ToString("dd/MM/yyyy")</td>
                 <td>@donHangRow.NAME</td>
                 <td>@if (donHangRow.DQUAY != null)

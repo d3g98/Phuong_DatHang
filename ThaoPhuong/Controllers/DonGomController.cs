@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Mvc; 
 using ThaoPhuong.Models;
 using ThaoPhuong.Utils;
 
@@ -46,8 +46,14 @@ namespace ThaoPhuong.Controllers
             ViewBag.DTRANGTHAIID = DTRANGTHAIID;
             ViewBag.giaoDich = giaoDich;
             //Sắp xếp theo ngày, vị trí - Tăng giảm
+            //Khách hàng thì mặc định ngày giảm
             ViewBag.sortName = sortName ?? "vitri";
             ViewBag.sortDirection = sortDirection ?? "tang";
+            if (!ViewBag.isAdmin)
+            {
+                ViewBag.sortName = sortName ?? "ngay";
+                ViewBag.sortDirection = sortDirection ?? "giam";
+            }
             List<TDONHANG> lst = new List<TDONHANG>();
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 0);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
@@ -56,7 +62,8 @@ namespace ThaoPhuong.Controllers
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
             if (giaoDich != "-1")
             {
-                iQueryable = iQueryable.Where(x => (x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich);
+                iQueryable = iQueryable.Where(x => ((x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich)
+                || (giaoDich == "2" && x.DQUAY == null));
             }
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
@@ -70,11 +77,12 @@ namespace ThaoPhuong.Controllers
                 else iOrderedQueryable = iQueryable.OrderByDescending(x => x.DQUAY.POSITION ?? 999999999);
             }
             lst = iOrderedQueryable.ToList();
+
             return View(lst);
         }
 
         [HttpGet]
-        public ActionResult AddOrUpdate(string id)
+        public ActionResult AddOrUpdate(string id, int? loadIndex)
         {
             bool isAdmin = SessionUtils.IsAdmin(Session);
             ViewBag.layout = Contants.LAYOUT_HOME;
@@ -101,10 +109,12 @@ namespace ThaoPhuong.Controllers
                 dhRow.TONGCONG = 10000;
             }
 
+            ViewBag.loadIndex = loadIndex;
             return View(dhRow);
         }
 
-        public static void GetParamFromUrl(NameValueCollection @params, ref string fDateStr, ref string tDateStr, ref string DKHACHHANGID, ref string DQUAYID, ref string DTRANGTHAIID, ref string sortName, ref string sortDirection, ref string giaoDich)
+        public static void GetParamFromUrl(NameValueCollection @params, ref string fDateStr, ref string tDateStr, ref string DKHACHHANGID, ref string DQUAYID,
+            ref string DTRANGTHAIID, ref string sortName, ref string sortDirection, ref string giaoDich, ref string loadIndex)
         {
             List<string> lstKeys = new List<string>(@params.AllKeys);
             if (lstKeys.Contains("pfDateStr")) fDateStr = @params["pfDateStr"];
@@ -115,6 +125,7 @@ namespace ThaoPhuong.Controllers
             if (lstKeys.Contains("psortName")) sortName = @params["psortName"];
             if (lstKeys.Contains("psortDirection")) sortDirection = @params["psortDirection"];
             if (lstKeys.Contains("pgiaoDich")) giaoDich = @params["pgiaoDich"];
+            if (lstKeys.Contains("loadIndex")) loadIndex = @params["loadIndex"];
         }
 
         public static Dictionary<string, string> GetDicAnhs(THAOPHUONGEntities db, TDONHANG dhRow)
@@ -131,8 +142,8 @@ namespace ThaoPhuong.Controllers
         [HttpPost]
         public ActionResult AddOrUpdate(TDONHANG item)
         {
-            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null;
-            GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich);
+            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex);
 
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
@@ -173,7 +184,8 @@ namespace ThaoPhuong.Controllers
                     dhRow.DQUAYID = item.DQUAYID;
                     dhRow.NOTE = item.NOTE;
 
-                    if (!hasImg || dhRow.DQUAYID == null || dhRow.DQUAYID.Length == 0)
+                    //if (!hasImg || dhRow.DQUAYID == null || dhRow.DQUAYID.Length == 0)
+                    if (dhRow.DQUAYID == null || dhRow.DQUAYID.Length == 0)
                     {
                         bool isAdmin = SessionUtils.IsAdmin(Session);
                         ViewBag.layout = Contants.LAYOUT_HOME;
@@ -183,14 +195,15 @@ namespace ThaoPhuong.Controllers
                         }
                         ViewBag.quays = db.DQUAYs.OrderBy(x => x.POSITION).ToList();
                         ViewBag.isAdmin = isAdmin;
-                        if (!hasImg)
-                        {
-                            ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
-                        }
-                        else
-                        {
+
+                        //if (!hasImg)
+                        //{
+                        //    ViewBag.error = "Bạn chưa chọn hình ảnh nào!";
+                        //}
+                        //else
+                        //{
                             ViewBag.error = "Bạn chưa chọn quầy giao dịch";
-                        }
+                        //}
                         return View(dhRow);
                     }
 
@@ -208,6 +221,16 @@ namespace ThaoPhuong.Controllers
                     //upload anh
                     uploadAnhMatHang(db, Server, preloaded, files, dhRow);
 
+                    if (!hasImg)
+                    {
+                        DANH anh = new DANH();
+                        anh.TDONHANGID = dhRow.ID;
+                        anh.PATH = "noimage.jpg";
+                        anh.ID = Guid.NewGuid().ToString();
+                        db.DANHs.Add(anh);
+                        db.SaveChanges();
+                    }
+
                     ViewBag.imgs = GetDicAnhs(db, dhRow);
                     ViewBag.success = "Tạo đơn gom thành công";
                 }
@@ -217,8 +240,7 @@ namespace ThaoPhuong.Controllers
                 ViewBag.error = ex.Message;
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
-
-            return RedirectToAction("Index", "DonGom", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich });
+            return RedirectToAction("Index", "DonGom", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich, loadIndex = loadIndex });
         }
 
         public static void uploadAnhMatHang(THAOPHUONGEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, TDONHANG item)

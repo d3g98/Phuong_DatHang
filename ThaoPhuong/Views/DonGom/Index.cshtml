@@ -132,96 +132,132 @@
         </div>
     </div>
 </form>
-    <div class="row">
-        @{
-            foreach (ThaoPhuong.Models.TDONHANG item in Model)
+<div class="row">
+    @{
+        foreach (ThaoPhuong.Models.TDONHANG item in Model)
+        {
+            string alertStr = "warning";
+            if (item.DTRANGTHAIID == "3" || item.DTRANGTHAIID == "7")
             {
-                string alertStr = "warning";
-                if (item.DTRANGTHAIID == "3" || item.DTRANGTHAIID == "7")
-                {
-                    alertStr = "success";
-                }    
-                if (item.DTRANGTHAIID == "4")
-                {
-                    alertStr = "danger";
-                }                    
-                DateTime time = item.TIMECREATED ?? DateTime.Now;
-                string logo = "";
-                foreach (var anh in item.DANHs)
-                {
-                    logo = "/Images/Upload/" + anh.PATH;
-                }
-                <div class="col-sm-12 col-md-6 col-lg-4 itemDonGom" data-id="@item.ID">
-                    <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
-                        <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
-                        </div>
-                        <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
-                            <div class="row">
-                                <div class="col-9">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <table border="0">
-                                                <tr>
-                                                    <td>Ngày</td>
-                                                    <td>@time.ToString("dd/MM HH:mm")</td>
-                                                </tr>
-                                                @*<tr>
+                alertStr = "success";
+            }
+            if (item.DTRANGTHAIID == "4")
+            {
+                alertStr = "danger";
+            }
+            DateTime time = item.TIMECREATED ?? DateTime.Now;
+            string logo = "";
+            foreach (var anh in item.DANHs)
+            {
+                logo = "/Images/Upload/" + anh.PATH;
+            }
+            <div class="col-sm-12 col-md-6 col-lg-4 itemDonGom" data-id="@item.ID">
+                <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
+                    <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
+                    </div>
+                    <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table border="0">
+                                            <tr>
+                                                <td>Ngày</td>
+                                                <td>@time.ToString("dd/MM HH:mm")</td>
+                                            </tr>
+                                            @*<tr>
                                                     <td colspan="2">@item.NAME</td>
                                                 </tr>*@
-                                                <tr>
-                                                    <td>Quầy</td>
-                                                    <td>@item.DQUAY.NAME</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Kh</td>
-                                                    <td>@item.DKHACHHANG.NAME</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>T.tiền</td>
-                                                    <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>G.chú</td>
-                                                    <td>@item.NOTE</td>
-                                                </tr>
-                                                @{
-                                                    if (item.TIMEUPDATED != null)
-                                                    {
-                                                        time = item.TIMEUPDATED ?? DateTime.Now;
-                                                        <tr>
-                                                            <td colspan="2">@time.ToString("dd/MM/yy HH:mm")</td>
-                                                        </tr>
-                                                    }
+                                            <tr>
+                                                <td>Quầy</td>
+                                                <td>@item.DQUAY.NAME</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kh</td>
+                                                <td>@item.DKHACHHANG.NAME</td>
+                                            </tr>
+                                            <tr>
+                                                <td>T.tiền</td>
+                                                <td>@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>G.chú</td>
+                                                <td>@item.NOTE</td>
+                                            </tr>
+                                            @{
+                                                if (item.TIMEUPDATED != null)
+                                                {
+                                                    time = item.TIMEUPDATED ?? DateTime.Now;
+                                                    <tr>
+                                                        <td colspan="2">@time.ToString("dd/MM/yy HH:mm")</td>
+                                                    </tr>
                                                 }
-                                            </table>
-                                        </div>
+                                            }
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="col-3 p-0">
-                                    <div class="alert alert-@alertStr h-100 w-100" role="alert" style="padding:3px;">
-                                        @item.DTRANGTHAI.NAME
-                                    </div>
+                            </div>
+                            <div class="col-3 p-0">
+                                <div class="alert alert-@alertStr h-100 w-100" role="alert" style="padding:3px;">
+                                    @item.DTRANGTHAI.NAME
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        }
+    }
+</div>
+@Scripts.Render("~/Scripts/jquery-3.6.0.js")
+<script>
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
             }
         }
-    </div>
-    @Scripts.Render("~/Scripts/jquery-3.6.0.js")
-    <script>
-        $('.itemDonGom').click(function () {
-            let id = $(this).attr("data-id");
-            let paramS = window.location.search;
-            paramS = paramS.replace("fDateStr", "pfDateStr");
-            paramS = paramS.replace("tDateStr", "ptDateStr");
-            paramS = paramS.replace("DKHACHHANGID", "pDKHACHHANGID");
-            paramS = paramS.replace("DQUAYID", "pDQUAYID");
-            paramS = paramS.replace("DTRANGTHAIID", "pDTRANGTHAIID");
-            paramS = paramS.replace("sortName", "psortName");
-            paramS = paramS.replace("sortDirection", "psortDirection");
-            paramS = paramS.replace("giaoDich", "pgiaoDich");
-            window.location.href = "/DonGom/AddOrUpdate/" + id + paramS;
-        });
-    </script>
+        return false;
+    };
+
+    $(document).ready(function () {
+        //get param from url
+        let loadIndex = getUrlParameter("loadIndex");
+        if (loadIndex != "") {
+            $('html, body').animate({
+                scrollTop: parseInt(loadIndex)
+            }, 200);
+        }
+    });
+
+    $('.itemDonGom').click(function () {
+        let id = $(this).attr("data-id");
+        let loadIndex = $(this).offset().top;
+        let paramS = window.location.search;
+        paramS = paramS.replace("fDateStr", "pfDateStr");
+        paramS = paramS.replace("tDateStr", "ptDateStr");
+        paramS = paramS.replace("DKHACHHANGID", "pDKHACHHANGID");
+        paramS = paramS.replace("DQUAYID", "pDQUAYID");
+        paramS = paramS.replace("DTRANGTHAIID", "pDTRANGTHAIID");
+        paramS = paramS.replace("sortName", "psortName");
+        paramS = paramS.replace("sortDirection", "psortDirection");
+        paramS = paramS.replace("giaoDich", "pgiaoDich");
+
+        let url = "/DonGom/AddOrUpdate/" + id + paramS;
+        if (paramS.length == 0) {
+            url += "?";
+        }
+        else {
+            url += "&";
+        }
+        url += "loadIndex=" + loadIndex;
+        window.location.href = url;
+    });
+</script>

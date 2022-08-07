@@ -90,6 +90,7 @@ namespace ThaoPhuong.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            string passadmin = DbUtils.EncrytPass("admin");
             return View();
         }
 

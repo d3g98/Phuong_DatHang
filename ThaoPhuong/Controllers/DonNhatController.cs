@@ -47,6 +47,11 @@ namespace ThaoPhuong.Controllers
             //Sắp xếp theo ngày, vị trí - Tăng giảm
             ViewBag.sortName = sortName ?? "vitri";
             ViewBag.sortDirection = sortDirection ?? "tang";
+            if (!ViewBag.isAdmin)
+            {
+                ViewBag.sortName = sortName ?? "ngay";
+                ViewBag.sortDirection = sortDirection ?? "giam";
+            }
             List<TDONHANG> lst = new List<TDONHANG>();
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 1);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
@@ -55,7 +60,8 @@ namespace ThaoPhuong.Controllers
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
             if (giaoDich != "-1")
             {
-                iQueryable = iQueryable.Where(x => (x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich);
+                iQueryable = iQueryable.Where(x => ((x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich)
+                || (giaoDich == "2" && x.DQUAY == null));
             }
             IOrderedQueryable<TDONHANG> iOrderedQueryable;
             if (ViewBag.sortDirection == "tang")
@@ -73,7 +79,7 @@ namespace ThaoPhuong.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddOrUpdate(string id)
+        public ActionResult AddOrUpdate(string id, int? loadIndex)
         {
             bool isAdmin = SessionUtils.IsAdmin(Session);
             ViewBag.layout = Contants.LAYOUT_HOME;
@@ -105,8 +111,8 @@ namespace ThaoPhuong.Controllers
         {
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
-            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null;
-            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich);
+            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex);
 
             try
             {
@@ -225,7 +231,7 @@ namespace ThaoPhuong.Controllers
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
 
-            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich });
+            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich, loadIndex = loadIndex });
         }
     }
 }

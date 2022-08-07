@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="67bd364d2746493ab5041903735d46d6" Name="Diagram1">
+      <Diagram DiagramId="fbe417f153d74b1fb8c758420b039ab2" Name="Diagram1">
         <EntityTypeShape EntityType="THAOPHUONGModel.DANH" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="THAOPHUONGModel.DKHACHHANG" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.DQUAY" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.DTRANGTHAI" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANG" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DQUAY" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.DTRANGTHAI" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANG" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="THAOPHUONGModel.TDONHANGCHITIET" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOAN" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="THAOPHUONGModel.TTHANHTOANCHITIET" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
