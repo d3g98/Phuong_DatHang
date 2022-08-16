@@ -251,7 +251,7 @@ namespace ThaoPhuong.Controllers
             {
                 foreach (DANH itemAnh in lstAnhs)
                 {
-                    if (!olds.Contains(itemAnh.ID))
+                    if (olds == null || !olds.Contains(itemAnh.ID))
                     {
                         FileUpload.Delete(httpServer, itemAnh.PATH);
                         db.DANHs.Remove(itemAnh);

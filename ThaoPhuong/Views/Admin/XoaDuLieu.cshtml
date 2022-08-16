@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Xóa dữ liệu hệ thống";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<h4>Lưu lý:</h4>
+<h3 style="padding: 10px; background-color: red; color: yellow;">
+    Sau khi xóa dữ liệu sẽ làm thay đổi dữ liệu công nợ khách hàng
+</h3>
+
+<form method="post" action="">
+    <div class="row justify-content-lg-start">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-1">
+                    Đến:
+                </div>
+                <div class="col-2">
+                    <input id="endDate" name="toDateStr" value="@ViewBag.tDateStr" />
+                </div>
+                <div class="col-2">
+                    <input name="password" placeholder="Mật khẩu xóa dữ liệu" class="form-control" type="password"/>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-danger">Xóa dữ liệu</button>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.error != null)
+{
+    <div class="alert alert-danger" role="alert">@ViewBag.error</div>
+}
