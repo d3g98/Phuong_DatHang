@@ -26,6 +26,23 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
             <div class="row">
+                <div class="col-1">
+                    Ud từ:
+                </div>
+                <div class="col-5">
+                    <input id="startUpdate" name="fUpdateStr" value="@ViewBag.fUpdateStr" />
+                </div>
+                <div class="col-1">
+                    Đến:
+                </div>
+                <div class="col-5">
+                    <input id="endUpdate" name="tUpdateStr" value="@ViewBag.tUpdateStr" />
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
+            <div class="row">
                 <div class="col-4">
                     Khách hàng
                 </div>
@@ -243,6 +260,8 @@
         let paramS = window.location.search;
         paramS = paramS.replace("fDateStr", "pfDateStr");
         paramS = paramS.replace("tDateStr", "ptDateStr");
+        paramS = paramS.replace("fUpdateStr", "pfUpdateStr");
+        paramS = paramS.replace("tUpdateStr", "ptUpdateStr");
         paramS = paramS.replace("DKHACHHANGID", "pDKHACHHANGID");
         paramS = paramS.replace("DQUAYID", "pDQUAYID");
         paramS = paramS.replace("DTRANGTHAIID", "pDTRANGTHAIID");

@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc; 
+using System.Web.Mvc;
 using ThaoPhuong.Models;
 using ThaoPhuong.Utils;
 
@@ -15,14 +15,17 @@ namespace ThaoPhuong.Controllers
     {
         THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DonGom
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection, string giaoDich)
+        public ActionResult Index()
         {
+            string fDateStr = null, tDateStr = null, fUpdateStr = null, tUpdateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref fUpdateStr, ref tUpdateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex, false);
+
             giaoDich = giaoDich ?? "-1";
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
             ViewBag.khachHangs = db.DKHACHHANGs.Where(x => x.ISADMIN != 30 && x.ISACTIVE > 0).ToList();
             ViewBag.quays = db.DQUAYs.ToList();
-            ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x=>x.ID).ToList();
+            ViewBag.trangthais = db.DTRANGTHAIs.OrderBy(x => x.ID).ToList();
             DKHACHHANG khRow = Session[Contants.USER_SESSION_NAME] as DKHACHHANG;
             ViewBag.isAdmin = false;
             if (SessionUtils.IsAdmin(Session))
@@ -39,8 +42,18 @@ namespace ThaoPhuong.Controllers
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;
+            DateTime fromUpdate = (fUpdateStr != null && fUpdateStr.Length > 0) ? DateTime.ParseExact(fUpdateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
+            DateTime toUpdate = (tUpdateStr != null && tUpdateStr.Length > 0) ? DateTime.ParseExact(tUpdateStr, "MM/dd/yyyy", null) : toDay;
             ViewBag.fDateStr = fromDate.ToString("MM/dd/yyyy");
             ViewBag.tDateStr = toDate.ToString("MM/dd/yyyy");
+
+            bool locNgayUpdate = (fUpdateStr != null && fUpdateStr.Length > 0) && (tUpdateStr != null && tUpdateStr.Length > 0);
+            if (locNgayUpdate)
+            {
+                ViewBag.fUpdateStr = fromUpdate.ToString("MM/dd/yyyy");
+                ViewBag.tUpdateStr = toUpdate.ToString("MM/dd/yyyy");
+            }
+
             ViewBag.DKHACHHANGID = DKHACHHANGID;
             ViewBag.DQUAYID = DQUAYID;
             ViewBag.DTRANGTHAIID = DTRANGTHAIID;
@@ -54,12 +67,20 @@ namespace ThaoPhuong.Controllers
                 ViewBag.sortName = sortName ?? "ngay";
                 ViewBag.sortDirection = sortDirection ?? "giam";
             }
+
             List<TDONHANG> lst = new List<TDONHANG>();
             IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.LOAI == 0);
             iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value >= fromDate && DbFunctions.TruncateTime(x.TIMECREATED ?? toDay).Value <= toDate);
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
             iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == "TatCa");
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
+
+            if (locNgayUpdate)
+            {
+                DateTime tmp = toUpdate.AddMonths(1);
+                iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMEUPDATED ?? tmp).Value >= fromUpdate && DbFunctions.TruncateTime(x.TIMEUPDATED ?? tmp).Value <= toUpdate);
+            }
+
             if (giaoDich != "-1")
             {
                 iQueryable = iQueryable.Where(x => ((x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich)
@@ -113,18 +134,21 @@ namespace ThaoPhuong.Controllers
             return View(dhRow);
         }
 
-        public static void GetParamFromUrl(NameValueCollection @params, ref string fDateStr, ref string tDateStr, ref string DKHACHHANGID, ref string DQUAYID,
-            ref string DTRANGTHAIID, ref string sortName, ref string sortDirection, ref string giaoDich, ref string loadIndex)
+        public static void GetParamFromUrl(NameValueCollection @params, ref string fDateStr, ref string tDateStr, ref string fUpdateStr, ref string tUpdateStr,
+            ref string DKHACHHANGID, ref string DQUAYID, ref string DTRANGTHAIID, ref string sortName, ref string sortDirection, ref string giaoDich,
+            ref string loadIndex, bool endp)
         {
             List<string> lstKeys = new List<string>(@params.AllKeys);
-            if (lstKeys.Contains("pfDateStr")) fDateStr = @params["pfDateStr"];
-            if (lstKeys.Contains("ptDateStr")) tDateStr = @params["ptDateStr"];
-            if (lstKeys.Contains("pDKHACHHANGID")) DKHACHHANGID = @params["pDKHACHHANGID"];
-            if (lstKeys.Contains("pDQUAYID")) DQUAYID = @params["pDQUAYID"];
-            if (lstKeys.Contains("pDTRANGTHAIID")) DTRANGTHAIID = @params["pDTRANGTHAIID"];
-            if (lstKeys.Contains("psortName")) sortName = @params["psortName"];
-            if (lstKeys.Contains("psortDirection")) sortDirection = @params["psortDirection"];
-            if (lstKeys.Contains("pgiaoDich")) giaoDich = @params["pgiaoDich"];
+            if (lstKeys.Contains((endp ? "p" : "") + "fDateStr")) fDateStr = @params[(endp ? "p" : "") + "fDateStr"];
+            if (lstKeys.Contains((endp ? "p" : "") + "tDateStr")) tDateStr = @params[(endp ? "p" : "") + "tDateStr"];
+            if (lstKeys.Contains((endp ? "p" : "") + "fUpdateStr")) fUpdateStr = @params[(endp ? "p" : "") + "fUpdateStr"];
+            if (lstKeys.Contains((endp ? "p" : "") + "tUpdateStr")) tUpdateStr = @params[(endp ? "p" : "") + "tUpdateStr"];
+            if (lstKeys.Contains((endp ? "p" : "") + "DKHACHHANGID")) DKHACHHANGID = @params[(endp ? "p" : "") + "DKHACHHANGID"];
+            if (lstKeys.Contains((endp ? "p" : "") + "DQUAYID")) DQUAYID = @params[(endp ? "p" : "") + "DQUAYID"];
+            if (lstKeys.Contains((endp ? "p" : "") + "DTRANGTHAIID")) DTRANGTHAIID = @params[(endp ? "p" : "") + "DTRANGTHAIID"];
+            if (lstKeys.Contains((endp ? "p" : "") + "sortName")) sortName = @params[(endp ? "p" : "") + "sortName"];
+            if (lstKeys.Contains((endp ? "p" : "") + "sortDirection")) sortDirection = @params[(endp ? "p" : "") + "sortDirection"];
+            if (lstKeys.Contains((endp ? "p" : "") + "giaoDich")) giaoDich = @params[(endp ? "p" : "") + "giaoDich"];
             if (lstKeys.Contains("loadIndex")) loadIndex = @params["loadIndex"];
         }
 
@@ -142,8 +166,8 @@ namespace ThaoPhuong.Controllers
         [HttpPost]
         public ActionResult AddOrUpdate(TDONHANG item)
         {
-            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
-            GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex);
+            string fDateStr = null, tDateStr = null, fUpdateStr = null, tUpdateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref fUpdateStr, ref tUpdateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex, true);
 
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
@@ -202,7 +226,7 @@ namespace ThaoPhuong.Controllers
                         //}
                         //else
                         //{
-                            ViewBag.error = "Bạn chưa chọn quầy giao dịch";
+                        ViewBag.error = "Bạn chưa chọn quầy giao dịch";
                         //}
                         return View(dhRow);
                     }
@@ -240,13 +264,26 @@ namespace ThaoPhuong.Controllers
                 ViewBag.error = ex.Message;
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
-            return RedirectToAction("Index", "DonGom", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich, loadIndex = loadIndex });
+            return RedirectToAction("Index", "DonGom", new
+            {
+                fDateStr = fDateStr,
+                tDateStr = tDateStr,
+                fUpdateStr = fUpdateStr,
+                tUpdateStr = tUpdateStr,
+                DKHACHHANGID = DKHACHHANGID,
+                DQUAYID = DQUAYID,
+                DTRANGTHAIID = DTRANGTHAIID,
+                sortName = sortName,
+                sortDirection = sortDirection,
+                giaoDich = giaoDich,
+                loadIndex = loadIndex
+            });
         }
 
         public static void uploadAnhMatHang(THAOPHUONGEntities db, HttpServerUtilityBase httpServer, string[] olds, List<HttpPostedFileBase> files, TDONHANG item)
         {
             //Lấy danh sách ảnh trong database cái nào không còn trong olds thì xóa.
-            List<DANH> lstAnhs = db.DANHs.Where(x=>x.TDONHANGID == item.ID).ToList();
+            List<DANH> lstAnhs = db.DANHs.Where(x => x.TDONHANGID == item.ID).ToList();
             if (lstAnhs != null && lstAnhs.Count > 0)
             {
                 foreach (DANH itemAnh in lstAnhs)
@@ -264,7 +301,7 @@ namespace ThaoPhuong.Controllers
                 foreach (HttpPostedFileBase fileItem in files)
                 {
                     if (fileItem.ContentLength == 0) continue;
-                    string file =  FileUpload.Upload(httpServer, fileItem);
+                    string file = FileUpload.Upload(httpServer, fileItem);
                     DANH itemAnh = new DANH();
                     itemAnh.ID = Guid.NewGuid().ToString();
                     itemAnh.TDONHANGID = item.ID;

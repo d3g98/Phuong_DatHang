@@ -14,8 +14,11 @@ namespace ThaoPhuong.Controllers
     {
         THAOPHUONGEntities db = new THAOPHUONGEntities();
         // GET: DonNhat
-        public ActionResult Index(string fDateStr, string tDateStr, string DKHACHHANGID, string DQUAYID, string DTRANGTHAIID, string sortName, string sortDirection, string giaoDich)
+        public ActionResult Index()
         {
+            string fDateStr = null, tDateStr = null, fUpdateStr = null, tUpdateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref fUpdateStr, ref tUpdateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex, false);
+
             giaoDich = giaoDich ?? "-1";
             //giao diện
             ViewBag.layout = Contants.LAYOUT_HOME;
@@ -38,8 +41,18 @@ namespace ThaoPhuong.Controllers
             DateTime toDay = DateTime.Now.Date;
             DateTime fromDate = (fDateStr != null && fDateStr.Length > 0) ? DateTime.ParseExact(fDateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
             DateTime toDate = (tDateStr != null && tDateStr.Length > 0) ? DateTime.ParseExact(tDateStr, "MM/dd/yyyy", null) : toDay;
+            DateTime fromUpdate = (fUpdateStr != null && fUpdateStr.Length > 0) ? DateTime.ParseExact(fUpdateStr, "MM/dd/yyyy", null) : toDay.AddMonths(-1);
+            DateTime toUpdate = (tUpdateStr != null && tUpdateStr.Length > 0) ? DateTime.ParseExact(tUpdateStr, "MM/dd/yyyy", null) : toDay;
             ViewBag.fDateStr = fromDate.ToString("MM/dd/yyyy");
             ViewBag.tDateStr = toDate.ToString("MM/dd/yyyy");
+
+            bool locNgayUpdate = (fUpdateStr != null && fUpdateStr.Length > 0) && (tUpdateStr != null && tUpdateStr.Length > 0);
+            if (locNgayUpdate)
+            {
+                ViewBag.fUpdateStr = fromUpdate.ToString("MM/dd/yyyy");
+                ViewBag.tUpdateStr = toUpdate.ToString("MM/dd/yyyy");
+            }
+
             ViewBag.DKHACHHANGID = DKHACHHANGID;
             ViewBag.DTRANGTHAIID = DTRANGTHAIID;
             ViewBag.DQUAYID = DQUAYID;
@@ -58,6 +71,13 @@ namespace ThaoPhuong.Controllers
             iQueryable = iQueryable.Where(x => x.DKHACHHANGID == DKHACHHANGID || DKHACHHANGID == null || DKHACHHANGID.Length == 0);
             iQueryable = iQueryable.Where(x => x.DTRANGTHAIID == DTRANGTHAIID || DTRANGTHAIID == "TatCa");
             iQueryable = iQueryable.Where(x => x.DQUAYID == DQUAYID || DQUAYID == null || DQUAYID.Length == 0);
+
+            if (locNgayUpdate)
+            {
+                DateTime tmp = toUpdate.AddMonths(1);
+                iQueryable = iQueryable.Where(x => DbFunctions.TruncateTime(x.TIMEUPDATED ?? tmp).Value >= fromUpdate && DbFunctions.TruncateTime(x.TIMEUPDATED ?? tmp).Value <= toUpdate);
+            }
+
             if (giaoDich != "-1")
             {
                 iQueryable = iQueryable.Where(x => ((x.DQUAYID != null || x.DQUAYID.Length > 0) && x.DQUAY.GIAODICH.ToString() == giaoDich)
@@ -111,8 +131,8 @@ namespace ThaoPhuong.Controllers
         {
             bool isNewItem = false;
             TDONHANG dhRow = new TDONHANG();
-            string fDateStr = null, tDateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
-            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex);
+            string fDateStr = null, tDateStr = null, fUpdateStr = null, tUpdateStr = null, DKHACHHANGID = null, DQUAYID = null, DTRANGTHAIID = null, sortName = null, sortDirection = null, giaoDich = null, loadIndex = null;
+            DonGomController.GetParamFromUrl(Request.Params, ref fDateStr, ref tDateStr, ref fUpdateStr, ref tUpdateStr, ref DKHACHHANGID, ref DQUAYID, ref DTRANGTHAIID, ref sortName, ref sortDirection, ref giaoDich, ref loadIndex, true);
 
             try
             {
@@ -231,7 +251,20 @@ namespace ThaoPhuong.Controllers
                 if (isNewItem) dhRow.NAME = "Tự động";
             }
 
-            return RedirectToAction("Index", "DonNhat", new { fDateStr = fDateStr, tDateStr = tDateStr, DKHACHHANGID = DKHACHHANGID, DQUAYID = DQUAYID, DTRANGTHAIID = DTRANGTHAIID, sortName = sortName, sortDirection = sortDirection, giaoDich = giaoDich, loadIndex = loadIndex });
+            return RedirectToAction("Index", "DonNhat", new
+            {
+                fDateStr = fDateStr,
+                tDateStr = tDateStr,
+                fUpdateStr = fUpdateStr,
+                tUpdateStr = tUpdateStr,
+                DKHACHHANGID = DKHACHHANGID,
+                DQUAYID = DQUAYID,
+                DTRANGTHAIID = DTRANGTHAIID,
+                sortName = sortName,
+                sortDirection = sortDirection,
+                giaoDich = giaoDich,
+                loadIndex = loadIndex
+            });
         }
     }
 }

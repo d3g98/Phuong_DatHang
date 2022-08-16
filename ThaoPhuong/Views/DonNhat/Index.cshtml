@@ -26,6 +26,23 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
             <div class="row">
+                <div class="col-1">
+                    Ud từ:
+                </div>
+                <div class="col-5">
+                    <input id="startUpdate" name="fUpdateStr" value="@ViewBag.fUpdateStr" />
+                </div>
+                <div class="col-1">
+                    Đến:
+                </div>
+                <div class="col-5">
+                    <input id="endUpdate" name="tUpdateStr" value="@ViewBag.tUpdateStr" />
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4" @{ if (!ViewBag.isAdmin) { <text> style="display:none" </text>  } }>
+            <div class="row">
                 <div class="col-4">
                     Khách hàng
                 </div>
@@ -35,7 +52,7 @@
                         @foreach (ThaoPhuong.Models.DKHACHHANG item in ViewBag.khachHangs)
                         {
                             <option value="@item.ID" @{if (ViewBag.DKHACHHANGID == item.ID) { <text> selected</text>} else {<text></text>}}>@item.NAME</option>
-                                }
+                        }
                     </select>
                 </div>
             </div>
@@ -52,7 +69,7 @@
                         @foreach (ThaoPhuong.Models.DQUAY item in ViewBag.quays)
                         {
                             <option value="@item.ID" @{if (ViewBag.DQUAYID == item.ID) { <text> selected</text>} else {<text></text>}}>@item.NAME</option>
-                                }
+                        }
                     </select>
                 </div>
             </div>
@@ -70,7 +87,7 @@
                             foreach (ThaoPhuong.Models.DTRANGTHAI item in ViewBag.trangthais)
                             {
                                 <option value="@item.ID" @{if (ViewBag.DTRANGTHAIID == item.ID) { <text> selected</text>}}>@item.NAME</option>
-                                    }
+                            }
                         }
                     </select>
                 </div>
@@ -89,7 +106,7 @@
                             if (ViewBag.isAdmin)
                             {
                                 <option value="vitri" @{if (ViewBag.sortName == "vitri") { <text> selected</text> } else { } }>Vị trí</option>
-                                    }
+                            }
                         }
                         <option value="ngay" @{if (ViewBag.sortName == "ngay") { <text> selected</text> } else { } }>Ngày</option>
                     </select>
@@ -265,6 +282,8 @@
         let paramS = window.location.search;
         paramS = paramS.replace("fDateStr", "pfDateStr");
         paramS = paramS.replace("tDateStr", "ptDateStr");
+        paramS = paramS.replace("fUpdateStr", "pfUpdateStr");
+        paramS = paramS.replace("tUpdateStr", "ptUpdateStr");
         paramS = paramS.replace("DKHACHHANGID", "pDKHACHHANGID");
         paramS = paramS.replace("DQUAYID", "pDQUAYID");
         paramS = paramS.replace("DTRANGTHAIID", "pDTRANGTHAIID");
