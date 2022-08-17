@@ -39,9 +39,10 @@
 
             DateTime time = donHangRow.TIMECREATED ?? DateTime.Now;
             DateTime timeUpdate = donHangRow.TIMEUPDATED ?? DateTime.Now;
-            <tr data-id="@donHangRow.ID" data-sl="@sl" data-ngay="@time.ToString("dd/MM/yyyy")" data-soHd="@donHangRow.NAME" data-quay="@if (donHangRow.DQUAY != null) { <text>@donHangRow.DQUAY.NAME</text> } "
-                data-khachhang="@donHangRow.DKHACHHANG.NAME" data-sp="@donHangRow.TENSP" data-tongtien="@Convert.ToInt32(donHangRow.TONGCONG)" data-note="@donHangRow.NOTE" data-trangthaiid="@donHangRow.DTRANGTHAIID"
-                data-timeupdate="@if (donHangRow.TIMEUPDATED != null) { <text>@timeUpdate.ToString("dd/MM/yyyy HH:mm")</text>}" data-details="@details" data-logo="@logo" data-trangthai="@donHangRow.DTRANGTHAI.NAME">
+            <tr data-id="@donHangRow.ID" data-loai="@donHangRow.LOAI" data-ngay="@time.ToString("dd/MM/yyyy")" data-soHd="@donHangRow.NAME" data-quay="@if (donHangRow.DQUAY != null) { <text>@donHangRow.DQUAY.NAME</text> } "
+                data-khachhang="@donHangRow.DKHACHHANG.NAME" data-sp="@donHangRow.TENSP" data-note="@donHangRow.NOTE" data-trangthaiid="@donHangRow.DTRANGTHAIID"
+                data-timeupdate="@if (donHangRow.TIMEUPDATED != null) { <text>@timeUpdate.ToString("dd/MM/yyyy HH:mm")</text>}" data-details="@details" data-logo="@logo" data-trangthai="@donHangRow.DTRANGTHAI.NAME"
+                data-sl="@donHangRow.SLDANHAT" data-tongcong="@Convert.ToInt32(donHangRow.TONGCONG)" data-tiennhat="@Convert.ToInt32(donHangRow.TIENDANHAT)" data-tiencong="@Convert.ToInt32(donHangRow.TIENCONG)">
                 <td><div class="form-group form-check"><input type="checkbox" class="form-check-input" checked></div></td>
                 <td>@time.ToString("dd/MM/yyyy")</td>
                 <td>@donHangRow.NAME</td>

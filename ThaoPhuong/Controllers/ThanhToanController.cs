@@ -117,6 +117,7 @@ namespace ThaoPhuong.Controllers
             ttRow.TIENHANG = temp.TIENHANG;
             ttRow.PHUPHI = temp.PHUPHI;
             ttRow.TONGCONG = temp.TONGCONG;
+            ttRow.TIENTHANHTOAN = temp.TIENTHANHTOAN;
             ttRow.NOTE = temp.NOTE;
             if (isNewItem) db.TTHANHTOANs.Add(ttRow);
             else

@@ -104,6 +104,18 @@
                     </div>
                 </div>
 
+                <!-- Tien thanh toan -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="">Tiền thanh toán</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="number" class="form-control ipTIENTHANHTOAN" name="TIENTHANHTOAN" value="@Convert.ToInt32(Model.TIENTHANHTOAN)">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Tong cong -->
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group row">
@@ -149,9 +161,14 @@
                         <table class="table tblChiTiet">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="col-5" scope="col">Tổng SL: <span class="lblTongSL">0</span></th>
-                                    <th class="col-6" scope="col">Tổng tiền hàng: <span class="lblTongTien">0</span></th>
-                                    <th class="col-1" scope="col"><div class="btn btn-success">+</div></th>
+                                    <th class="col-4" scope="col">SL Nhặt: <span class="lblSLNhat">0</span></th>
+                                    <th class="col-4" scope="col">Tiền nhặt: <span class="lblTienNhat">0</span></th>
+                                    <th class="col-4" scope="col">Công nhặt: <span class="lblCongNhat">0</span></th>
+                                </tr>
+                                <tr>
+                                    <th class="col-4" scope="col">SL Gom: <span class="lblSLGom">0</span></th>
+                                    <th class="col-4" scope="col">Tiền gom: <span class="lblTienGom">0</span></th>
+                                    <th class="col-4 justify-content-end" scope="col"><div class="btn btn-success">+</div></th>
                                 </tr>
                             </thead>
                         </table>
@@ -179,7 +196,7 @@
                                         logo = "/Images/Upload/" + anh.PATH;
                                     }
                                 }
-                                decimal soLuong = 0;
+                                //decimal soLuong = 0;
                                 string details = "";
                                 foreach (ThaoPhuong.Models.TDONHANGCHITIET detail in item.TDONHANG.TDONHANGCHITIETs)
                                 {
@@ -188,11 +205,12 @@
                                         details += "; ";
                                     }
                                     details += detail.SOLUONG + ": " + detail.NOTE + ": " + (detail.SOLUONGDANHAT == null ? "0" : detail.SOLUONGDANHAT.ToString());
-                                    soLuong += detail.SOLUONGDANHAT ?? 0;
+                                    //soLuong += detail.SOLUONGDANHAT ?? 0;
                                 }
-                                soLuong = soLuong == 0 ? 1 : soLuong;
+                                //soLuong = soLuong == 0 ? 1 : soLuong;
                                 //#ffbab5;
-                                <div class="col-12 itemDonNhat" data-id="@item.ID" data-soluong="@soLuong" data-tongtien="@item.TDONHANG.TONGCONG">
+                                @*<div class="col-12 itemDonNhat" data-id="@item.ID" data-soluong="@soLuong" data-tongtien="@item.TDONHANG.TONGCONG">*@
+                                <div class="col-12 itemDonNhat" data-id="@item.ID" data-loai="@item.TDONHANG.LOAI" data-soluong="@item.TDONHANG.SLDANHAT" data-tongcong="@item.TDONHANG.TONGCONG" data-tiennhat="@item.TDONHANG.TIENDANHAT" data-tiencong="@item.TDONHANG.TIENCONG">
                                     <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
                                         <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
                                         </div>
@@ -309,6 +327,10 @@
 
 @Scripts.Render("~/Scripts/jquery-3.6.0.js")
 <script>
+    $(document).ready(function () {
+        renameControls();
+    });
+
     function convertToInt(param) {
         let val = 0;
         if (param != undefined && param != null && param.length > 0) {
@@ -364,67 +386,70 @@
                     if ($(ele).attr("data-id") == val) {
                         //append data to grid
                         let ngay = $(ele).attr("data-ngay").trim();
+                        let loai = $(ele).attr("data-loai").trim();
                         let soLuong = $(ele).attr("data-sl").trim();
                         let logo = $(ele).attr("data-logo").trim();
                         let soHd = $(ele).attr("data-soHd").trim();
                         let quay = $(ele).attr("data-quay").trim();
                         let khachhang = $(ele).attr("data-khachhang").trim();
                         let sp = $(ele).attr("data-sp").trim();
-                        let tongtien = $(ele).attr("data-tongtien").trim();
+                        let tongcong = $(ele).attr("data-tongcong").trim();
+                        let tiennhat = $(ele).attr("data-tiennhat").trim();
+                        let tiencong = $(ele).attr("data-tiencong").trim();
                         let note = $(ele).attr("data-note").trim();
                         let timeupdate = $(ele).attr("data-timeupdate").trim();
                         let details = $(ele).attr("data-details").trim();
                         let trangthai = $(ele).attr("data-trangthai").trim();
-                        let html = $('<div class="col-12 itemDonNhat" data-id="' + val + '" data-soluong="' + soLuong + '" data-tongtien="' + tongtien + '">'+
-                                   ' <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">'+
-                                   '     <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url(' + logo +'); background-size: 100% 100%; background-repeat: no-repeat;">'+
-                                   '     </div>'+
-                                   '     <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">'+
-                                   '         <div class="row">'+
-                                   '             <div class="col-9">'+
-                                   '                 <div class="row" style="padding-left: 10px;">'+
-                                   '                     <table border="0">'+
-                                   '                         <tr>'+
-                                   '                             <td>Ngày</td>'+
-                                   '                             <td style="padding-left:5px;">'+ngay+'</td>'+
-                                   '                         </tr>'+
-                                   '                         <tr>'+
-                                   '                             <td>HĐ</td>'+
-                                   '                             <td style="padding-left:5px;">'+soHd+'</td>'+
-                                   '                         </tr>'+
-                                   '                         <tr>'+
-                                   '                             <td>Quầy</td>' +
-                                   '                             <td style="padding-left:5px;">' + (quay.length > 0 ? quay : '') +
-                                   '                             </td>'+
-                                   '                         </tr>'+
-                                   '                         <tr>'+
-                                   '                             <td>Kh:</td>'+
-                                   '                             <td>' + khachhang + '</td>' +
-                                   '                         </tr>' + (sp.length > 0 ? '<tr><td>Sp:</td><td style="padding-left:5px;">' + sp + '</td></tr>' : '') +
-                                   '                         <tr>'+
-                                   '                             <td>T.tiền:</td>'+
-                                   '                             <td class="lblTienItem" style="padding-left:5px;">'+tongtien+'</td>'+
-                                   '                         </tr>'+
-                                   '                         <tr>'+
-                                   '                             <td>Ghi chú</td>'+
-                                   '                             <td style="padding-left:5px;">'+note+'</td>'+
-                                   '                         </tr>' + (details.length > 0 ? '<tr><td colspan="2">' + details + '</td></tr>' : '') +
-                                                                      (timeupdate.length > 0 ? '<tr><td colspan="2">' + timeupdate + '</td></tr>' : '') +
-                                   '                     </table>'+
-                                   '                 </div>'+
-                                   '             </div>'+
-                                   '             <div class="col-3 p-0">'+
-                                   '                 <div class="alert alert-warning" role="alert" style="padding:3px;">'+ (trangthai.length > 0 ? trangthai : '') +
-                                   '                 </div>'+
-                                   '                 <div class="btn btn-danger btnXoa" role="alert">'+
-                                   '                     Xóa'+
-                                   '                 </div>'+
-                                   '                 <input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[0].TDONHANGID" value="'+val+'" hidden="hidden">'+
-                                   '             </div>'+
-                                   '         </div>'+
-                                   '     </div>'+
-                                   ' </div>'+
-                                   '</div>');
+                        let html = $('<div class="col-12 itemDonNhat" data-id="' + val + '" data-loai="' + loai + '" data-soluong="' + soLuong + '" data-tongcong="' + tongcong + '" data-tiennhat="' + tiennhat + '" data-tiencong="' + tiencong + '">' +
+                            ' <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">' +
+                            '     <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url(' + logo + '); background-size: 100% 100%; background-repeat: no-repeat;">' +
+                            '     </div>' +
+                            '     <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">' +
+                            '         <div class="row">' +
+                            '             <div class="col-9">' +
+                            '                 <div class="row" style="padding-left: 10px;">' +
+                            '                     <table border="0">' +
+                            '                         <tr>' +
+                            '                             <td>Ngày</td>' +
+                            '                             <td style="padding-left:5px;">' + ngay + '</td>' +
+                            '                         </tr>' +
+                            '                         <tr>' +
+                            '                             <td>HĐ</td>' +
+                            '                             <td style="padding-left:5px;">' + soHd + '</td>' +
+                            '                         </tr>' +
+                            '                         <tr>' +
+                            '                             <td>Quầy</td>' +
+                            '                             <td style="padding-left:5px;">' + (quay.length > 0 ? quay : '') +
+                            '                             </td>' +
+                            '                         </tr>' +
+                            '                         <tr>' +
+                            '                             <td>Kh:</td>' +
+                            '                             <td>' + khachhang + '</td>' +
+                            '                         </tr>' + (sp.length > 0 ? '<tr><td>Sp:</td><td style="padding-left:5px;">' + sp + '</td></tr>' : '') +
+                            '                         <tr>' +
+                            '                             <td>T.tiền:</td>' +
+                            '                             <td class="lblTienItem" style="padding-left:5px;">' + tongcong + '</td>' +
+                            '                         </tr>' +
+                            '                         <tr>' +
+                            '                             <td>Ghi chú</td>' +
+                            '                             <td style="padding-left:5px;">' + note + '</td>' +
+                            '                         </tr>' + (details.length > 0 ? '<tr><td colspan="2">' + details + '</td></tr>' : '') +
+                            (timeupdate.length > 0 ? '<tr><td colspan="2">' + timeupdate + '</td></tr>' : '') +
+                            '                     </table>' +
+                            '                 </div>' +
+                            '             </div>' +
+                            '             <div class="col-3 p-0">' +
+                            '                 <div class="alert alert-warning" role="alert" style="padding:3px;">' + (trangthai.length > 0 ? trangthai : '') +
+                            '                 </div>' +
+                            '                 <div class="btn btn-danger btnXoa" role="alert">' +
+                            '                     Xóa' +
+                            '                 </div>' +
+                            '                 <input type="text" class="form-control ipTDONHANGID" name="TTHANHTOANCHITIETs[0].TDONHANGID" value="' + val + '" hidden="hidden">' +
+                            '             </div>' +
+                            '         </div>' +
+                            '     </div>' +
+                            ' </div>' +
+                            '</div>');
                         $(".chiTiet").append(html);
                     }
                 });
@@ -444,19 +469,33 @@
     });
 
     function renameControls() {
-        let tienHang = 0;
-        let soLuong = 0;
+        let loai = 0, slNhat = 0, tienNhat = 0, congNhat = 0, slGom = 0, tienGom = 0;
         $(".chiTiet").find(".itemDonNhat").each(function (index, ele) {
             let name = "TTHANHTOANCHITIETs[" + index + "].TDONHANGID";
             $(ele).find('.ipTDONHANGID').attr("name", name);
             name = "TTHANHTOANCHITIETs[" + index + "].NOTE";
             $(ele).find('.ipNOTE').attr("name", name);
-            /*let tong = $(ele).find(".lblTienItem").text();*/
-            tienHang += convertToInt($(ele).attr("data-tongtien"));
-            soLuong += convertToInt($(ele).attr("data-soluong"));
+
+            //gom 0, nhặt 1
+            loai = convertToInt($(ele).attr("data-loai"));
+            if (loai == 0) {
+                slGom++;
+                tienGom += convertToInt($(ele).attr("data-tongcong"));
+            }
+            else {
+                slNhat += convertToInt($(ele).attr("data-soluong"));
+                tienNhat += convertToInt($(ele).attr("data-tiennhat"));
+                congNhat += convertToInt($(ele).attr("data-tiencong"));
+            }
         });
-        $('.lblTongSL').text(soLuong);
-        $('.lblTongTien').text(tienHang);
+
+        $('.lblSLNhat').text(slNhat);
+        $('.lblTienNhat').text(tienNhat);
+        $('.lblCongNhat').text(congNhat);
+        $('.lblSLGom').text(slGom);
+        $('.lblTienGom').text(tienGom);
+
+        let tienHang = tienNhat + congNhat + tienGom;
         $('.ipTIENHANG').val(tienHang);
         $('.ipTONGCONG').val(tienHang + convertToInt($('.ipPHUPHI').val().replace(",", "")));
     }
