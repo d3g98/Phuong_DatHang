@@ -3107,6 +3107,8 @@
     <Content Include="Views\DTRANGTHAI\Index.cshtml" />
     <Content Include="Views\Sconfig\ThongBaoKhachHang.cshtml" />
     <Content Include="Views\Admin\XoaDuLieu.cshtml" />
+    <Content Include="Views\Admin\CongNoKhachHang.cshtml" />
+    <Content Include="Views\Home\ChiTietCongNo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,43 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Công nợ khách hàng";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<h4>Công nợ khách hàng</h4>
+<p style="color: red; background-color: yellow; padding: 10px;">Giá trị dương: khách đang nợ, giá trị âm: đang nợ khách</p>
+<table class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Điện thoại</th>
+            <th scope="col">Địa chỉ</th>
+            <th scope="col">Công nợ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
+                int i = 1;
+                foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr data-id="@row["ID"]">
+                        <th scope="row">@i</th>
+                        <td>@row["NAME"]</td>
+                        <td>@row["DIENTHOAI"]</td>
+                        <td>@row["DIACHI"]</td>
+                        <td>@ThaoPhuong.Utils.DbUtils.NumberToText((decimal)row["CONGNO"])</td>
+                    </tr>
+                    i++;
+                }
+            }
+        }
+    </tbody>
+</table>
+@Scripts.Render("~/Scripts/jquery-3.6.0.js")
+<script>
+    $('tbody').on("click", 'tr', function () {
+        window.location.href = "/Home/ChiTietCongNo/" + $(this).attr("data-id");
+    });
+</script>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,22 @@ namespace ThaoPhuong.Controllers
         {
             ViewBag.data = SconfigController.LayDuLieuThongBaoKhachHang(db);
             return View();
+        }
+
+        public ActionResult CongNoKhachHang()
+        {
+            string query = @"SELECT * FROM
+            (
+	            SELECT ID, NAME, DIENTHOAI, DIACHI, 
+	            (
+		            SELECT SUM(COALESCE(TONGCONG, 0) - COALESCE(TIENTHANHTOAN, 0)) FROM TTHANHTOAN WHERE DKHACHHANGID = DKHACHHANG.ID
+	            ) AS CONGNO
+	            FROM DKHACHHANG
+            )
+            A
+            WHERE A.CONGNO <> 0";
+            DataTable dt = DbUtils.GetTable(db, query, null);
+            return View(dt);
         }
 
         public ActionResult XoaDuLieu()

@@ -1,0 +1,48 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Chi tiết công nợ";
+    Layout = ViewBag.layout;
+}
+<h4>Chi tiết công nợ @ViewBag.NAME : @ViewBag.congNo</h4>
+
+@{
+    if (Model != null)
+    {
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ngày</th>
+                <th scope="col">Số phiếu</th>
+                <th scope="col">Diễn giải</th>
+                <th scope="col">Ghi chú</th>
+                <th scope="col">Tổng cộng</th>
+                <th scope="col">Tiền thanh toán</th>
+                <th scope="col">Lũy kế</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model != null)
+                {
+                    int i = 1;
+                    foreach (System.Data.DataRow row in Model.Rows)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@row["NGAY"]</td>
+                            <td>@row["NAME"]</td>
+                            <td>@row["DIENGIAI"]</td>
+                            <td>@row["NOTE"]</td>
+                            <td>@ThaoPhuong.Utils.DbUtils.NumberToText((decimal)row["TONGCONG"])</td>
+                            <td>@ThaoPhuong.Utils.DbUtils.NumberToText((decimal)row["TIENTHANHTOAN"])</td>
+                            <td>@ThaoPhuong.Utils.DbUtils.NumberToText((decimal)row["LUYKE"])</td>
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+    }
+}
