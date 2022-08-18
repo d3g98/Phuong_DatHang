@@ -183,9 +183,9 @@
             //#ffbab5;
             <div class="col-sm-12 col-md-6 col-lg-4 itemDonNhat" data-id="@item.ID">
                 <div class="row p-1 m-1" style="background-color: whitesmoke; border-radius: 10px;">
-                    <div class="col-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
+                    <div class="col-lg-3 col-md-5 col-sm-5" style="border-radius: 15px 15px 15px 15px; background-image: url('@logo'); background-size: 100% 100%; background-repeat: no-repeat;">
                     </div>
-                    <div class="col-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
+                    <div class="col-lg-9 col-md-7 col-sm-7" style="border-radius: 0px 15px 15px 0px; padding-left: 10px;">
                         <div class="row">
                             <div class="col-9">
                                 <div class="row" style="padding-left: 10px;">
@@ -195,44 +195,44 @@
                                             <td>@time.ToString("dd/MM HH:mm")</td>
                                         </tr>
                                         @*<tr>
-                                            <td colspan="2">@item.NAME</td>
-                                        </tr>*@
+                                                <td colspan="2">@item.NAME</td>
+                                            </tr>*@
                                         <tr>
                                             <td>Quầy</td>
                                             <td style="padding-left:5px;">
                                                 @{if (item.DQUAY != null)
                                                     { <text>@item.DQUAY.NAME</text> }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kh</td>
-                                        <td>@item.DKHACHHANG.NAME</td>
-                                    </tr>
-                                    <tr>
-                                        <td>T.tiền</td>
-                                        <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>G.chú</td>
-                                        <td style="padding-left:5px;">@item.NOTE</td>
-                                    </tr>
-                                     <tr>
-                                        <td>Đ.nhặt:</td>
-                                        <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.SLDANHAT)</td>
-                                    </tr>
-                                    @if (details.Length > 0)
-                                    {
-                                        <tr>
-                                            <td colspan="2">@details</td>
+                                            </td>
                                         </tr>
-                                    }
-                                    @if (item.TIMEUPDATED != null)
-                                    {
-                                        time = item.TIMEUPDATED ?? DateTime.Now;
                                         <tr>
-                                            <td colspan="2" style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
+                                            <td>Kh</td>
+                                            <td>@item.DKHACHHANG.NAME</td>
                                         </tr>
-                                    }
+                                        <tr>
+                                            <td>T.tiền</td>
+                                            <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.TONGCONG)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>G.chú</td>
+                                            <td style="padding-left:5px;">@item.NOTE</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Đ.nhặt:</td>
+                                            <td style="padding-left:5px;">@ThaoPhuong.Utils.DbUtils.NumberToText(item.SLDANHAT)</td>
+                                        </tr>
+                                        @if (details.Length > 0)
+                                        {
+                                            <tr>
+                                                <td colspan="2">@details</td>
+                                            </tr>
+                                        }
+                                        @if (item.TIMEUPDATED != null)
+                                        {
+                                            time = item.TIMEUPDATED ?? DateTime.Now;
+                                            <tr>
+                                                <td colspan="2" style="padding-left:5px;">@time.ToString("dd/MM/yy HH:mm")</td>
+                                            </tr>
+                                        }
                                     </table>
                                 </div>
                             </div>
